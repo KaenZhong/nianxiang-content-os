@@ -1,0 +1,11 @@
+*
+!/.gitignore
+!/README.md
+!/AGENTS.md
+!/nianxiang-content-os/
+!/nianxiang-content-os/**
+**/.DS_Store
+**/__pycache__/
+**/*.pyc
+**/.nianxiang/
+**/profiles/

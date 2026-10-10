@@ -78,7 +78,7 @@ python3 -B scripts/manage.py release recover \
 
 ```bash
 python3 -B scripts/manage.py release manifest \
-  --source-dir /path/to/public-candidate --version 0.1.0-beta.2
+  --source-dir /path/to/public-candidate --version 0.1.0-beta.3
 ```
 
 清单列出除自身之外的全部公共文件、尺寸和SHA-256。任何公共文件改动后必须重新生成并核对清单；最终ZIP在发行阶段重新验收。目前清单不是签名，也不代表许可证、正式仓库或三平台实机已落实。个人优化按[规则维护](rules.md)留在私人配置档；官方核心更新不吸收私人规则。

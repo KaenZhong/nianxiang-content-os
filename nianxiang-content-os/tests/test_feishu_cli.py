@@ -2,6 +2,8 @@ import json
 from pathlib import Path
 import sys
 import unittest
+from unittest.mock import patch
+from types import SimpleNamespace
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 from runtime.feishu_cli import FeishuAdapter
 from runtime.models import NianxiangError
@@ -33,5 +35,34 @@ class CLIBoundaries(unittest.TestCase):
         a=self.adapter([])
         with self.assertRaisesRegex(NianxiangError,'unsupported_action'):a.write({'action':'overwrite','target':{'obj_type':'docx'},'content':{}})
         self.assertEqual(self.commands,[])
+
+
+    def test_modern_wiki_token_is_read_as_node_not_document(self):
+        def runner(command):
+            target=command[command.index('--node-token')+1]
+            if target!='https://feishu.cn/wiki/Abc123synthetic':
+                return {'ok':False,'identity':'user','error':{'type':'validation'}}
+            return {'ok':True,'identity':'user','data':{'node':{'node_token':'Abc123synthetic','obj_type':'docx'}}}
+        a=FeishuAdapter({'space_id':'synthetic-space'},runner)
+        self.assertEqual(a.get_node({'node_token':'Abc123synthetic'})['node_token'],'Abc123synthetic')
+    def test_typed_entry_url_is_preserved(self):
+        a=self.adapter([{'ok':True,'identity':'user','data':{'node':{'obj_type':'docx'}}}])
+        url='https://example.feishu.cn/docx/AbcSynthetic?from=share'
+        a.get_node({'node_token':url})
+        self.assertEqual(self.commands[0][self.commands[0].index('--node-token')+1],url)
+    def test_stderr_permission_envelope_is_classified_without_private_payload(self):
+        proc=SimpleNamespace(returncode=2,stdout='',stderr=json.dumps({'ok':False,'identity':'user','error':{'type':'permission','message':'private-source-secret'}}))
+        with patch('runtime.feishu_cli.subprocess.run',return_value=proc):
+            with self.assertRaises(NianxiangError) as error:FeishuAdapter({'space_id':'synthetic-space'}).list_nodes(None)
+        self.assertEqual(error.exception.code,'permission_denied')
+        self.assertNotIn('private-source-secret',str(error.exception))
+    def test_stderr_success_cannot_authorize_identity(self):
+        proc=SimpleNamespace(returncode=2,stdout='',stderr=json.dumps({'verified':True,'identities':{'user':{'verified':True,'openId':'synthetic-user'}}}))
+        with patch('runtime.feishu_cli.subprocess.run',return_value=proc):
+            with self.assertRaisesRegex(NianxiangError,'invalid_response'):FeishuAdapter({}).get_account()
+    def test_non_object_cli_json_is_blocked(self):
+        proc=SimpleNamespace(returncode=0,stdout='[]',stderr='')
+        with patch('runtime.feishu_cli.subprocess.run',return_value=proc):
+            with self.assertRaisesRegex(NianxiangError,'invalid_response'):FeishuAdapter({}).get_account()
 
 if __name__=='__main__':unittest.main()

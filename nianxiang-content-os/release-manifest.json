@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.2",
+  "version": "0.1.0-beta.3",
   "entry": "SKILL.md",
   "knowledge_schema_version": 4,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "22932784e01ef9c5b276833c2792e2f2bf0d1d0464fe1d98c283e105ed0c2cc7",
-      "size": 1644
+      "sha256": "93e90ddd9ae303c7682131b0c4431469a78067f485c1c87661ec95d196177083",
+      "size": 2097
     },
     "README.md": {
-      "sha256": "19038716257121f6b93147c7aea146a898cd704d4fe8037e7c7b757fc28009de",
+      "sha256": "f3ae6218a5c7974b01007c963ac3d11b8b4aca05132a249b9746f55e302193ae",
       "size": 4391
     },
     ".gitignore": {
@@ -20,7 +20,7 @@
       "size": 462
     },
     "SKILL.md": {
-      "sha256": "bb33abbe896435d2caf647ac4bb3296cd88ec13a2b6860dde6020e2e4e056a84",
+      "sha256": "3d0d4c9dc9d1b3b365e08d7bc889ff678469b312daf4c31f268b39ce4bc3b089",
       "size": 14185
     },
     "references/system/data-ownership.md": {
@@ -116,7 +116,7 @@
       "size": 4750
     },
     "references/maintenance/releases.md": {
-      "sha256": "b4b2f2c5a9c64453283db9fc797473b06adb6bafd11ce4f0f072d25672aaf52e",
+      "sha256": "138631ea933e145618309bbed0219b26f50ef96b668e10762ea06287ddbeba0b",
       "size": 9995
     },
     "references/maintenance/rules.md": {
@@ -140,8 +140,8 @@
       "size": 12086
     },
     "tests/test_feishu_cli.py": {
-      "sha256": "8dac9f9e7ca1376fcc0174ec90f1a96e2fcccb935cce0117d18d6029aadb03d8",
-      "size": 2073
+      "sha256": "b5e919d35865ebac7206c3288d638add7c590377a47acd9812fd5ba8c2df5c67",
+      "size": 4351
     },
     "tests/personal_support.py": {
       "sha256": "e2105752fcb3ddff67be2a7da396235239a87e101a8b91f5055c430e20ff9be1",
@@ -280,8 +280,8 @@
       "size": 14045
     },
     "scripts/runtime/feishu_cli.py": {
-      "sha256": "96ff1801891e7a5602c05665be5188d6c9d27597b22567a2ac9c0473e5575abe",
-      "size": 11222
+      "sha256": "552c2acdef87dc52c718c42c61f12865e27825f381b19f410a79e1c85747bc1f",
+      "size": 11908
     },
     "scripts/runtime/personal.py": {
       "sha256": "07843f7c09cd46705adab0456ca4d0f4ecfb9d13364b5c9c604b89d762bd57b8",

@@ -4,6 +4,7 @@ import copy
 import html
 import json
 import subprocess
+from urllib.parse import quote
 from .models import NianxiangError,digest
 
 class FeishuAdapter:
@@ -15,7 +16,13 @@ class FeishuAdapter:
         except subprocess.TimeoutExpired as exc:raise NianxiangError('timeout','CLI response timed out') from exc
         except OSError as exc:raise NianxiangError('network_error','CLI could not run') from exc
         try:payload=json.loads(proc.stdout)
-        except ValueError as exc:raise NianxiangError('invalid_response','CLI response was not JSON; write outcome needs inspection') from exc
+        except ValueError as exc:
+            # lark-cli reports structured failures on stderr, not stdout.
+            try:payload=json.loads(proc.stderr) if proc.returncode else None
+            except ValueError:payload=None
+            if not isinstance(payload,dict) or payload.get('ok') is not False:
+                raise NianxiangError('invalid_response','CLI response was not JSON; write outcome needs inspection') from exc
+        if not isinstance(payload,dict):raise NianxiangError('invalid_response','CLI returned non-object')
         if proc.returncode and payload.get('ok') is not False:raise NianxiangError('network_error','CLI returned an unknown failure')
         return payload
     def _run(self,args,auth=False):
@@ -43,7 +50,10 @@ class FeishuAdapter:
         item=self.config.get('knowledge_map',{}).get(target.get('knowledge_id'))
         node_token=target.get('node_token') or (item or {}).get('node_token')
         if not node_token:raise NianxiangError('target_mismatch','configured node is required')
-        data=self._run(['wiki','+node-get','--node-token',node_token])
+        # A configured node token is a Wiki node even when it has no wik prefix.
+        # Typed user URLs retain their original document/Wiki semantics.
+        locator=node_token if '://' in node_token else 'https://feishu.cn/wiki/'+quote(node_token,safe='')
+        data=self._run(['wiki','+node-get','--node-token',locator])
         node=data.get('node',data)
         return {**node,'account_id':self.account_id}
     def list_nodes(self,parent):

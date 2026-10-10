@@ -1,27 +1,27 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.4",
+  "version": "0.1.0-beta.5",
   "entry": "SKILL.md",
   "knowledge_schema_version": 4,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "2f6e65486a50adbd8a1b3b5e52f13ddba21b1c3d21aea783f7bf2d3a32c5a9ee",
-      "size": 2560
+      "sha256": "e80706477dc1b0538255a0118a86a672c100a06dc201a93d9756a46ee8ed70e0",
+      "size": 2978
     },
     "README.md": {
-      "sha256": "cbcfc90ea15517e47ebfcdbdfbcbcec9d7528fb19864e711fe0b62ac780cd2ab",
-      "size": 4391
+      "sha256": "7673af2787ceca0953fec708faf8cf44d645214958ae59d4aa27f259e159bc67",
+      "size": 4472
     },
     ".gitignore": {
       "sha256": "15e6316624e788526473eb2b1e3f24d500a1656c5792880d598507ca77495363",
       "size": 462
     },
     "SKILL.md": {
-      "sha256": "a30f89f17f017a6e2a355c647d9c0b7d2687169a04398246d51780790f71ba06",
-      "size": 14185
+      "sha256": "9f0be67b5699f2257a6f6063ce5e780f0c67b8ade15868df516c2d981692a0a5",
+      "size": 14264
     },
     "references/system/data-ownership.md": {
       "sha256": "2eebe3c3113812f24681f3e25f30c4a24b811a514181e08fccbe95f8adc797db",
@@ -116,12 +116,12 @@
       "size": 4750
     },
     "references/maintenance/releases.md": {
-      "sha256": "f683a6e23dd615dcc2ee05a71608663f471bd9301fd307bb9ea11c692de91909",
-      "size": 9995
+      "sha256": "6791616c2bc42c145b47c108c0c22172944edd3797855ccbf0910da9a931ead6",
+      "size": 10001
     },
     "references/maintenance/rules.md": {
-      "sha256": "46d2154efb75b209293fe1683f9a90399c214291deacdff9d492917b143c5704",
-      "size": 7344
+      "sha256": "72e844627da0f81a0d93d31d6824d83b8b7e20d321b8de1634773cc7a77e8977",
+      "size": 7403
     },
     "references/maintenance/acceptance.md": {
       "sha256": "1941d4ec4e47962f5ac40a02ca29d510be38bf8f07456ee43b04bbdaaca0c023",
@@ -184,8 +184,8 @@
       "size": 15231
     },
     "agents/openai.yaml": {
-      "sha256": "4fd8feb59032d1e633cc6b5c4f5f935ee1f1eeda118bcbd7ca2c3f0e1308fce6",
-      "size": 349
+      "sha256": "45d677c3a8a4e8ce986f5b0ba6cf79932e6a73c0753df163300cd010ab0571d0",
+      "size": 343
     },
     "agent/IDENTITY.md": {
       "sha256": "1aef58743cf928f4ba00ffa3aa47340e6e46321e6d7e30ba4a7e29bb2c814d9d",

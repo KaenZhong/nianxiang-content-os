@@ -1,5 +1,5 @@
 interface:
-  display_name: "念响AI · 内容OS"
+  display_name: "念响内容OS"
   short_description: "阿响统一陪你聊素材、选题、写朋友圈与口播，并按授权归档和沉淀"
   default_prompt: "请用 $nianxiang-content-os 让阿响基于我的真实素材，协助内容策略、选题、创作、运营或复盘。"
 policy:

@@ -103,6 +103,35 @@ class FeishuAdapter:
         base,table=self._record_coordinates(target)
         data=self._run(['base','+record-list','--base-token',base['obj_token'],'--table-id',table['id'],'--filter-json',json.dumps({'logic':'and','conditions':[[target['key_field'],'==',target['object_key']]]},ensure_ascii=False),'--limit','200'])
         records=data.get('records')
+        if 'records' not in data:
+            # Current Base CLI returns aligned rows, field names and record IDs.
+            # Validate that alignment before constructing a record dictionary.
+            columns=data.get('fields');ids=data.get('record_id_list');rows=data.get('data')
+            field_ids=data.get('field_id_list');types=data.get('field_type_list')
+            if (not all(isinstance(x,list) for x in (columns,ids,rows,field_ids,types))
+                or type(data.get('has_more')) is not bool
+                or len(columns)!=len(field_ids) or len(columns)!=len(types)
+                or not all(isinstance(x,str) and x for x in columns+ids+field_ids+types)
+                or len(set(columns))!=len(columns) or len(set(field_ids))!=len(field_ids)
+                or len(ids)!=len(rows) or len(set(ids))!=len(ids)
+                or target['key_field'] not in columns
+                or any(not isinstance(row,list) or len(row)!=len(columns) for row in rows)):
+                raise NianxiangError('invalid_response','record matrix is missing or misaligned')
+            if data['has_more'] or len(rows)>1:raise NianxiangError('duplicate_object_key','business key is not unique')
+            records=[]
+            if rows:
+                schema={f.get('name'):f for f in self.list_fields(base,table)}
+                fields={}
+                for name,fid,kind,value in zip(columns,field_ids,types,rows[0]):
+                    field=schema.get(name)
+                    if not field or field.get('id')!=fid or field.get('type')!=kind:
+                        raise NianxiangError('invalid_response','record columns differ from the live schema')
+                    if kind=='select' and not field.get('multiple',False) and isinstance(value,list):
+                        if len(value)>1 or any(not isinstance(x,str) for x in value):
+                            raise NianxiangError('invalid_response','single select returned multiple or invalid values')
+                        value=value[0] if value else None
+                    fields[name]=value
+                records=[{'record_id':ids[0],'fields':fields}]
         if not isinstance(records,list):raise NianxiangError('invalid_response','record list missing')
         if data.get('has_more') or len(records)>1:raise NianxiangError('duplicate_object_key','business key is not unique')
         if not records:return None

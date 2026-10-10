@@ -1,0 +1,141 @@
+{
+  "schema_version": 4,
+  "knowledge_backend": "feishu",
+  "identity": "user",
+  "fail_closed": true,
+  "space_id": "REPLACE_WITH_SPACE_ID",
+  "last_verified_date": "YYYY-MM-DD",
+  "knowledge_map": {
+    "content.strategy": {
+      "expected_title": "01｜内容经营策略",
+      "node_token": "REPLACE_WITH_NODE_TOKEN",
+      "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+      "obj_type": "docx",
+      "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+      "access": "read_write"
+    },
+    "ip.profile": {
+      "expected_title": "03｜个人IP档案",
+      "node_token": "REPLACE_WITH_NODE_TOKEN",
+      "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+      "obj_type": "docx",
+      "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+      "access": "read_write"
+    },
+    "audience.needs": {
+      "expected_title": "02｜受众与需求",
+      "node_token": "REPLACE_WITH_NODE_TOKEN",
+      "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+      "obj_type": "docx",
+      "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+      "access": "read_write"
+    },
+    "expression.baseline": {
+      "expected_title": "04｜个人表达风格",
+      "node_token": "REPLACE_WITH_NODE_TOKEN",
+      "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+      "obj_type": "docx",
+      "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+      "access": "read_write"
+    },
+    "cocreation.index": {
+      "expected_title": "01｜念响共创记录",
+      "node_token": "REPLACE_WITH_NODE_TOKEN",
+      "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+      "obj_type": "docx",
+      "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+      "access": "create_child"
+    },
+    "content.assets": {
+      "expected_title": "02｜内容资产库",
+      "node_token": "REPLACE_WITH_NODE_TOKEN",
+      "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+      "obj_type": "docx",
+      "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+      "access": "read_write"
+    },
+    "operations.index": {
+      "expected_title": "01｜内容操盘",
+      "node_token": "REPLACE_WITH_NODE_TOKEN",
+      "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+      "obj_type": "docx",
+      "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+      "access": "read_write"
+    },
+    "operations.base": {
+      "expected_title": "念响AI · 内容中台",
+      "node_token": "REPLACE_WITH_NODE_TOKEN",
+      "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+      "obj_type": "bitable",
+      "parent_node_token": "REPLACE_WITH_OPERATIONS_NODE_TOKEN",
+      "access": "read_write"
+    },
+    "content.archives": {
+      "expected_title": "02｜内容档案",
+      "node_token": "REPLACE_WITH_NODE_TOKEN",
+      "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+      "obj_type": "docx",
+      "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+      "access": "create_child"
+    },
+    "content.campaigns": {
+      "expected_title": "03｜内容战役",
+      "node_token": "REPLACE_WITH_NODE_TOKEN",
+      "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+      "obj_type": "docx",
+      "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+      "access": "create_child"
+    },
+    "content.reviews": {
+      "expected_title": "04｜阶段复盘",
+      "node_token": "REPLACE_WITH_NODE_TOKEN",
+      "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+      "obj_type": "docx",
+      "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+      "access": "create_child"
+    },
+    "methodology.current": {
+      "expected_title": "04｜内容方法论",
+      "node_token": "REPLACE_WITH_NODE_TOKEN",
+      "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+      "obj_type": "docx",
+      "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN_OR_EMPTY",
+      "access": "read_write"
+    }
+  },
+  "base_tables": {
+    "topic_pool": {
+      "expected_title": "选题池",
+      "table_id": "REPLACE_WITH_TOPIC_POOL_TABLE_ID"
+    },
+    "moments_works": {
+      "expected_title": "朋友圈文案",
+      "table_id": "REPLACE_WITH_MOMENTS_TABLE_ID"
+    },
+    "video_works": {
+      "expected_title": "短视频口播",
+      "table_id": "REPLACE_WITH_VIDEO_TABLE_ID"
+    },
+    "article_works": {
+      "expected_title": "公众号长文",
+      "table_id": "REPLACE_WITH_ARTICLE_TABLE_ID"
+    }
+  },
+  "write_targets": {
+    "cocreation_parent_knowledge_id": "cocreation.index",
+    "archive_parent_knowledge_id": "content.archives",
+    "campaign_parent_knowledge_id": "content.campaigns",
+    "review_parent_knowledge_id": "content.reviews",
+    "content_base_knowledge_id": "operations.base",
+    "sync_candidate_knowledge_ids": [
+      "content.strategy",
+      "audience.needs",
+      "ip.profile",
+      "expression.baseline",
+      "content.assets",
+      "methodology.current"
+    ]
+  },
+  "private": true,
+  "include_in_public_release": false
+}

@@ -1,0 +1,17 @@
+{
+  "kind": "creation",
+  "mode": "execution",
+  "status": "active",
+  "goal": "根据已确认素材创作朋友圈",
+  "context_refs": [],
+  "selected_items": [],
+  "artifact_refs": [
+    {
+      "type": "missing",
+      "label": "待提供的原始素材；此示例不得假称已找回"
+    }
+  ],
+  "checkpoint": "任务目标已确认，素材待补",
+  "next_step": "收到素材后判断切口并出稿",
+  "operation_ids": []
+}

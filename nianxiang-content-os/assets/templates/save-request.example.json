@@ -1,0 +1,7 @@
+{
+  "operation_id": "REPLACE_WITH_STABLE_OPERATION_ID",
+  "target": {"knowledge_id": "operations.base", "obj_type": "bitable", "table_key": "moments_works", "key_field": "作品键", "object_key": "nxw:REPLACE_WITH_STABLE_WORK_KEY"},
+  "action": "create",
+  "base_revision": null,
+  "content": {"作品键": "nxw:REPLACE_WITH_STABLE_WORK_KEY", "作品标题": "REPLACE_WITH_CONFIRMED_TITLE", "第一版": "REPLACE_WITH_TRACEABLE_FIRST_DRAFT", "发表状态": "待发布", "沉淀状态": "待沉淀"}
+}

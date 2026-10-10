@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "preferred_name": "REPLACE_WITH_PREFERRED_NAME",
+  "assistant_name": "阿响",
+  "memory_scope": "long_term",
+  "consent_confirmed": true,
+  "consent_date": "YYYY-MM-DD",
+  "updated_date": "YYYY-MM-DD",
+  "private": true,
+  "include_in_public_release": false
+}

@@ -1,0 +1,585 @@
+{
+  "schema_version": 1,
+  "knowledge_schema_version": 4,
+  "data_layout_version": 1,
+  "nodes": [
+    {
+      "id": "home",
+      "title": "首页｜念响AI · 内容OS",
+      "parent": null,
+      "obj_type": "docx",
+      "legacy_titles": [
+        "首页｜念响AI · 内容工坊"
+      ]
+    },
+    {
+      "id": "positioning",
+      "title": "01｜定位与策略",
+      "parent": null,
+      "obj_type": "docx"
+    },
+    {
+      "id": "assets",
+      "title": "02｜共创与资产",
+      "parent": null,
+      "obj_type": "docx"
+    },
+    {
+      "id": "creation",
+      "title": "03｜创作与运营",
+      "parent": null,
+      "obj_type": "docx"
+    },
+    {
+      "id": "content.strategy",
+      "title": "01｜内容经营策略",
+      "parent": "positioning",
+      "obj_type": "docx",
+      "access": "read_write"
+    },
+    {
+      "id": "ip.profile",
+      "title": "03｜个人IP档案",
+      "parent": "positioning",
+      "obj_type": "docx",
+      "access": "read_write"
+    },
+    {
+      "id": "audience.needs",
+      "title": "02｜受众与需求",
+      "parent": "positioning",
+      "obj_type": "docx",
+      "access": "read_write"
+    },
+    {
+      "id": "expression.baseline",
+      "title": "04｜个人表达风格",
+      "parent": "positioning",
+      "obj_type": "docx",
+      "access": "read_write"
+    },
+    {
+      "id": "cocreation.index",
+      "title": "01｜念响共创记录",
+      "parent": "assets",
+      "obj_type": "docx",
+      "access": "create_child"
+    },
+    {
+      "id": "content.assets",
+      "title": "02｜内容资产库",
+      "parent": "assets",
+      "obj_type": "docx",
+      "access": "read_write"
+    },
+    {
+      "id": "operations.index",
+      "title": "01｜内容操盘",
+      "parent": "creation",
+      "obj_type": "docx",
+      "access": "read_write"
+    },
+    {
+      "id": "operations.base",
+      "title": "念响AI · 内容中台",
+      "parent": "operations.index",
+      "obj_type": "bitable",
+      "access": "read_write"
+    },
+    {
+      "id": "content.archives",
+      "title": "02｜内容档案",
+      "parent": "creation",
+      "obj_type": "docx",
+      "access": "create_child"
+    },
+    {
+      "id": "content.campaigns",
+      "title": "03｜内容战役",
+      "parent": "creation",
+      "obj_type": "docx",
+      "access": "create_child"
+    },
+    {
+      "id": "content.reviews",
+      "title": "04｜阶段复盘",
+      "parent": "creation",
+      "obj_type": "docx",
+      "access": "create_child"
+    },
+    {
+      "id": "methodology.current",
+      "title": "04｜内容方法论",
+      "parent": null,
+      "obj_type": "docx",
+      "access": "read_write"
+    }
+  ],
+  "tables": [
+    {
+      "id": "topic_pool",
+      "title": "选题池",
+      "fields": [
+        {
+          "name": "选题",
+          "type": "text"
+        },
+        {
+          "name": "选题编号",
+          "type": "auto_number"
+        },
+        {
+          "name": "选题键",
+          "type": "text"
+        },
+        {
+          "name": "一句话切口",
+          "type": "text"
+        },
+        {
+          "name": "价值依据",
+          "type": "text"
+        },
+        {
+          "name": "来源线索",
+          "type": "text"
+        },
+        {
+          "name": "来源链接",
+          "type": "text",
+          "style": {
+            "type": "url"
+          }
+        },
+        {
+          "name": "当前状态",
+          "type": "select",
+          "multiple": false,
+          "options": [
+            {
+              "name": "待创作"
+            },
+            {
+              "name": "已成稿"
+            },
+            {
+              "name": "暂缓"
+            },
+            {
+              "name": "放弃"
+            }
+          ]
+        },
+        {
+          "name": "入池时间",
+          "type": "created_at"
+        }
+      ]
+    },
+    {
+      "id": "moments_works",
+      "title": "朋友圈文案",
+      "fields": [
+        {
+          "name": "作品标题",
+          "type": "text"
+        },
+        {
+          "name": "作品编号",
+          "type": "auto_number"
+        },
+        {
+          "name": "作品键",
+          "type": "text"
+        },
+        {
+          "name": "关联选题",
+          "type": "link",
+          "link_table": "选题池",
+          "bidirectional": true,
+          "bidirectional_link_field_name": "朋友圈文案作品"
+        },
+        {
+          "name": "第一版",
+          "type": "text"
+        },
+        {
+          "name": "待发布版",
+          "type": "text"
+        },
+        {
+          "name": "已发布版",
+          "type": "text"
+        },
+        {
+          "name": "关键修改意见",
+          "type": "text"
+        },
+        {
+          "name": "发表状态",
+          "type": "select",
+          "multiple": false,
+          "options": [
+            {
+              "name": "待发布"
+            },
+            {
+              "name": "已发布"
+            }
+          ]
+        },
+        {
+          "name": "发布时间",
+          "type": "datetime",
+          "style": {
+            "format": "yyyy-MM-dd HH:mm"
+          }
+        },
+        {
+          "name": "发布链接",
+          "type": "text",
+          "style": {
+            "type": "url"
+          }
+        },
+        {
+          "name": "批量初稿文档",
+          "type": "text",
+          "style": {
+            "type": "url"
+          }
+        },
+        {
+          "name": "配图",
+          "type": "attachment"
+        },
+        {
+          "name": "贴图标题待选",
+          "type": "text"
+        },
+        {
+          "name": "贴图标题",
+          "type": "text"
+        },
+        {
+          "name": "同步贴图状态",
+          "type": "select",
+          "multiple": false,
+          "options": [
+            {
+              "name": "待同步"
+            },
+            {
+              "name": "已同步"
+            }
+          ]
+        },
+        {
+          "name": "沉淀状态",
+          "type": "select",
+          "multiple": false,
+          "options": [
+            {
+              "name": "待沉淀"
+            },
+            {
+              "name": "已沉淀"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "video_works",
+      "title": "短视频口播",
+      "fields": [
+        {
+          "name": "作品标题",
+          "type": "text"
+        },
+        {
+          "name": "作品编号",
+          "type": "auto_number"
+        },
+        {
+          "name": "作品键",
+          "type": "text"
+        },
+        {
+          "name": "关联选题",
+          "type": "link",
+          "link_table": "选题池",
+          "bidirectional": true,
+          "bidirectional_link_field_name": "短视频口播作品"
+        },
+        {
+          "name": "第一版",
+          "type": "text"
+        },
+        {
+          "name": "待发布版",
+          "type": "text"
+        },
+        {
+          "name": "已发布版",
+          "type": "text"
+        },
+        {
+          "name": "关键修改意见",
+          "type": "text"
+        },
+        {
+          "name": "发表状态",
+          "type": "select",
+          "multiple": false,
+          "options": [
+            {
+              "name": "待发布"
+            },
+            {
+              "name": "已发布"
+            }
+          ]
+        },
+        {
+          "name": "发布时间",
+          "type": "datetime",
+          "style": {
+            "format": "yyyy-MM-dd HH:mm"
+          }
+        },
+        {
+          "name": "发布链接",
+          "type": "text",
+          "style": {
+            "type": "url"
+          }
+        }
+      ]
+    },
+    {
+      "id": "article_works",
+      "title": "公众号长文",
+      "fields": [
+        {
+          "name": "作品标题",
+          "type": "text"
+        },
+        {
+          "name": "作品编号",
+          "type": "auto_number"
+        },
+        {
+          "name": "作品键",
+          "type": "text"
+        },
+        {
+          "name": "关联选题",
+          "type": "link",
+          "link_table": "选题池",
+          "bidirectional": true,
+          "bidirectional_link_field_name": "公众号长文作品"
+        },
+        {
+          "name": "第一版",
+          "type": "text",
+          "style": {
+            "type": "url"
+          }
+        },
+        {
+          "name": "待发布版",
+          "type": "text",
+          "style": {
+            "type": "url"
+          }
+        },
+        {
+          "name": "已发布版",
+          "type": "text",
+          "style": {
+            "type": "url"
+          }
+        },
+        {
+          "name": "关键修改意见",
+          "type": "text"
+        },
+        {
+          "name": "发表状态",
+          "type": "select",
+          "multiple": false,
+          "options": [
+            {
+              "name": "待发布"
+            },
+            {
+              "name": "已发布"
+            }
+          ]
+        },
+        {
+          "name": "发布时间",
+          "type": "datetime",
+          "style": {
+            "format": "yyyy-MM-dd HH:mm"
+          }
+        },
+        {
+          "name": "发布链接",
+          "type": "text",
+          "style": {
+            "type": "url"
+          }
+        }
+      ]
+    }
+  ],
+  "config_template": {
+    "schema_version": 4,
+    "knowledge_backend": "feishu",
+    "identity": "user",
+    "fail_closed": true,
+    "space_id": "REPLACE_WITH_SPACE_ID",
+    "last_verified_date": "YYYY-MM-DD",
+    "knowledge_map": {
+      "content.strategy": {
+        "expected_title": "01｜内容经营策略",
+        "node_token": "REPLACE_WITH_NODE_TOKEN",
+        "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+        "obj_type": "docx",
+        "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+        "access": "read_write"
+      },
+      "ip.profile": {
+        "expected_title": "03｜个人IP档案",
+        "node_token": "REPLACE_WITH_NODE_TOKEN",
+        "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+        "obj_type": "docx",
+        "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+        "access": "read_write"
+      },
+      "audience.needs": {
+        "expected_title": "02｜受众与需求",
+        "node_token": "REPLACE_WITH_NODE_TOKEN",
+        "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+        "obj_type": "docx",
+        "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+        "access": "read_write"
+      },
+      "expression.baseline": {
+        "expected_title": "04｜个人表达风格",
+        "node_token": "REPLACE_WITH_NODE_TOKEN",
+        "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+        "obj_type": "docx",
+        "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+        "access": "read_write"
+      },
+      "cocreation.index": {
+        "expected_title": "01｜念响共创记录",
+        "node_token": "REPLACE_WITH_NODE_TOKEN",
+        "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+        "obj_type": "docx",
+        "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+        "access": "create_child"
+      },
+      "content.assets": {
+        "expected_title": "02｜内容资产库",
+        "node_token": "REPLACE_WITH_NODE_TOKEN",
+        "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+        "obj_type": "docx",
+        "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+        "access": "read_write"
+      },
+      "operations.index": {
+        "expected_title": "01｜内容操盘",
+        "node_token": "REPLACE_WITH_NODE_TOKEN",
+        "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+        "obj_type": "docx",
+        "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+        "access": "read_write"
+      },
+      "operations.base": {
+        "expected_title": "念响AI · 内容中台",
+        "node_token": "REPLACE_WITH_NODE_TOKEN",
+        "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+        "obj_type": "bitable",
+        "parent_node_token": "REPLACE_WITH_OPERATIONS_NODE_TOKEN",
+        "access": "read_write"
+      },
+      "content.archives": {
+        "expected_title": "02｜内容档案",
+        "node_token": "REPLACE_WITH_NODE_TOKEN",
+        "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+        "obj_type": "docx",
+        "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+        "access": "create_child"
+      },
+      "content.campaigns": {
+        "expected_title": "03｜内容战役",
+        "node_token": "REPLACE_WITH_NODE_TOKEN",
+        "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+        "obj_type": "docx",
+        "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+        "access": "create_child"
+      },
+      "content.reviews": {
+        "expected_title": "04｜阶段复盘",
+        "node_token": "REPLACE_WITH_NODE_TOKEN",
+        "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+        "obj_type": "docx",
+        "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN",
+        "access": "create_child"
+      },
+      "methodology.current": {
+        "expected_title": "04｜内容方法论",
+        "node_token": "REPLACE_WITH_NODE_TOKEN",
+        "obj_token": "REPLACE_WITH_OBJ_TOKEN",
+        "obj_type": "docx",
+        "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN_OR_EMPTY",
+        "access": "read_write"
+      }
+    },
+    "base_tables": {
+      "topic_pool": {
+        "expected_title": "选题池",
+        "table_id": "REPLACE_WITH_TOPIC_POOL_TABLE_ID"
+      },
+      "moments_works": {
+        "expected_title": "朋友圈文案",
+        "table_id": "REPLACE_WITH_MOMENTS_TABLE_ID"
+      },
+      "video_works": {
+        "expected_title": "短视频口播",
+        "table_id": "REPLACE_WITH_VIDEO_TABLE_ID"
+      },
+      "article_works": {
+        "expected_title": "公众号长文",
+        "table_id": "REPLACE_WITH_ARTICLE_TABLE_ID"
+      }
+    },
+    "write_targets": {
+      "cocreation_parent_knowledge_id": "cocreation.index",
+      "archive_parent_knowledge_id": "content.archives",
+      "campaign_parent_knowledge_id": "content.campaigns",
+      "review_parent_knowledge_id": "content.reviews",
+      "content_base_knowledge_id": "operations.base",
+      "sync_candidate_knowledge_ids": [
+        "content.strategy",
+        "audience.needs",
+        "ip.profile",
+        "expression.baseline",
+        "content.assets",
+        "methodology.current"
+      ]
+    },
+    "private": true,
+    "include_in_public_release": false
+  },
+  "notes": [
+    "只建立兼容骨架，不推断用户事实。",
+    "已有表只核验，不覆盖字段、视图或自动化；字段缺口需另行确认。",
+    "Base反向关系由关联选题字段创建，不重复创建同义字段。",
+    "内容库文件夹和展示视图可按平台能力人工整理，不影响四表寻址。"
+  ]
+}

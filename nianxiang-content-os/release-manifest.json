@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.7",
+  "version": "0.1.0-beta.8",
   "entry": "SKILL.md",
   "knowledge_schema_version": 4,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "85049658d602fedd0115d99cd8566f91c5cd8182726b2d7cf40f9576ed07f1d4",
-      "size": 4185
+      "sha256": "78a53dc638b2314c16917bfc603d00866e0422695728f6634a1384194cd1f5f8",
+      "size": 4834
     },
     "README.md": {
-      "sha256": "ee95c94bc1ff4b4cd8e7bf78c405204cbf5a74ef914639c436ee628820156e4a",
+      "sha256": "c593527a4d897290854ab98ecb98d7f32c5d5214602a6badd2e6cd0da9937650",
       "size": 4472
     },
     ".gitignore": {
@@ -20,8 +20,8 @@
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "9bdb4e2b5ddf2ca9fe86f1a556f1da29c8db53e6c0841fac9bd5d83b61a04ce2",
-      "size": 14553
+      "sha256": "97af52da4453768a32827b25bf4f73f4d05f75f49e9175cadc5225ce305c2136",
+      "size": 14692
     },
     "references/system/data-ownership.md": {
       "sha256": "09547bcffbb1499eb4827be06719ea4c45e1abb859e0268b7b6f9cae440441e8",
@@ -60,12 +60,12 @@
       "size": 5571
     },
     "references/creation/topics.md": {
-      "sha256": "9bb210ac55da66877f0949fab81ef25841831bbab83c8c7a164bb4b807fc4489",
-      "size": 5442
+      "sha256": "9e4d4da5645556aa5efad0ff4c560a89c7879ad895f791f8a062a1fee42d77f2",
+      "size": 5947
     },
     "references/creation/workflow.md": {
-      "sha256": "59c59d8c19108905fbf06c0e0448a9aab7f9c4206d7a9e5009641788e060335f",
-      "size": 29106
+      "sha256": "6e0e543865ba5a4891f9f2afaba371ad2976bf4b39340cb1b10d671aae332994",
+      "size": 30091
     },
     "references/creation/topic-map.md": {
       "sha256": "a7bbaa8cf3880101c975894739d7bae92994ffb06156fcc8e1d1ed338a32c18a",
@@ -128,8 +128,8 @@
       "size": 7403
     },
     "references/maintenance/acceptance.md": {
-      "sha256": "c4c7966e2fcc673f15b72373363739239c216c1f6185785e92a4378d4d99c194",
-      "size": 26945
+      "sha256": "d37581ae5b037ef3ea508bc3402b373a68bdc5ab06de457854cdbd07f159e60d",
+      "size": 28208
     },
     "tests/test_core_journey.py": {
       "sha256": "ab94c5e83d279eecc4742c161c43deb8c793dfb0d341167ee543cedd49406267",
@@ -200,12 +200,12 @@
       "size": 2476
     },
     "agent/methodology.md": {
-      "sha256": "46ed9012bccaeb46fc0c6dcf25d266a1d881e6975a9c9d63432170b4b40f7c5c",
-      "size": 4037
+      "sha256": "ab43f2cb228d80c71bbcea62092838dfeab1411af6a0ea57c5ce0b679e2f420d",
+      "size": 4286
     },
     "agent/SOUL.md": {
-      "sha256": "0a12ae1fb66a00118642ecff1d7b984adb31254f4c4f349e4dfce0045fa97340",
-      "size": 11822
+      "sha256": "ba199f71354160793860c05a0ad4d3d7b41f1a5fc471567637da76b19d1ece9f",
+      "size": 12751
     },
     "agent/AGENTS.md": {
       "sha256": "889c2a150588d652c84a03fb757408362a52bdd0444c6e61031e0c33bdabb483",

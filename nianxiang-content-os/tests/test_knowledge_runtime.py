@@ -170,7 +170,7 @@ class KnowledgeRuntime(unittest.TestCase):
 
     def test_foreign_snapshot_is_never_returned(self):
         load_context(self.profile,['content.strategy'],self.adapter)
-        path=self.profile/'snapshots/content.strategy.json';snapshot=read_json(path);snapshot['account_id']='other';write_json(path,snapshot)
+        path=self.profile/'snapshots/context.json';bundle=read_json(path);bundle['knowledge']['content.strategy']['account_id']='other';write_json(path,bundle)
         self.adapter.offline=True
         with self.assertRaises(NianxiangError):load_context(self.profile,['content.strategy'],self.adapter)
 

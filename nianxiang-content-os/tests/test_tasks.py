@@ -28,7 +28,7 @@ class Tasks(Fixture,unittest.TestCase):
     def test_changed_source_and_account_are_distinct(self):
         t=self.create();self.adapter.docs['content.strategy']['revision']=2
         self.assertEqual(resume_task(self.profile,t['task_id'],self.adapter)['status'],'needs_revalidation')
-        self.adapter.account='other';self.assertEqual(resume_task(self.profile,t['task_id'],self.adapter)['status'],'blocked')
+        self.adapter.account='other';self.assertEqual(resume_task(self.profile,t['task_id'],self.adapter,require_latest=True)['status'],'blocked')
     def test_no_authorization_no_file_and_invalid_path(self):
         with self.assertRaisesRegex(NianxiangError,'authorization_required'):create_task(self.profile,self.request(),'')
         self.assertFalse((self.profile/'tasks').exists())

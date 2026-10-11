@@ -82,6 +82,18 @@ class FeishuAdapter:
                 return items
             if not fields or offset>10000:raise NianxiangError('incomplete_listing','field pagination did not finish')
             offset+=len(fields)
+    def get_revision(self,knowledge_id):
+        item=self.config['knowledge_map'][knowledge_id]
+        if item['obj_type']!='docx':raise NianxiangError('unsupported_action','metadata requires Docx')
+        data=self._run(['api','GET','/open-apis/docx/v1/documents/'+quote(item['obj_token'],safe='')])
+        # Raw OpenAPI responses retain their native data envelope.
+        if 'code' in data:
+            if data['code']!=0:raise NianxiangError('cli_rejected','metadata API rejected the read')
+            data=data.get('data',{})
+        document=data.get('document',{})
+        if document.get('document_id')!=item['obj_token'] or type(document.get('revision_id')) is not int:
+            raise NianxiangError('invalid_response','metadata identity and revision are required')
+        return {'document_id':document['document_id'],'revision':document['revision_id']}
     def read(self,knowledge_id):
         node=self.get_node({'knowledge_id':knowledge_id})
         if node.get('obj_type')=='bitable':

@@ -65,4 +65,14 @@ class CLIBoundaries(unittest.TestCase):
         with patch('runtime.feishu_cli.subprocess.run',return_value=proc):
             with self.assertRaisesRegex(NianxiangError,'invalid_response'):FeishuAdapter({}).get_account()
 
+    def test_revision_reads_metadata_without_fetching_body(self):
+        a=self.adapter([{'ok':True,'identity':'user','data':{'code':0,'data':{'document':{'document_id':'doc-test','revision_id':7}}}}])
+        a.config['knowledge_map']['content.strategy']={'obj_type':'docx','obj_token':'doc-test'}
+        self.assertEqual(a.get_revision('content.strategy'),{'document_id':'doc-test','revision':7})
+        self.assertEqual(self.commands[0][1:4],['api','GET','/open-apis/docx/v1/documents/doc-test'])
+    def test_metadata_with_another_document_is_rejected(self):
+        a=self.adapter([{'ok':True,'identity':'user','data':{'document':{'document_id':'foreign','revision_id':7}}}])
+        a.config['knowledge_map']['content.strategy']={'obj_type':'docx','obj_token':'doc-test'}
+        with self.assertRaises(NianxiangError):a.get_revision('content.strategy')
+
 if __name__=='__main__':unittest.main()

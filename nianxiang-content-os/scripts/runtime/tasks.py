@@ -79,15 +79,19 @@ def update_task(profile_dir,task_id,patch,expected_version,consent_id):
         return {'status':'updated','task_id':task_id,'version':data['version']}
     except (NianxiangError,ValueError,TypeError,KeyError) as exc:return {'status':'blocked','code':getattr(exc,'code','invalid_task')}
 
-def resume_task(profile_dir,task_id,adapter):
+def resume_task(profile_dir,task_id,adapter,require_latest=False):
     profile=Path(profile_dir)
     try:
-        data=_load(profile,task_id);state=profile_state(profile);config=configuration(profile);verify_account(state,adapter);missing=[];changed=[];operations={}
+        data=_load(profile,task_id);state=profile_state(profile);config=configuration(profile);missing=[];changed=[];operations={}
+        live_artifacts=any(r['type']=='remote' for r in data['artifact_refs'])
+        if live_artifacts:verify_account(state,adapter)
+        loaded={}
         if data['context_refs']:
-            loaded=load_context(profile,[r['knowledge_id'] for r in data['context_refs']],adapter,True)
+            from .sync import read_context
+            loaded=read_context(profile,[r['knowledge_id'] for r in data['context_refs']],adapter,require_latest=require_latest)
             for ref in data['context_refs']:
                 item=loaded['knowledge'][ref['knowledge_id']]
-                if item['stale']:raise NianxiangError('offline','task recovery requires current source verification')
+                if require_latest and item['stale']:raise NianxiangError('offline','latest source verification is required')
                 if item['revision']!=ref['revision']:changed.append(ref['knowledge_id'])
         for ref in data['artifact_refs']:
             if ref['type']=='missing':missing.append(ref['label'])
@@ -108,7 +112,8 @@ def resume_task(profile_dir,task_id,adapter):
             if any(entry.get(k)!=state[k] for k in ('profile_id','account_id','space_id')):raise NianxiangError('pending_identity_mismatch','operation belongs elsewhere')
             operations[op]=entry.get('status','unknown')
             if operations[op]!='saved':changed.append(op)
-        verify_account(state,adapter)
+        live_artifacts=any(r['type']=='remote' for r in data['artifact_refs'])
+        if live_artifacts:verify_account(state,adapter)
         status='needs_input' if missing else ('needs_revalidation' if changed else 'ready')
-        return {'status':status,'task':data,'missing':missing,'changed':changed,'operations':operations,'remote_writes':0,'next_step':data['next_step'],'terminal':data['status'] in ('completed','abandoned')}
+        return {'status':status,'task':data,'missing':missing,'changed':changed,'operations':operations,'remote_writes':0,'next_step':data['next_step'],'terminal':data['status'] in ('completed','abandoned'),'context_generation':loaded.get('generation'),'sync':loaded.get('sync'),'account_verified_live':live_artifacts or require_latest}
     except (NianxiangError,ValueError,TypeError,KeyError,OSError) as exc:return {'status':'blocked','code':getattr(exc,'code','invalid_task')}

@@ -15,6 +15,7 @@ from runtime.bootstrap import plan_bootstrap,resume_bootstrap,authorize_bootstra
 from runtime.releases import build_manifest,verify_release,apply_release,rollback_release,recover_release,check_update,installation_state_path,installation_status,plan_name_migration,apply_name_migration
 from runtime.personal import read_personal_context,plan_personal_migration,apply_personal_migration,export_personal_context,save_preferred_name
 from runtime.tasks import create_task,update_task,resume_task
+from runtime.sync import read_context,sync_context,sync_status,CONTEXT_KEYS
 from validate_local_config import validate
 
 SKILL_ROOT=Path(__file__).resolve().parents[1]
@@ -68,12 +69,14 @@ def main():
     p=bs.add_parser('plan');p.add_argument('--output',type=Path)
     p=bs.add_parser('apply');p.add_argument('--plan',type=Path,required=True);p.add_argument('--consent',required=True)
     knowledge=groups.add_parser('knowledge');ks=knowledge.add_subparsers(dest='action',required=True)
-    p=ks.add_parser('read');p.add_argument('knowledge_ids',nargs='+');p.add_argument('--refresh',action='store_true');p.add_argument('--show-private-content',action='store_true')
+    p=ks.add_parser('read');p.add_argument('knowledge_ids',nargs='+');m=p.add_mutually_exclusive_group();m.add_argument('--refresh',action='store_true');m.add_argument('--cache-only',action='store_true');p.add_argument('--show-private-content',action='store_true')
     p=ks.add_parser('save');p.add_argument('--request',type=Path,required=True);p.add_argument('--consent',required=True)
     p=ks.add_parser('reconcile');p.add_argument('--operation-id',required=True)
     ks.add_parser('pending')
+    p=ks.add_parser('sync');p.add_argument('knowledge_ids',nargs='*',default=list(CONTEXT_KEYS))
+    ks.add_parser('sync-status')
     personal=groups.add_parser('personal');xs=personal.add_subparsers(dest='action',required=True)
-    p=xs.add_parser('read');p.add_argument('--refresh',action='store_true');p.add_argument('--allow-stale',action='store_true');p.add_argument('--show-private-content',action='store_true')
+    p=xs.add_parser('read');m=p.add_mutually_exclusive_group();m.add_argument('--refresh',action='store_true');m.add_argument('--cache-only',action='store_true');p.add_argument('--allow-stale',action='store_true');p.add_argument('--show-private-content',action='store_true')
     p=xs.add_parser('migration-plan');p.add_argument('--output',type=Path)
     p=xs.add_parser('migration-apply');p.add_argument('--plan',type=Path,required=True);p.add_argument('--consent',required=True)
     p=xs.add_parser('export');p.add_argument('--kinds',nargs='+',choices=['user','memory'],required=True)
@@ -81,7 +84,7 @@ def main():
     task=groups.add_parser('task');ts=task.add_subparsers(dest='action',required=True)
     p=ts.add_parser('create');p.add_argument('--request',type=Path,required=True);p.add_argument('--consent',required=True)
     p=ts.add_parser('update');p.add_argument('--task-id',required=True);p.add_argument('--patch',type=Path,required=True);p.add_argument('--expected-version',type=int,required=True);p.add_argument('--consent',required=True)
-    p=ts.add_parser('resume');p.add_argument('--task-id',required=True);p.add_argument('--show-private-content',action='store_true')
+    p=ts.add_parser('resume');p.add_argument('--refresh',action='store_true');p.add_argument('--task-id',required=True);p.add_argument('--show-private-content',action='store_true')
     release=groups.add_parser('release');rs=release.add_subparsers(dest='action',required=True)
     p=rs.add_parser('manifest');p.add_argument('--source-dir',type=Path,default=SKILL_ROOT);p.add_argument('--version',required=True)
     p=rs.add_parser('verify');p.add_argument('--archive',type=Path,required=True);p.add_argument('--manifest',type=Path)
@@ -163,14 +166,14 @@ def main():
             if args.action=='create':outcome=create_task(profile,read_json(args.request),consent(args))
             elif args.action=='update':outcome=update_task(profile,args.task_id,read_json(args.patch),args.expected_version,consent(args))
             else:
-                outcome=resume_task(profile,args.task_id,FeishuAdapter(read_json(profile/'local-config.json')))
-                if not args.show_private_content:outcome={k:v for k,v in outcome.items() if k in ('status','code','remote_writes','terminal')}
+                outcome=resume_task(profile,args.task_id,FeishuAdapter(read_json(profile/'local-config.json')),require_latest=args.refresh)
+                if not args.show_private_content:outcome={k:v for k,v in outcome.items() if k in ('status','code','remote_writes','terminal','context_generation','sync','account_verified_live')}
             emit(outcome);return 0 if outcome['status'] in ('created','updated','ready') else 1
         if args.group=='personal':
             adapter=FeishuAdapter(read_json(profile/'local-config.json'))
             if args.action=='read':
-                outcome=read_personal_context(profile,adapter,args.refresh,args.allow_stale)
-                if not args.show_private_content:outcome={k:v for k,v in outcome.items() if k in ('status','code','migration_groups')}
+                outcome=read_personal_context(profile,adapter,args.refresh,args.allow_stale,args.cache_only)
+                if not args.show_private_content:outcome={k:v for k,v in outcome.items() if k in ('status','code','migration_groups','context_generation','sync','account_verified_live')}
             elif args.action=='migration-plan':
                 plan=plan_personal_migration(profile,adapter)
                 if args.output and plan['status']=='preview':private_output(args.output,plan)
@@ -208,18 +211,21 @@ def main():
             return 0
         adapter=FeishuAdapter(read_json(profile/'local-config.json'))
         if args.action=='read':
-            outcome=load_context(profile,args.knowledge_ids,adapter,args.refresh)
+            outcome=read_context(profile,args.knowledge_ids,adapter,require_latest=args.refresh,cache_only=args.cache_only)
             if not args.show_private_content:
-                outcome={'knowledge':{k:{f:v for f,v in item.items() if f in ('status','cached','current','stale','read_at','fact_status')} for k,item in outcome['knowledge'].items()}}
+                outcome={'knowledge':{k:{f:v for f,v in item.items() if f in ('status','cached','current','stale','read_at','checked_at','body_synced_at','fact_status','revision','generation','account_verified_live')} for k,item in outcome['knowledge'].items()},'generation':outcome.get('generation'),'sync':outcome.get('sync')}
+        elif args.action=='sync':outcome=sync_context(profile,args.knowledge_ids or list(CONTEXT_KEYS),adapter)
+        elif args.action=='sync-status':
+            status=sync_status(profile);outcome={k:v for k,v in status.items() if k in ('status','finished_at','code','knowledge_ids','retry_at','invalidations')}
         elif args.action=='save':
             request=read_json(args.request);request['authorization']=authorize_request(profile,request,consent(args));outcome=save_change(profile,request,adapter)
         elif args.action=='reconcile':outcome=reconcile_pending(profile,args.operation_id,adapter)
         else:
             outcome={'operations':[{'operation_id':p.stem,'status':read_json(p).get('status')} for p in (profile/'pending').glob('*.json') if read_json(p).get('status')!='saved']}
         # CLI status logs never contain remote IDs, source tokens or private body.
-        if 'status' in outcome:outcome={k:v for k,v in outcome.items() if k in ('status','message','readback_revision','snapshot_refresh')}
+        if 'status' in outcome:outcome={k:v for k,v in outcome.items() if k in ('status','message','readback_revision','snapshot_refresh','code','changed','full_reads','generation','finished_at','knowledge_ids','retry_at','invalidations')}
         emit(outcome)
-        return 0 if outcome.get('status','saved')=='saved' else 1
+        return 0 if outcome.get('status','saved') in ('saved','synced','never_synced','starting','running') else 1
     except (NianxiangError,ValueError,KeyError,OSError) as exc:
         emit({'status':'blocked','message':getattr(exc,'code','invalid_input')});return 2
 

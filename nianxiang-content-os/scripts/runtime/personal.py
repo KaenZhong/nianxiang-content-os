@@ -79,16 +79,17 @@ def _legacy_pending(profile,state,kind):
 def _binding(item):
     return {k:item[k] for k in ('profile_id','account_id','space_id','knowledge_id','obj_token','revision','read_at')} | {'body_digest':digest(item['content']),'parser_version':1,'mapping_digest':item['mapping_digest']}
 
-def read_personal_context(profile_dir,adapter,refresh=False,allow_stale=False):
+def read_personal_context(profile_dir,adapter,refresh=False,allow_stale=False,cache_only=False):
     profile=Path(profile_dir)
     try:
-        state=profile_state(profile);loaded=load_context(profile,[x[0] for x in SOURCES.values()],adapter,refresh)
+        from .sync import read_context
+        state=profile_state(profile);loaded=read_context(profile,[x[0] for x in SOURCES.values()],adapter,require_latest=refresh,cache_only=cache_only)
         coll={};rules={'schema_version':1,'rules':[]};bindings={};pending=[];stale=False;established=False
         for kind,(key,prefix) in SOURCES.items():
             item=loaded['knowledge'][key]
             if digest(item['content'])!=item.get('content_digest'):raise NianxiangError('invalid_cache','snapshot integrity failed')
             stale=stale or item['stale']
-            if item['stale'] and not allow_stale:raise NianxiangError('stale_not_allowed','explicit offline cache opt-in required')
+            if refresh and item['stale'] and not allow_stale:raise NianxiangError('stale_not_allowed','explicit offline cache opt-in required')
             data=parse_personal_source(item['content'],kind);bindings[kind]=_binding(item)
             if data.get('status')=='empty':
                 if _legacy_pending(profile,state,kind):pending.append(kind)
@@ -96,7 +97,7 @@ def read_personal_context(profile_dir,adapter,refresh=False,allow_stale=False):
                 established=True
                 if kind=='collaboration':coll=data
                 else:rules=data
-        ctx={'status':'migration_required' if pending else ('stale' if stale else ('ready' if established else 'empty')),'collaboration':coll,'rules':rules,'source_bindings':bindings,'migration_groups':pending,'profile_id':state['profile_id'],'generated_at':now()}
+        ctx={'status':'migration_required' if pending else ('stale' if stale else ('ready' if established else 'empty')),'collaboration':coll,'rules':rules,'source_bindings':bindings,'migration_groups':pending,'profile_id':state['profile_id'],'generated_at':now(),'context_generation':loaded.get('generation'),'sync':loaded.get('sync'), 'account_verified_live':all(x.get('current',False) for x in loaded['knowledge'].values())}
         # A projection is never accepted as an input to reading authority.
         write_json(profile/'derived/personal-context.json',ctx)
         return ctx
@@ -168,6 +169,11 @@ def apply_personal_migration(profile_dir,plan,adapter,consent_id):
         expected=digest({k:v for k,v in plan.items() if k not in ('plan_id','status')})
         if expected!=plan.get('plan_id') or any(plan.get(k)!=state[k] for k in ('profile_id','account_id','space_id')):raise NianxiangError('invalid_plan','preview changed or belongs elsewhere')
         if _legacy_files(profile)!=plan['legacy_hashes']:return {'status':'conflict','code':'legacy_changed'}
+        config=configuration(profile)
+        for kind,group in plan['groups'].items():
+            key=SOURCES[kind][0];mapping=config['knowledge_map'][key]
+            if mapping['obj_token']!=group['binding']['obj_token'] or digest(mapping)!=group['binding']['mapping_digest']:
+                return {'status':'conflict','code':'source_binding_changed'}
         loaded=load_context(profile,[SOURCES[k][0] for k in plan['groups']],adapter,True)
         # Preflight all not-attempted groups before any writes; attempted groups are reconciled by their same operation.
         for kind,group in plan['groups'].items():

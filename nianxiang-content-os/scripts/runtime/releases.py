@@ -21,7 +21,7 @@ LEGACY_PACKAGE='nianxiang-content-studio'
 MANIFEST='release-manifest.json'
 MAX_FILE=16*1024*1024
 MAX_TOTAL=64*1024*1024
-FORBIDDEN={'data-root.json','personal-context.json','state.json','bootstrap-plan.json','tasks','derived','USER.md','MEMORY.md','rules.local.json','business-conventions.md','private','profiles','snapshots','pending','__pycache__','.git','.venv','node_modules','.nianxiang','.DS_Store','local-config.json','user-profile.json','local-rules.json','business-guidelines.md','strategy-snapshot.md','expression-baseline-snapshot.md','active-release.json'}
+FORBIDDEN={'data-root.json','personal-context.json','context-sync.json','state.json','bootstrap-plan.json','tasks','derived','USER.md','MEMORY.md','rules.local.json','business-conventions.md','private','profiles','snapshots','pending','__pycache__','.git','.venv','node_modules','.nianxiang','.DS_Store','local-config.json','user-profile.json','local-rules.json','business-guidelines.md','strategy-snapshot.md','expression-baseline-snapshot.md','active-release.json'}
 LOCAL_EXAMPLES={'local/local-config.example.json','local/user-profile.example.json'}
 
 def _error(code,message):raise NianxiangError(code,message)

@@ -42,13 +42,16 @@ def verify_node(state,config,target,adapter):
 def load_context(profile_dir,knowledge_ids,adapter,refresh=False):
     profile=Path(profile_dir);state=profile_state(profile);config=configuration(profile);items={}
     if not knowledge_ids or not all(k in config['knowledge_map'] for k in knowledge_ids):raise NianxiangError('invalid_knowledge','choose configured knowledge IDs')
+    from .sync import local_items, make_snapshot, publish_snapshots, error_versions, invalidate_sources, _assert_readable
+    cached_items,_=local_items(profile,state,config,knowledge_ids);updates={};errors=error_versions(profile,state,config,knowledge_ids)
     offline=False
     try: verify_account(state,adapter)
     except NianxiangError as exc:
-        if exc.code not in OFFLINE: raise
+        if exc.code not in OFFLINE:
+            invalidate_sources(profile,knowledge_ids,exc.code);raise
         offline=True
     for key in knowledge_ids:
-        cachefile=profile/'snapshots'/f'{key}.json';cached=read_json(cachefile) if cachefile.exists() else None
+        cached=cached_items.get(key)
         valid=bool(cached and cached.get('profile_id')==state['profile_id'] and cached.get('account_id')==state['account_id'] and cached.get('space_id')==state['space_id'] and cached.get('mapping_digest')==digest(config['knowledge_map'][key]) and cached.get('content_digest')==digest(cached.get('content')))
         try:
             if offline:raise NianxiangError('offline','identity not verifiable')
@@ -60,12 +63,15 @@ def load_context(profile_dir,knowledge_ids,adapter,refresh=False):
                 raise NianxiangError('target_mismatch','source body belongs to another object')
             if current.get('revision') is None or 'content' not in current: raise NianxiangError('invalid_response','source version and body are required')
             use_cache=valid and not refresh and cached.get('revision')==current['revision'] and digest(cached['content'])==digest(current['content'])
-            snap={**copy.deepcopy(current),'profile_id':state['profile_id'],'account_id':state['account_id'],'space_id':state['space_id'],'knowledge_id':key,'mapping_digest':digest(expected),'source':'feishu','content_digest':digest(current['content']),'read_at':now(),'fact_status':'source_material_not_automatically_confirmed'}
-            write_json(cachefile,snap)
+            snap=make_snapshot(current,state,config,key,cached)
+            updates[key]=snap
             items[key]={**snap,'status':'current','cached':use_cache,'current':True,'stale':False}
         except NianxiangError as exc:
-            if exc.code not in OFFLINE or not valid: raise
+            if exc.code not in OFFLINE or not valid:
+                invalidate_sources(profile,[key],exc.code);raise
+            _assert_readable(profile,state,config,[key])
             items[key]={**cached,'status':'stale','cached':True,'current':False,'stale':True,'message':'offline; source and account cannot currently be verified'}
+    if updates:publish_snapshots(profile,updates,state,config,expected={k:digest(cached_items.get(k)) for k in updates},expected_errors={k:errors[k] for k in updates})
     return {'profile_id':state['profile_id'],'knowledge':items}
 
 def request_signature(request):
@@ -122,6 +128,8 @@ def _save(profile,request,adapter):
     try:
         state=validate_request(profile,request);config=configuration(profile)
     except NianxiangError as exc:return result('blocked',exc.code)
+    from .sync import error_versions,invalidate_sources
+    source_errors=error_versions(profile,state,config,[request['target']['knowledge_id']])
     op=request['operation_id'];journal=profile/'pending'/f'{op}.json';signature=digest({'request':request_signature(request),'binding':request['authorization']['binding_digest']})
     prior=read_json(journal) if journal.exists() else None
     if prior and prior.get('signature')!=signature:return result('conflict','operation_id was already bound to another request')
@@ -139,8 +147,15 @@ def _save(profile,request,adapter):
         if is_record and matches_record(actual,content):return finish('saved','matched and read back by stable object key',actual)
         if not is_record and matches_document(actual,request,entry.get('expected_document_digest')):
             outcome=finish('saved','content read back in source',actual)
-            try:load_context(profile,[target['knowledge_id']],adapter,refresh=True)
-            except NianxiangError:outcome['snapshot_refresh']='deferred'
+            try:
+                from .sync import make_snapshot,publish_snapshots
+                snap=make_snapshot(actual,state,config,target['knowledge_id'])
+                publish_snapshots(profile,{target['knowledge_id']:snap},state,config,locked=True,expected_errors=source_errors)
+            except NianxiangError as exc:
+                outcome['snapshot_refresh']='deferred'
+                if exc.code=='invalid_personal_source':
+                    from .sync import _record
+                    _record(profile,state,config,'blocked',[target['knowledge_id']],exc.code)
             return outcome
         if is_record and actual and request['action']=='update':
             original=actual.get('content',{}).get('第一版')
@@ -162,10 +177,18 @@ def _save(profile,request,adapter):
         if not verified:return finish('uncertain','write response did not produce a matching readback',remote)
         outcome=finish('saved','write and source readback verified',actual)
         if not is_record:
-            try:load_context(profile,[target['knowledge_id']],adapter,refresh=True)
-            except NianxiangError:outcome['snapshot_refresh']='deferred'
+            try:
+                from .sync import make_snapshot,publish_snapshots
+                snap=make_snapshot(actual,state,config,target['knowledge_id'])
+                publish_snapshots(profile,{target['knowledge_id']:snap},state,config,locked=True,expected_errors=source_errors)
+            except NianxiangError as exc:
+                outcome['snapshot_refresh']='deferred'
+                if exc.code=='invalid_personal_source':
+                    from .sync import _record
+                    _record(profile,state,config,'blocked',[target['knowledge_id']],exc.code)
         return outcome
     except NianxiangError as exc:
+        invalidate_sources(profile,[request['target']['knowledge_id']],exc.code)
         status=('uncertain' if entry['attempted'] else 'pending') if exc.code in OFFLINE else ('uncertain' if entry['attempted'] and exc.code in ('invalid_response','uncertain_response') else 'blocked')
         return finish(status,exc.code)
 

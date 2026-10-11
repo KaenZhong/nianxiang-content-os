@@ -38,9 +38,10 @@ def write_json(path, value):
         if temporary and temporary.exists(): temporary.unlink()
 
 @contextmanager
-def profile_lock(profile):
+def profile_lock(profile,name=".runtime.lock",blocking=False):
     """Advisory single-machine lock, released by OS on crash; no distributed guarantee."""
-    path=Path(profile)/'.runtime.lock'
+    if name not in ('.runtime.lock','.context-cache.lock'):raise NianxiangError('invalid_path','unknown runtime lock')
+    path=Path(profile)/name
     if path.is_symlink(): raise NianxiangError('invalid_path','lock must not be a symlink')
     with path.open('a+b') as handle:
         os.chmod(path,0o600)
@@ -48,10 +49,10 @@ def profile_lock(profile):
             if os.name=='nt':
                 import msvcrt
                 if path.stat().st_size==0: handle.write(b'0');handle.flush()
-                handle.seek(0);msvcrt.locking(handle.fileno(),msvcrt.LK_NBLCK,1)
+                handle.seek(0);msvcrt.locking(handle.fileno(),msvcrt.LK_LOCK if blocking else msvcrt.LK_NBLCK,1)
             else:
                 import fcntl
-                fcntl.flock(handle.fileno(),fcntl.LOCK_EX|fcntl.LOCK_NB)
+                fcntl.flock(handle.fileno(),fcntl.LOCK_EX if blocking else fcntl.LOCK_EX|fcntl.LOCK_NB)
         except OSError as exc: raise NianxiangError('busy','another process is managing this profile') from exc
         try: yield
         finally:

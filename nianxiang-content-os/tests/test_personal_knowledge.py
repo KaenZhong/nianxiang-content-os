@@ -22,7 +22,7 @@ class PersonalKnowledge(Fixture,unittest.TestCase):
     def test_duplicate_source_blocks_without_cache_fallback(self):
         self.seed();self.assertEqual(read_personal_context(self.profile,self.adapter)['status'],'ready')
         self.adapter.docs['methodology.current']['content']+='\n'+self.adapter.docs['methodology.current']['content']
-        outcome=read_personal_context(self.profile,self.adapter)
+        outcome=read_personal_context(self.profile,self.adapter,refresh=True)
         self.assertEqual(outcome['status'],'blocked');self.assertEqual(outcome['code'],'invalid_personal_source');self.assertNotIn('rules',outcome)
     def test_missing_sources_with_legacy_requires_migration(self):
         self.legacy();self.assertEqual(read_personal_context(self.profile,self.adapter)['status'],'migration_required')
@@ -32,16 +32,17 @@ class PersonalKnowledge(Fixture,unittest.TestCase):
         from runtime.rules import select_confirmed_rules
         self.assertEqual(select_confirmed_rules(ctx['rules'],{'channel':'moments','surface':'body'}),[])
         self.source('rules',{'schema_version':1,'rules':[rule(status='paused')]});self.adapter.docs['methodology.current']['revision']=2
-        self.assertEqual(read_personal_context(self.profile,self.adapter)['rules']['rules'][0]['status'],'paused')
-    def test_offline_cache_requires_explicit_opt_in(self):
+        self.assertEqual(read_personal_context(self.profile,self.adapter,refresh=True)['rules']['rules'][0]['status'],'paused')
+    def test_local_cache_supports_offline_work_but_latest_still_requires_network(self):
         self.seed();read_personal_context(self.profile,self.adapter);self.adapter.offline=True
+        self.assertEqual(read_personal_context(self.profile,self.adapter)['status'],'ready')
+        self.assertEqual(read_personal_context(self.profile,self.adapter,refresh=True)['status'],'blocked')
+        cache=self.profile/'snapshots/context.json';data=read_json(cache);data['knowledge']['ip.profile']['content']='tampered';write_json(cache,data)
         self.assertEqual(read_personal_context(self.profile,self.adapter)['status'],'blocked')
-        self.assertEqual(read_personal_context(self.profile,self.adapter,allow_stale=True)['status'],'stale')
-        cache=self.profile/'snapshots/ip.profile.json';data=read_json(cache);data['content']='tampered';write_json(cache,data)
-        self.assertEqual(read_personal_context(self.profile,self.adapter,allow_stale=True)['status'],'blocked')
-    def test_account_change_never_uses_cache(self):
+    def test_known_account_change_never_uses_cache(self):
         self.seed();read_personal_context(self.profile,self.adapter);self.adapter.account='other'
-        self.assertEqual(read_personal_context(self.profile,self.adapter,allow_stale=True)['code'],'account_mismatch')
+        self.assertEqual(read_personal_context(self.profile,self.adapter,refresh=True)['code'],'account_mismatch')
+        self.assertEqual(read_personal_context(self.profile,self.adapter)['code'],'account_mismatch')
     def test_partial_migration_only_activates_saved_group(self):
         self.legacy();plan=plan_personal_migration(self.profile,self.adapter);self.adapter.fail_key='methodology.current'
         first=apply_personal_migration(self.profile,plan,self.adapter,'合成测试：保存预览的两类资料')

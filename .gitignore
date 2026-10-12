@@ -4,6 +4,8 @@
 !/AGENTS.md
 !/nianxiang-content-os/
 !/nianxiang-content-os/**
+!/tools/
+!/tools/**
 **/.DS_Store
 **/__pycache__/
 **/*.pyc

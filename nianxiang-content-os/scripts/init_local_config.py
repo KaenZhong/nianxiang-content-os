@@ -58,15 +58,9 @@ class InitError(RuntimeError):
     pass
 
 
-class UnsupportedAuthCommand(InitError):
-    pass
-
-
 def run_json(command: list[str], *, require_ok: bool = True) -> dict[str, Any]:
     result = subprocess.run(command, capture_output=True, text=True, check=False)
     if result.returncode != 0:
-        if command[1:3] == ["auth", "status"] and 'unknown command "auth" for "lark-cli"' in result.stderr:
-            raise UnsupportedAuthCommand("this CLI has no auth status command")
         action = " ".join(command[1:3])
         raise InitError(f"Feishu {action} read failed (exit {result.returncode}); check login, permission, entry URL, and network")
     try:
@@ -79,23 +73,13 @@ def run_json(command: list[str], *, require_ok: bool = True) -> dict[str, Any]:
 
 
 def verify_user_identity() -> None:
-    try:
-        payload = run_json(
-            ["lark-cli", "auth", "status", "--json", "--verify"],
-            require_ok=False,
-        )
-    except UnsupportedAuthCommand:
-        payload = run_json(["lark-cli", "contact", "+get-user", "--as", "user", "--format", "json"])
-        data = payload.get("data")
-        user = data.get("user") if isinstance(data, dict) else None
-        account_id = (user.get("open_id") or user.get("openId")) if isinstance(user, dict) else None
-        if payload.get("identity") != "user" or not isinstance(account_id, str) or not account_id.strip():
-            raise InitError("verified Feishu user identity is required")
-    else:
-        identities = payload.get("identities")
-        user = identities.get("user") if isinstance(identities, dict) else None
-        if payload.get("verified") is not True or not isinstance(user, dict) or user.get("verified") is not True or not user.get("openId"):
-            raise InitError("verified Feishu user identity is required")
+    payload = run_json(
+        ["lark-cli", "auth", "status", "--json", "--verify"],
+        require_ok=False,
+    )
+    user = payload.get("identities", {}).get("user", {})
+    if payload.get("verified") is not True or user.get("verified") is not True:
+        raise InitError("verified Feishu user identity is required")
 
 
 def normalize_entry(entry: str) -> str:

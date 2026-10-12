@@ -9,7 +9,7 @@ description: 念响内容OS，统一处理素材讨论、选题、个人IP朋友
 
 ## 维护信息
 
-当前版本：v0.1.0-beta.8 · 内测版
+当前版本：v0.1.0-beta.9 · 内测版
 开发者：卡昂  
 公众号：卡昂AI超能玩  
 使用反馈：kaenzhong@foxmail.com
@@ -36,7 +36,7 @@ description: 念响内容OS，统一处理素材讨论、选题、个人IP朋友
 | 用户任务 | 按需读取 | 何时补充 |
 |---|---|---|
 | 安装念响、初始化私人目录或更换运行环境 | [安装与私人目录初始化](references/system/installation.md) | 扫描在先，首次路径确认后才创建；多个已有根先选择，云端须说明持久性依据 |
-| 轻聊素材、单篇共创、改稿、交付与沉淀 | [共创工作流](references/creation/workflow.md) | 发生渠道转换、历史恢复或验收问题时读 [上下文与验收](references/creation/context-and-review.md)；自然收口已在工作流末章 |
+| 轻聊素材、单篇共创、改稿、交付与沉淀 | [共创工作流](references/creation/workflow.md) | 发生渠道转换、历史恢复或验收问题时读 [上下文与验收](references/creation/context-and-review.md)；自然收口与 📥 沉淀入口、👉 下一步入口已在工作流末章 |
 | 长素材挖题、批量挑题、下周讲什么 | [选题方法](references/creation/topics.md) | 批量或长素材任务再读 [选题地图](references/creation/topic-map.md)；少量临时想法不强制地图 |
 | 朋友圈写稿、图文共创与配图、批量初稿、改稿、审稿与案例拆解 | [朋友圈方法](references/creation/moments.md) | 有现存私人规则时按 [规则维护](references/maintenance/rules.md) 筛选 |
 | 个人IP口播、图文转口播、改稿、审稿与案例拆解 | [口播方法](references/creation/spoken-video.md) | 使用指定母稿与真实发布状态，不要求先发表朋友圈 |

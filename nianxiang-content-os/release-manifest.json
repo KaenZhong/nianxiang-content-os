@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.8",
+  "version": "0.1.0-beta.9",
   "entry": "SKILL.md",
   "knowledge_schema_version": 4,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "78a53dc638b2314c16917bfc603d00866e0422695728f6634a1384194cd1f5f8",
-      "size": 4834
+      "sha256": "d03fd6b5b4161164da1e7847ae4ca8271fca0c73ca864f6cc364d3229d3629b6",
+      "size": 5241
     },
     "README.md": {
-      "sha256": "c593527a4d897290854ab98ecb98d7f32c5d5214602a6badd2e6cd0da9937650",
+      "sha256": "eae3641e280209a6632e4d3c90aa6fea3ca62f5ba6640223d098d33da510d48a",
       "size": 4472
     },
     ".gitignore": {
@@ -20,8 +20,8 @@
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "97af52da4453768a32827b25bf4f73f4d05f75f49e9175cadc5225ce305c2136",
-      "size": 14692
+      "sha256": "2cd4484f540b5e1dad9aeef18358871eefffad5d98203d6b86ba758fac9a7d6b",
+      "size": 14736
     },
     "references/system/data-ownership.md": {
       "sha256": "09547bcffbb1499eb4827be06719ea4c45e1abb859e0268b7b6f9cae440441e8",
@@ -64,8 +64,8 @@
       "size": 5947
     },
     "references/creation/workflow.md": {
-      "sha256": "6e0e543865ba5a4891f9f2afaba371ad2976bf4b39340cb1b10d671aae332994",
-      "size": 30091
+      "sha256": "583e1063e8def158ed251c59bf4e607a87b056395b66d865a6e8570c121869bb",
+      "size": 30835
     },
     "references/creation/topic-map.md": {
       "sha256": "a7bbaa8cf3880101c975894739d7bae92994ffb06156fcc8e1d1ed338a32c18a",
@@ -128,8 +128,8 @@
       "size": 7403
     },
     "references/maintenance/acceptance.md": {
-      "sha256": "d37581ae5b037ef3ea508bc3402b373a68bdc5ab06de457854cdbd07f159e60d",
-      "size": 28208
+      "sha256": "b941aa1790685d3f792e0735b67b60bbd76afd9c0dbcdbe6b89aa3abc1f98755",
+      "size": 28606
     },
     "tests/test_core_journey.py": {
       "sha256": "ab94c5e83d279eecc4742c161c43deb8c793dfb0d341167ee543cedd49406267",
@@ -204,8 +204,8 @@
       "size": 4286
     },
     "agent/SOUL.md": {
-      "sha256": "ba199f71354160793860c05a0ad4d3d7b41f1a5fc471567637da76b19d1ece9f",
-      "size": 12751
+      "sha256": "83be74c28536a8a6b38ac50e04a69adf8029c1e4d83755124078aeee9733b1be",
+      "size": 12878
     },
     "agent/AGENTS.md": {
       "sha256": "889c2a150588d652c84a03fb757408362a52bdd0444c6e61031e0c33bdabb483",

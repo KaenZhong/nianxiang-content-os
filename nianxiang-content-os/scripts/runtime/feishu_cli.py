@@ -21,6 +21,8 @@ class FeishuAdapter:
             try:payload=json.loads(proc.stderr) if proc.returncode else None
             except ValueError:payload=None
             if not isinstance(payload,dict) or payload.get('ok') is not False:
+                if command[1:3]==['auth','status'] and 'unknown command "auth" for "lark-cli"' in proc.stderr:
+                    raise NianxiangError('unsupported_command','this CLI has no auth status command') from exc
                 raise NianxiangError('invalid_response','CLI response was not JSON; write outcome needs inspection') from exc
         if not isinstance(payload,dict):raise NianxiangError('invalid_response','CLI returned non-object')
         if proc.returncode and payload.get('ok') is not False:raise NianxiangError('network_error','CLI returned an unknown failure')
@@ -42,10 +44,19 @@ class FeishuAdapter:
         if not isinstance(data,dict):raise NianxiangError('invalid_response','CLI data must be an object')
         return data
     def get_account(self):
-        payload=self._run(['auth','status','--json','--verify'],auth=True);user=payload.get('identities',{}).get('user',{})
-        if payload.get('verified') is not True or user.get('verified') is not True or not user.get('openId'):
+        try:payload=self._run(['auth','status','--json','--verify'],auth=True)
+        except NianxiangError as exc:
+            if exc.code!='unsupported_command':raise
+            data=self._run(['contact','+get-user'])
+            user=data.get('user')
+            account_id=(user.get('open_id') or user.get('openId')) if isinstance(user,dict) else None
+        else:
+            identities=payload.get('identities')
+            user=identities.get('user') if isinstance(identities,dict) else None
+            account_id=user.get('openId') if isinstance(user,dict) and payload.get('verified') is True and user.get('verified') is True else None
+        if not isinstance(account_id,str) or not account_id.strip():
             raise NianxiangError('identity_unverified','verified user account ID is required')
-        self.account_id=user['openId'];return {'identity':'user','account_id':self.account_id}
+        self.account_id=account_id;return {'identity':'user','account_id':self.account_id}
     def get_node(self,target):
         item=self.config.get('knowledge_map',{}).get(target.get('knowledge_id'))
         node_token=target.get('node_token') or (item or {}).get('node_token')

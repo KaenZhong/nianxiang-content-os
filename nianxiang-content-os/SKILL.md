@@ -9,10 +9,10 @@ description: 念响内容OS，统一处理素材讨论、选题、个人IP朋友
 
 ## 维护信息
 
-当前版本：v0.1.0-beta.11 · 内测版<br>
-开发者：卡昂<br>
-公众号：卡昂AI超能玩<br>
-使用反馈：[kaenzhong@foxmail.com](mailto:kaenzhong@foxmail.com)
+当前版本：v0.1.0-beta.9 · 内测版
+开发者：卡昂  
+公众号：卡昂AI超能玩  
+使用反馈：kaenzhong@foxmail.com
 
 ## 目标与启动
 

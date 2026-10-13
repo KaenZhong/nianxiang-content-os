@@ -84,12 +84,17 @@ def main() -> int:
         manifest = read_json(SOURCE / "release-manifest.json")
         verify_tree(SOURCE, manifest)
         source_commit = committed_source()
-        before = installation_status(args.skill_root)
+        requested_root = args.skill_root.expanduser().absolute()
+        resolved_root = requested_root.resolve(strict=True)
+        before = installation_status(resolved_root)
         result = {
             "source_version": manifest["version"],
             "source_verified": True,
             "source_commit": source_commit,
-            "codex_skill_root": str(args.skill_root.expanduser().absolute()),
+            "requested_skill_root": str(requested_root),
+            "codex_skill_root": str(resolved_root),
+            "current_chat_reloaded": False,
+            "cross_session_verified": False,
             "codex_before": before,
         }
         if not args.apply:
@@ -108,13 +113,15 @@ def main() -> int:
             if checked["status"] != "verified":
                 raise ValueError(f"package verification failed: {checked}")
             result["archive_sha256"] = checked["archive_sha256"]
-            applied = apply_release(archive, args.skill_root, profile, args.consent)
+            if requested_root.resolve(strict=True) != resolved_root:
+                raise ValueError("installation path changed during preflight")
+            applied = apply_release(archive, resolved_root, profile, args.consent)
         result["apply_result"] = applied
-        result["codex_after"] = installation_status(args.skill_root)
+        result["codex_after"] = installation_status(resolved_root)
         if applied["status"] not in {"updated", "up_to_date"}:
             emit(result)
             return 1
-        verify_tree(args.skill_root, manifest)
+        verify_tree(resolved_root, manifest)
         result["installed_matches_source"] = True
         emit(result)
         return 0

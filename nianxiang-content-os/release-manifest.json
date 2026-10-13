@@ -1,27 +1,27 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.9",
+  "version": "0.1.0-beta.11",
   "entry": "SKILL.md",
   "knowledge_schema_version": 4,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "d03fd6b5b4161164da1e7847ae4ca8271fca0c73ca864f6cc364d3229d3629b6",
-      "size": 5241
+      "sha256": "536dfbe383985f9bc2393abeac483e903249ca2b6869005a15874dcb2486ee65",
+      "size": 5867
     },
     "README.md": {
-      "sha256": "eae3641e280209a6632e4d3c90aa6fea3ca62f5ba6640223d098d33da510d48a",
-      "size": 4472
+      "sha256": "9093b1c8b9f1583ee36c4e038377ba67171e408ed14e4fe10e64e460eae4b2d2",
+      "size": 4473
     },
     ".gitignore": {
       "sha256": "7e585a41f683fdec919186bcdd2d19d0cfd2741800a49c9ce48f88297bc45d1d",
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "2cd4484f540b5e1dad9aeef18358871eefffad5d98203d6b86ba758fac9a7d6b",
-      "size": 14736
+      "sha256": "da1dba579558010857f696075245dcc640774b40da9d2f22670a9f2a53a05ff0",
+      "size": 14836
     },
     "references/system/data-ownership.md": {
       "sha256": "09547bcffbb1499eb4827be06719ea4c45e1abb859e0268b7b6f9cae440441e8",
@@ -64,8 +64,8 @@
       "size": 5947
     },
     "references/creation/workflow.md": {
-      "sha256": "583e1063e8def158ed251c59bf4e607a87b056395b66d865a6e8570c121869bb",
-      "size": 30835
+      "sha256": "53bbdc81da7f696e3fdbdb589e12d832591b37ab4999cc5f1ae744078a134522",
+      "size": 32035
     },
     "references/creation/topic-map.md": {
       "sha256": "a7bbaa8cf3880101c975894739d7bae92994ffb06156fcc8e1d1ed338a32c18a",
@@ -128,8 +128,8 @@
       "size": 7403
     },
     "references/maintenance/acceptance.md": {
-      "sha256": "b941aa1790685d3f792e0735b67b60bbd76afd9c0dbcdbe6b89aa3abc1f98755",
-      "size": 28606
+      "sha256": "e3d1c32ca1f28d0c63eada7986d43d607163eb69e58939240689ff3a453ff6b5",
+      "size": 29910
     },
     "tests/test_core_journey.py": {
       "sha256": "ab94c5e83d279eecc4742c161c43deb8c793dfb0d341167ee543cedd49406267",
@@ -204,8 +204,8 @@
       "size": 4286
     },
     "agent/SOUL.md": {
-      "sha256": "83be74c28536a8a6b38ac50e04a69adf8029c1e4d83755124078aeee9733b1be",
-      "size": 12878
+      "sha256": "fb31224ad5a803e86c24ae6d1afaea9f6d69113dbbc18c9e8b96fca0ea5bde35",
+      "size": 12902
     },
     "agent/AGENTS.md": {
       "sha256": "889c2a150588d652c84a03fb757408362a52bdd0444c6e61031e0c33bdabb483",

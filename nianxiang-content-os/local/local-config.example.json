@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "knowledge_backend": "feishu",
   "identity": "user",
   "fail_closed": true,
@@ -101,6 +101,14 @@
       "obj_type": "docx",
       "parent_node_token": "REPLACE_WITH_PARENT_NODE_TOKEN_OR_EMPTY",
       "access": "read_write"
+    },
+    "content.methods": {
+      "expected_title": "01｜创作方法与规则",
+      "node_token": "REPLACE_WITH_METHODS_NODE_TOKEN",
+      "obj_token": "REPLACE_WITH_METHODS_OBJ_TOKEN",
+      "obj_type": "docx",
+      "parent_node_token": "REPLACE_WITH_NODE_TOKEN",
+      "access": "read_write"
     }
   },
   "base_tables": {
@@ -133,7 +141,8 @@
       "ip.profile",
       "expression.baseline",
       "content.assets",
-      "methodology.current"
+      "methodology.current",
+      "content.methods"
     ]
   },
   "private": true,

@@ -8,7 +8,7 @@ from .models import NianxiangError,read_json,write_json,digest,file_digest,now,p
 from .knowledge import load_context,profile_state,configuration,save_change,authorize_request,verify_account
 from .rules import select_confirmed_rules
 
-SOURCES={'collaboration':('ip.profile','NIANXIANG_COLLABORATION_V1='),'rules':('methodology.current','NIANXIANG_PERSONAL_RULES_V1=')}
+SOURCES={'collaboration':('ip.profile','NIANXIANG_COLLABORATION_V1='),'rules':('content.methods','NIANXIANG_PERSONAL_RULES_V1=')}
 LEGACY={'collaboration':('user-profile.json',),'rules':('rules.local.json','local-rules.json')}
 CONVENTIONS=('business-conventions.md','business-guidelines.md')
 STATUSES={'active','trial','paused','retired'}

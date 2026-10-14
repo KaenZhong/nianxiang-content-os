@@ -16,6 +16,7 @@ from runtime.releases import build_manifest,verify_release,apply_release,rollbac
 from runtime.personal import read_personal_context,plan_personal_migration,apply_personal_migration,export_personal_context,save_preferred_name
 from runtime.tasks import create_task,update_task,resume_task
 from runtime.sync import read_context,sync_context,sync_status,CONTEXT_KEYS
+from runtime.config_upgrade import plan_config_upgrade,apply_config_upgrade,verify_methods_authority
 from validate_local_config import validate
 
 SKILL_ROOT=Path(__file__).resolve().parents[1]
@@ -42,9 +43,9 @@ def verify_profile(profile):
             if len(matches)>1:raise NianxiangError('ambiguous_table','duplicate required table title; select and resolve before activation')
             if len(matches)!=1 or matches[0].get('id')!=table['table_id'] or table['expected_title']!=spec['title']:raise NianxiangError('target_mismatch','configured table differs from source')
             verify_fields(adapter,base,matches[0],spec)
-        verify_account(state,adapter)
+        verify_methods_authority(state,config,adapter)
         state['active']=True;write_json(profile/'state.json',state)
-        return {'status':'ready','knowledge_mappings':12,'tables':4}
+        return {'status':'ready','knowledge_mappings':len(config['knowledge_map']),'tables':4}
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
@@ -62,6 +63,8 @@ def main():
     doctor=groups.add_parser('doctor');doctor.add_argument('--offline',action='store_true')
     profile=groups.add_parser('profile');ps=profile.add_subparsers(dest='action',required=True)
     ps.add_parser('list');p=ps.add_parser('create');entry=p.add_mutually_exclusive_group(required=True);entry.add_argument('--space-id');entry.add_argument('--entry-url');p.add_argument('--consent',required=True);ps.add_parser('verify')
+    p=ps.add_parser('upgrade-plan');p.add_argument('--output',type=Path)
+    p=ps.add_parser('upgrade-apply');p.add_argument('--plan',type=Path,required=True);p.add_argument('--consent',required=True)
     migration=groups.add_parser('migration');ms=migration.add_subparsers(dest='action',required=True)
     p=ms.add_parser('plan');p.add_argument('--legacy-dir',type=Path,required=True);p.add_argument('--output',type=Path)
     p=ms.add_parser('apply');p.add_argument('--plan',type=Path,required=True);p.add_argument('--consent',required=True)
@@ -161,7 +164,18 @@ def main():
             if not space:raise NianxiangError('space_missing','entry URL did not resolve a space')
             pid=create_profile(root,account['account_id'],space);emit({'status':'created','profile_id':pid,'active':False});return 0
         profile=resolve_profile(SKILL_ROOT,root,args.profile)
-        if args.group=='profile':emit(verify_profile(profile));return 0
+        if args.group=='profile':
+            if args.action=='verify':outcome=verify_profile(profile)
+            else:
+                adapter=FeishuAdapter(read_json(profile/'local-config.json'))
+                if args.action=='upgrade-plan':
+                    plan=plan_config_upgrade(profile,adapter)
+                    if args.output and plan['status']=='preview':private_output(args.output,plan)
+                    outcome={k:v for k,v in plan.items() if k in ('status','code','schema_version','plan_id')}
+                    outcome['plan_path']=str(args.output) if args.output and plan['status']=='preview' else None
+                    outcome['remote_writes']=0
+                else:outcome=apply_config_upgrade(profile,read_json(args.plan),adapter,consent(args))
+            emit(outcome);return 0 if outcome['status'] in ('ready','preview','current','upgraded') else 1
         if args.group=='task':
             if args.action=='create':outcome=create_task(profile,read_json(args.request),consent(args))
             elif args.action=='update':outcome=update_task(profile,args.task_id,read_json(args.patch),args.expected_version,consent(args))

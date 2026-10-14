@@ -5,9 +5,10 @@ from pathlib import Path
 from .models import NianxiangError,digest,read_json,write_json,now,profile_lock
 from .knowledge import profile_state,verify_account
 from validate_local_config import validate
+from .config_upgrade import verify_methods_authority
 
 def check_structure(structure):
-    if structure.get('schema_version')!=1 or structure.get('knowledge_schema_version')!=4 or structure.get('data_layout_version')!=1:raise NianxiangError('incompatible_structure','unsupported skeleton schema')
+    if structure.get('schema_version')!=1 or structure.get('knowledge_schema_version')!=5 or structure.get('data_layout_version')!=1:raise NianxiangError('incompatible_structure','unsupported skeleton schema')
     if not structure.get('account_id') or not structure.get('space_id'):raise NianxiangError('identity_required','choose actual account and target space')
     seen=set()
     for node in structure['nodes']:
@@ -15,7 +16,7 @@ def check_structure(structure):
             raise NianxiangError('invalid_structure','node order, IDs or types are invalid')
         seen.add(node['id'])
     mappings=set(structure['config_template']['knowledge_map'])
-    if not mappings.issubset(seen) or len(mappings)!=12 or len(structure['tables'])!=4:raise NianxiangError('invalid_structure','complete 12 mappings and four tables required')
+    if not mappings.issubset(seen) or len(mappings)!=13 or len(structure['tables'])!=4:raise NianxiangError('invalid_structure','complete 13 mappings and four tables required')
 
 def select_node(adapter,structure,spec,parent):
     titles=[spec['title']]+spec.get('legacy_titles',[])
@@ -127,9 +128,10 @@ def _resume(profile,plan,adapter,authorization,state):
             node=observed[key]
             for field in ('node_token','obj_token','obj_type','parent_node_token'):item[field]=node.get(field,'')
         config['base_tables']=tables;validate(config)
+        verify_methods_authority(state,config,adapter)
         write_json(profile/'local-config.json',config);state['active']=True;state['bootstrap_verified_at']=now();write_json(profile/'state.json',state)
         progress['status']='ready';write_json(path,progress)
-        return {'status':'ready','knowledge_mappings':12,'tables':4,'personal_content':'empty_or_existing_content_preserved'}
+        return {'status':'ready','knowledge_mappings':len(config['knowledge_map']),'tables':4,'personal_content':'empty_or_existing_content_preserved'}
     except (NianxiangError,ValueError,KeyError) as exc:
         code=getattr(exc,'code','invalid_configuration');progress['status']='uncertain' if code in ('offline','timeout','network_error','uncertain_creation','invalid_response','uncertain_response') else 'blocked'
         progress['message']=code;write_json(path,progress)

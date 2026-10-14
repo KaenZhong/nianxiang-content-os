@@ -71,7 +71,7 @@ def apply_migration(plan,consent_id):
         config=read_json(config_item['source']);state=read_json(profile/'state.json')
         from validate_local_config import validate
         try:validate(config)
-        except (ValueError,KeyError,TypeError):raise NianxiangError('invalid_configuration','legacy configuration is not compatible schema=4')
+        except (ValueError,KeyError,TypeError):raise NianxiangError('invalid_configuration','legacy configuration is not compatible schema=5')
         if config.get('space_id')!=state['space_id']:raise NianxiangError('space_mismatch','legacy config belongs to another space; nothing copied')
     # Full preflight above; each copy uses exclusive creation to avoid racing overwrites.
     for item in fresh['files']:

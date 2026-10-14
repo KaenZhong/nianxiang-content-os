@@ -2,7 +2,7 @@
 
 ## 唯一源与机器数据段
 
-《个人IP档案》ip.profile保存称呼、协作偏好与边界；《内容方法论》methodology.current保存私人创作规则。不新增知识对象或长期记忆页面。阿响向用户展示自然语言差异，工具维护下列唯一单行段，不要求用户填写JSON。
+《个人IP档案》ip.profile保存称呼、协作偏好与边界；《01｜创作方法与规则》`content.methods`保存私人创作规则，是`methodology.current`《04｜内容方法论》导航的直属子文档。导航页不再保存私人规则机器段，不新增独立长期记忆页面。阿响向用户展示自然语言差异，工具维护下列唯一单行段，不要求用户填写JSON。
 
 - `NIANXIANG_COLLABORATION_V1=` 后接紧凑JSON：schema_version=1、preferred_name（字符串或null）、preferred_name_evidence、preferences、boundaries。昵称非null时证据包含status、basis、source、confirmed_at；偏好/边界包含id、instruction、scope和上述证据字段。scope包含channels/surfaces/materials三个非空字符串列表，通用范围用["*"]。
 - `NIANXIANG_PERSONAL_RULES_V1=` 后接紧凑JSON：schema_version=1、rules。每条有id、instruction、channels/surfaces/materials、status、basis、source、confirmed_at；可选scope必须与三个范围列表一致。参见[规则维护](../maintenance/rules.md)。
@@ -32,6 +32,12 @@ python3 -B scripts/manage.py --data-dir '<私人根>' --profile '<UUID>' persona
 ```
 
 计划只预览，不自动迁移。原件或目标变化conflict；有不同远端条目时先人工逐条核对，不自动合并。每组使用稳定operation_id和既有pending/save_change回读；只有saved将对应long_term_sources_status设feishu_active，其他组legacy_pending。断线或回读不确定重用原operation_id核验，不重复追加。原件始终保留，清理另按具体范围授权。
+
+## 方法正文与旧导航规则迁移
+
+schema=4配置升级为schema=5时保留原有12映射，精确定位导航直属的《01｜创作方法与规则》后新增`content.methods`，核验空间、父子关系、类型及token配对；未知或冲突目标停止迁移。新配置共有13映射，后台同步范围增加方法正文。用户授权结构调整时，先读导航和方法正文的最新版本，检查两处机器段及来源：零段保持零条；旧导航存在唯一有效段且新正文没有段时，沿具体授权迁入正文并回读，再移除导航重复段；两处已有不同内容或重复/损坏段时先展示差异，不能盲目覆盖或自动合并。
+
+迁移完成后规则读取、保存和投影只绑定`content.methods`，刷新相关快照与投影并核验来源对象。旧导航快照或投影不能充作新规则源。自然语言试行方法仍保留试行状态，不因搬迁生成active机器条目。私人配置、机器段正文、快照、投影和迁移回执不进入公共Git。
 
 ## 可选兼容摘要
 

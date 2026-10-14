@@ -47,6 +47,7 @@ class KnowledgeRuntime(unittest.TestCase):
         for key in ('operations.index','content.archives','content.campaigns','content.reviews'): config['knowledge_map'][key]['parent_node_token']='operations-root'
         config['knowledge_map']['content.strategy'].update(node_token='node-strategy',obj_token='doc-strategy')
         config['knowledge_map']['operations.index']['node_token']='operations'
+        config['knowledge_map']['content.methods']['parent_node_token']=config['knowledge_map']['methodology.current']['node_token']
         config['knowledge_map']['operations.base'].update(node_token='node-base',obj_token='base-a',parent_node_token='operations')
         for key,item in config['base_tables'].items():item['table_id']='table-'+key
         write_json(self.profile/'local-config.json',config)

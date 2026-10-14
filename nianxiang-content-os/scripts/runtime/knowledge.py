@@ -20,7 +20,7 @@ def profile_state(profile, require_active=True):
 def configuration(profile):
     config=read_json(Path(profile)/'local-config.json')
     try: validate(config)
-    except (ValueError,KeyError,TypeError): raise NianxiangError('invalid_configuration','schema=4 and complete mappings are required')
+    except (ValueError,KeyError,TypeError): raise NianxiangError('invalid_configuration','schema=5 and complete mappings are required')
     state=profile_state(profile)
     if config['space_id']!=state['space_id']:raise NianxiangError('space_mismatch','configuration belongs to a different space')
     return config

@@ -46,7 +46,7 @@ python3 -B scripts/manage.py release check-update --manifest release-manifest.js
 python3 -B scripts/manage.py release status --skill-root /path/to/installed/nianxiang-content-os
 ```
 
-先核验并展示版本、来源、schema=4/layout=1、变更说明及目标安装目录。用户已明确要求从指定官方来源更新当前安装时，在核验所得包与目标仍属该范围的情况下沿用已有授权，展示结果后直接推进，不为版本解析、验包或工具调用重复索要确认。只有来源或目标改变、公共文件冲突需处置、删除或迁移新增范围时，才确认相应事项。将用户真实原话写入`--consent`；若原话引用此前方案，同时保留方案上下文，不能由Agent编造授权。完成授权后：
+先核验并展示版本、来源、schema=5/layout=1、变更说明及目标安装目录。用户已明确要求从指定官方来源更新当前安装时，在核验所得包与目标仍属该范围的情况下沿用已有授权，展示结果后直接推进，不为版本解析、验包或工具调用重复索要确认。只有来源或目标改变、公共文件冲突需处置、删除或迁移新增范围时，才确认相应事项。将用户真实原话写入`--consent`；若原话引用此前方案，同时保留方案上下文，不能由Agent编造授权。完成授权后：
 
 ```bash
 python3 -B scripts/manage.py --data-dir /path/to/private-root --profile UUID \
@@ -54,6 +54,8 @@ python3 -B scripts/manage.py --data-dir /path/to/private-root --profile UUID \
   --skill-root /path/to/installed/nianxiang-content-os \
   --consent "用户实际要求更新本次指定包与安装目录的原话"
 ```
+
+当前包配置契约为schema=5/layout=1，安装核验仍兼容schema=4旧包用于检查现有安装和回退；旧配置连接使用前须按[连接协议](../knowledge/connection.md)显式升级，不能把安装兼容当成旧连接可直接启用。核心回退不回滚私人配置；schema=5配置不能由仅支持schema=4的旧核心直接读取，须按具体授权另行恢复匹配的配置并重新核验，不自动覆盖私人数据。
 
 脚本核验单一顶层目录、所有文件与清单、schema/layout、路径、重复成员、符号链接、私人文件名和尺寸上限；ZIP里的未列文件同样拒绝。私人目录必须在核心和安装记录之外。旧核心全部文件、文件集合和清单必须匹配；本地改动得到`conflict`，不自动覆盖、不自动迁成个人规则。
 

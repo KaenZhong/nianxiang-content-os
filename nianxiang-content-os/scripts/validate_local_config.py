@@ -14,7 +14,7 @@ from runtime.models import NianxiangError
 REQUIRED_IDS = {
     "content.strategy", "audience.needs", "ip.profile", "expression.baseline", "cocreation.index",
     "content.assets", "operations.index", "operations.base", "content.archives",
-    "content.campaigns", "content.reviews", "methodology.current",
+    "content.campaigns", "content.reviews", "methodology.current", "content.methods",
 }
 
 EXPECTED_ACCESS = {
@@ -24,12 +24,12 @@ EXPECTED_ACCESS = {
     "content.assets": "read_write", "operations.index": "read_write",
     "operations.base": "read_write", "content.archives": "create_child",
     "content.campaigns": "create_child", "content.reviews": "create_child",
-    "methodology.current": "read_write",
+    "methodology.current": "read_write", "content.methods": "read_write",
 }
 
 SYNC_IDS = {
     "content.strategy", "audience.needs", "ip.profile", "expression.baseline",
-    "content.assets", "methodology.current",
+    "content.assets", "methodology.current", "content.methods",
 }
 
 BASE_TABLES = {
@@ -51,9 +51,9 @@ def require_same_parent(mapping: dict, ids: tuple[str, ...], label: str) -> None
         fail(f"{label} parent hierarchy is invalid")
 
 
-def validate(data: dict) -> None:
-    if data.get("schema_version") != 4:
-        fail("schema_version must be 4")
+def validate(data: dict, schema_version: int = 5) -> None:
+    if schema_version not in (4, 5) or data.get("schema_version") != schema_version:
+        fail(f"schema_version must be {schema_version}; schema 4 requires explicit upgrade")
     if data.get("knowledge_backend") != "feishu":
         fail("knowledge_backend must be feishu")
     if data.get("identity") != "user":
@@ -68,8 +68,9 @@ def validate(data: dict) -> None:
     mapping = data.get("knowledge_map")
     if not isinstance(mapping, dict):
         fail("knowledge_map must be an object")
-    missing = REQUIRED_IDS - set(mapping)
-    extra = set(mapping) - REQUIRED_IDS
+    required_ids = REQUIRED_IDS if schema_version == 5 else REQUIRED_IDS - {"content.methods"}
+    missing = required_ids - set(mapping)
+    extra = set(mapping) - required_ids
     if missing or extra:
         fail(f"knowledge_map mismatch; missing={sorted(missing)}, extra={sorted(extra)}")
 
@@ -108,6 +109,13 @@ def validate(data: dict) -> None:
     if mapping["operations.base"].get("parent_node_token") != mapping["operations.index"].get("node_token"):
         fail("operations.base.parent_node_token must point to operations.index.node_token")
 
+    if schema_version == 5:
+        methods = mapping["content.methods"]
+        if methods.get("parent_node_token") != mapping["methodology.current"]["node_token"]:
+            fail("content.methods must be a direct child of methodology.current")
+        if methods["expected_title"] != "01｜创作方法与规则":
+            fail("content.methods title must be 01｜创作方法与规则")
+
     tables = data.get("base_tables")
     if (not isinstance(tables, dict) or not set(BASE_TABLES).issubset(tables)
             or set(tables) - set(BASE_TABLES) - set(OPTIONAL_BASE_TABLES)):
@@ -139,8 +147,8 @@ def validate(data: dict) -> None:
         if targets.get(key) != value:
             fail(f"write_targets.{key} must be {value}")
     sync_ids = targets.get("sync_candidate_knowledge_ids")
-    if not isinstance(sync_ids, list) or set(sync_ids) != SYNC_IDS or len(sync_ids) != len(SYNC_IDS):
-        fail("sync_candidate_knowledge_ids must contain the six long-term pages")
+    if not isinstance(sync_ids, list) or set(sync_ids) != (SYNC_IDS if schema_version == 5 else SYNC_IDS - {"content.methods"}) or len(sync_ids) != (len(SYNC_IDS) if schema_version == 5 else len(SYNC_IDS) - 1):
+        fail("sync_candidate_knowledge_ids must contain the configured long-term pages")
     if data.get("private") is not True or data.get("include_in_public_release") is not False:
         fail("private/public-release flags are invalid")
 

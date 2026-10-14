@@ -14,9 +14,9 @@
 
 ## 同步范围与来源
 
-背景刷新范围为六份长期上下文：`content.strategy`、`audience.needs`、`ip.profile`、`expression.baseline`、`methodology.current`、`content.assets`。后台刷新六份不等于将六份全文加入创作上下文，Agent仍只读本篇相关资料。
+背景刷新范围为七份长期上下文：`content.strategy`、`audience.needs`、`ip.profile`、`expression.baseline`、`methodology.current`、`content.methods`、`content.assets`。后台刷新七份不等于将七份全文加入创作上下文，Agent仍只读本篇相关资料。
 
-新给出的素材、聊天记录、指定母稿及历史作品按任务需要直接读取；Base中的选题/作品、发表状态、业务键及具体待同步操作按实际对象实时核验。后台不遍历整库历史，不写飞书、不提交沉淀、不重放pending、不自动修改策略或私人规则。
+新给出的素材、聊天记录、指定母稿及历史作品按任务需要直接读取；Base中的选题/作品、发表状态、业务键及具体待同步操作按实际对象实时核验。方法与私人规则只从`content.methods`解析，`methodology.current`只是导航；服务案例与内容范式子库按任务动态发现，不加入后台整库遍历。后台不遍历整库历史，不写飞书、不提交沉淀、不重放pending、不自动修改策略或私人规则。
 
 `<profile>/snapshots/context.json`是原子发布的上下文包，带generation及绑定摘要；单页JSON是兼容镜像。旧版已核验的单页快照在首次新读取时可直接复用，身份/对象/摘要损坏时停止对应个性化。包外`context-sync.json`记录后台状态、重试时间和已知失效；派生个人投影从本次选定的源版本重新解析，不作为读取权威。
 
@@ -50,4 +50,4 @@ python3 -B scripts/manage.py --data-dir '<私人根>' --profile '<UUID>' knowled
 python3 -B scripts/manage.py --data-dir '<私人根>' --profile '<UUID>' knowledge sync-status
 ```
 
-`read`默认本地优先，过期时发起后台；`sync`是显式的前台只读刷新，省略知识ID刷新六页；状态查询不联网。personal read同样本地优先，可用`--cache-only`或`--refresh`。旧`--allow-stale`只保留参数兼容，不使`--refresh`降级。task resume默认用本地长期上下文，可用`--refresh`要求最新；远端产物始终按对象核验。
+`read`默认本地优先，过期时发起后台；`sync`是显式的前台只读刷新，省略知识ID刷新七页；状态查询不联网。personal read同样本地优先，可用`--cache-only`或`--refresh`。旧`--allow-stale`只保留参数兼容，不使`--refresh`降级。task resume默认用本地长期上下文，可用`--refresh`要求最新；远端产物始终按对象核验。

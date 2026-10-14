@@ -18,7 +18,12 @@ class SkeletonFeishu:
     def list_nodes(self,parent):return copy.deepcopy([n for n in self.nodes if n['parent_node_token']==((parent or {}).get('node_token',''))])
     def list_tables(self,base):return copy.deepcopy(self.tables)
     def list_fields(self,base,table):return copy.deepcopy(table['fields'])
-    def get_node(self,target):return copy.deepcopy(next(n for n in self.nodes if n['node_token']==target['node_token']))
+    def get_node(self,target):
+        token=target.get('node_token') or self.config['knowledge_map'][target['knowledge_id']]['node_token']
+        return copy.deepcopy(next(n for n in self.nodes if n['node_token']==token))
+    def read(self,key):
+        node=next(n for n in self.nodes if n['node_token']==self.config['knowledge_map'][key]['node_token'])
+        return {**copy.deepcopy(node),'account_id':self.account,'revision':1,'content':node.get('content','')}
     def write(self,request):
         self.writes+=1;t=request['target']
         if request['action']=='create_table':
@@ -56,13 +61,24 @@ class Bootstrap(unittest.TestCase):
         with self.assertRaisesRegex(NianxiangError,'ambiguous_node'):self.plan()
         self.assertEqual(self.adapter.writes,0)
 
+    def test_old_navigation_rules_block_activation_without_overwriting_config(self):
+        self.run_plan()
+        source=self.profile/'local-config.json';before=source.read_bytes()
+        root=next(n for n in self.adapter.nodes if n['title']=='04｜内容方法论')
+        root['content']='NIANXIANG_PERSONAL_RULES_V1={bad}'
+        outcome=self.run_plan()
+        self.assertEqual(outcome['status'],'blocked')
+        self.assertEqual(outcome['message'],'private_rules_migration_required')
+        self.assertEqual(source.read_bytes(),before)
+        self.assertFalse(read_json(self.profile/'state.json')['active'])
+
     def test_preview_without_authorization_does_not_write(self):
         plan=self.plan();self.assertEqual(self.adapter.writes,0)
         self.assertEqual(resume_bootstrap(self.profile,plan,self.adapter,{})['status'],'blocked');self.assertEqual(self.adapter.writes,0)
     def test_empty_then_half_built_only_missing_objects_and_active_config(self):
         result=self.run_plan();self.assertEqual(result['status'],'ready')
         config=json.loads((self.profile/'local-config.json').read_text())
-        self.assertEqual(len(config['knowledge_map']),12);self.assertEqual(len(config['base_tables']),4);self.assertTrue(read_json(self.profile/'state.json')['active'])
+        self.assertEqual(len(config['knowledge_map']),13);self.assertEqual(len(config['base_tables']),4);self.assertTrue(read_json(self.profile/'state.json')['active'])
         writes=self.adapter.writes;self.assertEqual(self.run_plan()['status'],'ready');self.assertEqual(self.adapter.writes,writes)
     def test_duplicate_title_is_conflict_without_writes(self):
         self.run_plan();node=copy.deepcopy(self.adapter.nodes[0]);node['node_token']='duplicate';node['obj_token']='duplicate-object';self.adapter.nodes.append(node)

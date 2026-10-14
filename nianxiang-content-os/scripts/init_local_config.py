@@ -17,6 +17,7 @@ from runtime.paths import add_profile_args, default_private_file
 from runtime.models import NianxiangError, read_json, write_json
 from runtime.feishu_cli import FeishuAdapter
 from runtime.knowledge import verify_account, profile_state
+from runtime.config_upgrade import verify_methods_authority
 
 
 ROOT_TITLES = {
@@ -37,6 +38,9 @@ CHILDREN = {
     "assets": [
         ("cocreation.index", re.compile(r"^01｜念响共创记录$"), "create_child"),
         ("content.assets", re.compile(r"^02｜内容资产库$"), "read_write"),
+    ],
+    "methodology.current": [
+        ("content.methods", re.compile(r"^01｜创作方法与规则$"), "read_write"),
     ],
     "creation": [
         ("operations.index", re.compile(r"^01｜内容操盘$"), "read_write"),
@@ -249,9 +253,10 @@ def discover(entry: str) -> tuple[dict[str, Any], dict[str, str]]:
         "content.campaigns",
         "content.reviews",
         "methodology.current",
+        "content.methods",
     ]
     config = {
-        "schema_version": 4,
+        "schema_version": 5,
         "knowledge_backend": "feishu",
         "identity": "user",
         "fail_closed": True,
@@ -272,11 +277,15 @@ def discover(entry: str) -> tuple[dict[str, Any], dict[str, str]]:
                 "expression.baseline",
                 "content.assets",
                 "methodology.current",
+                "content.methods",
             ],
         },
         "private": True,
         "include_in_public_release": False,
     }
+    adapter = FeishuAdapter(config)
+    account = adapter.get_account()
+    verify_methods_authority({"account_id": account["account_id"], "space_id": space_id}, config, adapter)
     return config, display_paths
 
 

@@ -81,7 +81,7 @@ class ContextSync(Fixture, unittest.TestCase):
     def test_personal_cache_is_default_and_no_remote_calls(self):
         import json
         self.adapter.docs['ip.profile']['content']='NIANXIANG_COLLABORATION_V1='+json.dumps(collaboration())
-        self.seed(('ip.profile','methodology.current'))
+        self.seed(('ip.profile','content.methods'))
         self.adapter.get_account=lambda:self.fail('personal default contacted remote')
         out=read_personal_context(self.profile,self.adapter)
         self.assertEqual(out['collaboration']['preferred_name'],'测试作者')

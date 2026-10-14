@@ -44,7 +44,7 @@ def _manifest(value,package=PACKAGE):
     if package not in (PACKAGE,LEGACY_PACKAGE):_error('invalid_manifest','unsupported package identity')
     if not isinstance(value,dict) or value.get('schema_version')!=1 or value.get('name')!=package or value.get('entry')!='SKILL.md':_error('invalid_manifest','release identity and entry are required')
     if not isinstance(value.get('version'),str) or not re.fullmatch(r'\d+\.\d+\.\d+(?:-[A-Za-z0-9.-]+)?',value['version']):_error('invalid_manifest','semantic release version is required')
-    if value.get('knowledge_schema_version')!=4 or value.get('data_layout_version')!=1:_error('incompatible_release','schema=4 and layout=1 are required')
+    if value.get('knowledge_schema_version') not in (4,5) or value.get('data_layout_version')!=1:_error('incompatible_release','schema=4/5 and layout=1 are required')
     if value.get('release_source') is not None:_error('unsupported_release_source','first release supports explicit local packages only')
     files=value.get('files')
     if not isinstance(files,dict) or not files or len(files)>2000 or 'SKILL.md' not in files or 'scripts/manage.py' not in files or MANIFEST in files:_error('invalid_manifest','complete public file map, excluding the manifest itself, is required')
@@ -70,7 +70,7 @@ def _tree_files(root):
 
 def build_manifest(root,version):
     root=_canonical(root)
-    value={'schema_version':1,'name':PACKAGE,'version':version,'entry':'SKILL.md','knowledge_schema_version':4,'data_layout_version':1,'release_source':None,'files':_tree_files(root),'changes':'See CHANGELOG.md; local development candidate, not a published release.'}
+    value={'schema_version':1,'name':PACKAGE,'version':version,'entry':'SKILL.md','knowledge_schema_version':5,'data_layout_version':1,'release_source':None,'files':_tree_files(root),'changes':'See CHANGELOG.md; local development candidate, not a published release.'}
     return _manifest(value)
 
 def verify_tree(root,manifest):

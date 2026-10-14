@@ -5,7 +5,7 @@ from runtime.personal import parse_personal_source,read_personal_context,plan_pe
 
 class PersonalKnowledge(Fixture,unittest.TestCase):
     def source(self,kind,data):
-        key='ip.profile' if kind=='collaboration' else 'methodology.current'
+        key='ip.profile' if kind=='collaboration' else 'content.methods'
         prefix='NIANXIANG_COLLABORATION_V1=' if kind=='collaboration' else 'NIANXIANG_PERSONAL_RULES_V1='
         self.adapter.docs[key]['content']=prefix+json.dumps(data,ensure_ascii=False,separators=(',',':'))
     def seed(self):
@@ -13,15 +13,33 @@ class PersonalKnowledge(Fixture,unittest.TestCase):
     def legacy(self):
         write_json(self.profile/'user-profile.json',{'schema_version':1,'preferred_name':'旧称呼','consent_confirmed':True,'consent_date':'2026-09-01'})
         write_json(self.profile/'rules.local.json',{'schema_version':1,'rules':[rule()]})
+    def test_rules_are_read_from_methods_child_not_navigation(self):
+        config=read_json(self.profile/'local-config.json')
+        if 'content.methods' not in config['knowledge_map']:
+            parent=config['knowledge_map']['methodology.current']
+            config['knowledge_map']['content.methods']={'expected_title':'01｜创作方法与规则','node_token':'node-methods','obj_token':'doc-methods','obj_type':'docx','parent_node_token':parent['node_token'],'access':'read_write'}
+            config['schema_version']=5
+            config['write_targets']['sync_candidate_knowledge_ids'].append('content.methods')
+            write_json(self.profile/'local-config.json',config)
+            from personal_support import PersonalFake
+            self.adapter=PersonalFake(self.profile)
+        self.source('collaboration',collaboration())
+        self.adapter.docs['methodology.current']['content']='导航，不维护规则正文'
+        self.adapter.docs['content.methods']['content']='NIANXIANG_PERSONAL_RULES_V1='+json.dumps({'schema_version':1,'rules':[rule()]},ensure_ascii=False,separators=(',',':'))
+        result=read_personal_context(self.profile,self.adapter,refresh=True)
+        self.assertEqual(result['status'],'ready')
+        self.assertEqual(result['rules']['rules'][0]['id'],'r-one')
+        self.assertEqual(result['source_bindings']['rules']['knowledge_id'],'content.methods')
+
     def test_source_validation(self):
-        self.seed();body=self.adapter.docs['methodology.current']['content']
+        self.seed();body=self.adapter.docs['content.methods']['content']
         self.assertEqual(len(parse_personal_source(body,'rules')['rules']),1)
         for content in [body+'\n'+body,body.replace('user_explicit','unknown'),body.replace('"source":"synthetic:user-request"','"source":null'),body+'junk']:
             with self.assertRaisesRegex(NianxiangError,'invalid_personal_source'):parse_personal_source(content,'rules')
         with self.assertRaises(NianxiangError):parse_personal_source(body,'unknown')
     def test_duplicate_source_blocks_without_cache_fallback(self):
         self.seed();self.assertEqual(read_personal_context(self.profile,self.adapter)['status'],'ready')
-        self.adapter.docs['methodology.current']['content']+='\n'+self.adapter.docs['methodology.current']['content']
+        self.adapter.docs['content.methods']['content']+='\n'+self.adapter.docs['content.methods']['content']
         outcome=read_personal_context(self.profile,self.adapter,refresh=True)
         self.assertEqual(outcome['status'],'blocked');self.assertEqual(outcome['code'],'invalid_personal_source');self.assertNotIn('rules',outcome)
     def test_missing_sources_with_legacy_requires_migration(self):
@@ -31,7 +49,7 @@ class PersonalKnowledge(Fixture,unittest.TestCase):
         ctx=read_personal_context(self.profile,self.adapter);self.assertEqual(ctx['rules']['rules'][0]['basis'],'agent_inference')
         from runtime.rules import select_confirmed_rules
         self.assertEqual(select_confirmed_rules(ctx['rules'],{'channel':'moments','surface':'body'}),[])
-        self.source('rules',{'schema_version':1,'rules':[rule(status='paused')]});self.adapter.docs['methodology.current']['revision']=2
+        self.source('rules',{'schema_version':1,'rules':[rule(status='paused')]});self.adapter.docs['content.methods']['revision']=2
         self.assertEqual(read_personal_context(self.profile,self.adapter,refresh=True)['rules']['rules'][0]['status'],'paused')
     def test_local_cache_supports_offline_work_but_latest_still_requires_network(self):
         self.seed();read_personal_context(self.profile,self.adapter);self.adapter.offline=True
@@ -44,13 +62,13 @@ class PersonalKnowledge(Fixture,unittest.TestCase):
         self.assertEqual(read_personal_context(self.profile,self.adapter,refresh=True)['code'],'account_mismatch')
         self.assertEqual(read_personal_context(self.profile,self.adapter)['code'],'account_mismatch')
     def test_partial_migration_only_activates_saved_group(self):
-        self.legacy();plan=plan_personal_migration(self.profile,self.adapter);self.adapter.fail_key='methodology.current'
+        self.legacy();plan=plan_personal_migration(self.profile,self.adapter);self.adapter.fail_key='content.methods'
         first=apply_personal_migration(self.profile,plan,self.adapter,'合成测试：保存预览的两类资料')
         self.assertEqual(first['groups']['collaboration']['status'],'saved');self.assertEqual(first['groups']['rules']['status'],'uncertain')
         state=read_json(self.profile/'state.json');self.assertEqual(state['long_term_sources_status']['collaboration'],'feishu_active');self.assertEqual(state['long_term_sources_status']['rules'],'legacy_pending')
         self.adapter.fail_key=None;second=apply_personal_migration(self.profile,plan,self.adapter,'合成测试：保存预览的两类资料')
         self.assertEqual(second['status'],'saved');self.assertEqual(self.adapter.writes,2)
-        self.assertEqual(self.adapter.docs['methodology.current']['content'].count('NIANXIANG_PERSONAL_RULES_V1='),1)
+        self.assertEqual(self.adapter.docs['content.methods']['content'].count('NIANXIANG_PERSONAL_RULES_V1='),1)
         self.assertTrue((self.profile/'rules.local.json').exists())
     def test_changed_source_or_legacy_conflicts_before_write(self):
         self.legacy();plan=plan_personal_migration(self.profile,self.adapter)

@@ -8,7 +8,7 @@
 
 `<profile>`表示选定的 `<data-root>/profiles/<UUID>`，是本地私有目录的记号，不是包内相对路径：
 
-- `local-config.json`：schema=4，12知识映射与四张Base表；不保存认证密钥。
+- `local-config.json`：schema=5，13知识映射与四张Base表；不保存认证密钥。
 - `state.json`：布局版本1，账号、空间与连接启用状态。
 - 旧 `user-profile.json`：迁移前的已授权称呼，仅保留供显式迁移，不再新增。
 - 旧 `rules.local.json`、`business-conventions.md`：保留范围与来源，按[个人源协议](personal.md)显式归位；长期权威是飞书，不直接继续追加旧文件。
@@ -45,9 +45,9 @@ python3 scripts/manage.py --data-dir '<私人根>' --profile '<UUID>' profile ve
 
 ## 实时核验与读取
 
-选择档案后，仅从该档读取配置。接受 `knowledge_backend=feishu`、`identity=user`、`fail_closed=true`、schema=4及完整12映射、四表。未知对象、占位符、同名、跨空间、父节点变化或token配对变化都停止对应访问，不猜相似节点。
+选择档案后，仅从该档读取配置。接受 `knowledge_backend=feishu`、`identity=user`、`fail_closed=true`、schema=5及完整13映射、四表。未知对象、占位符、同名、跨空间、父节点变化或token配对变化都停止对应访问，不猜相似节点。
 
-正文用obj_token；节点身份与父子关系用node_token。资产分类文档在`content.assets`的直属、同空间、唯一精确标题的docx节点中按契约动态发现，不扩大到其他子树；此动态子节点操作由原生工具按同一核验与授权流程完成。
+正文用obj_token；节点身份与父子关系用node_token。资产分类文档在`content.assets`的直属、同空间、唯一精确标题的docx节点中按契约动态发现，不扩大到其他子树；`02｜内容范式库`同样只在`methodology.current`直属子节点中动态发现，核对唯一精确标题、同空间、同父节点、docx类型和token配对。`content.methods`固定映射到其直属《01｜创作方法与规则》，实质方法及私人规则读写不写导航页。动态子节点操作由原生工具按同一核验与授权流程完成。
 
 普通新任务按[使用时后台同步](../system/synchronization.md)从选定profile按需读本地源快照；到期启动独立只读worker，前台继续共创。同任务固定已读版本。示例：
 
@@ -74,6 +74,10 @@ python3 scripts/manage.py --data-dir '<私人根>' --profile '<UUID>' knowledge 
 只有saved可以说“已保存”。pending表示还未尝试远端写入；uncertain表示已尝试但无法核实；conflict表示基础版本或业务键冲突；blocked表示身份、授权、权限或能力不满足。保存成功才刷新已确认的写入结果与源快照。
 
 恢复先查询真实对象。同一operation_id绑定原请求，不重复创建；源变化或新范围重新决定。已尝试而未找到结果时保持uncertain，人工核查后才允许新操作，不盲目重放。Base写前检查与写后回读没有分布式条件更新保证，首版同一资料一次由一个Agent修改。
+
+## 配置结构升级
+
+旧schema=4配置不直接启用新版连接。使用`profile upgrade-plan --output`只读预览，`profile upgrade-apply --plan --consent`在具体授权内升级。升schema前实时核验所有旧映射；旧导航存在非空、重复或损坏的私人规则机器段时blocked，须先按[个人源协议](personal.md)授权迁移正文、回读并移除旧段，不能自动忽略或丢失规则。沿已授权的结构调整范围保留原有12映射与四表，核验`methodology.current`直属《01｜创作方法与规则》并新增`content.methods`，升级schema=5；服务案例与范式子库仍动态发现，不增加固定映射。写入配置后重新验证账号、13映射与四表，再刷新快照和私人规则投影。无法定位、同名、跨空间或token配对变化时停止，不能猜目标或用旧导航正文兜底；私人规则机器段的唯一源迁移见[个人源协议](personal.md)。
 
 ## 旧资料迁移与发行
 

@@ -12,7 +12,7 @@ import uuid
 from .models import NianxiangError, digest, read_json, write_json, now, profile_lock
 from .knowledge import profile_state, configuration, verify_account, verify_node, OFFLINE
 
-CONTEXT_KEYS=('content.strategy','audience.needs','ip.profile','expression.baseline','methodology.current','content.assets')
+CONTEXT_KEYS=('content.strategy','audience.needs','ip.profile','expression.baseline','methodology.current','content.assets','content.methods')
 INTERVAL=86400
 RUN_LEASE=1800
 
@@ -68,7 +68,7 @@ def make_snapshot(current,state,config,key,previous=None):
         raise NianxiangError('target_mismatch','source belongs to another identity or object')
     if current.get('revision') is None or 'content' not in current:raise NianxiangError('invalid_response','version and body are required')
     # Validate machine sections before the source becomes usable for personalization.
-    if key in ('ip.profile','methodology.current'):
+    if key in ('ip.profile','content.methods'):
         from .personal import parse_personal_source
         parse_personal_source(current['content'],'collaboration' if key=='ip.profile' else 'rules')
     same=bool(previous and previous['revision']==current['revision'] and previous['content_digest']==digest(current['content']))

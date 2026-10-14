@@ -2,17 +2,19 @@
 
 面向个人 IP 与一人公司的开源内容 Skill。阿响和你一起聊素材、挖选题、写朋友圈、做口播；需要保存时，再按你的授权连接个人内容知识库。
 
-**当前公开内测：v0.1.0-beta.12 · MIT 开源。**
+**当前公开内测：v0.1.0-beta.14 · MIT 开源。**
 
 ## 内测用户从这里开始
 
-**[复制安装与首次使用提示词 →](BETA-START.md#可复制提示词)**
+**[下载当前 Skill 安装包 →](https://github.com/KaenZhong/nianxiang-content-os/releases/download/v0.1.0-beta.14/nianxiang-content-os-0.1.0-beta.14.zip)** · **[查看更新说明 →](https://github.com/KaenZhong/nianxiang-content-os/releases/tag/v0.1.0-beta.14)**
+
+[全部公开内测版本](https://github.com/KaenZhong/nianxiang-content-os/releases) · [复制通用安装提示词](BETA-START.md#可复制提示词)
 
 把提示词发给你准备使用的 Agent，它会检查当前平台、协助取得完整 Skill、引导确认私人目录，再开始第一份素材共创。没有私人知识库也能先试用。
 
 若需要手动下载：
 
-1. 在 [beta.12 Release](https://github.com/KaenZhong/nianxiang-content-os/releases/tag/v0.1.0-beta.12) 下载标准安装ZIP、`SHA256SUMS` 和 `LICENSE`，核对ZIP摘要。
+1. 在 [beta.14 Release](https://github.com/KaenZhong/nianxiang-content-os/releases/tag/v0.1.0-beta.14) 下载标准安装ZIP、`SHA256SUMS` 和 `LICENSE`，核对ZIP摘要。
 2. 首次安装时解压并导入完整的 **`nianxiang-content-os/` 目录**；已有安装将标准ZIP交给受控更新入口，不直接覆盖目录。
 3. 在目标 Agent 中发送[安装提示词](BETA-START.md#可复制提示词)，分别确认实际安装、当前对话读取、新会话生效和私人目录状态。
 
@@ -39,7 +41,7 @@
 
 ## 内测范围
 
-- beta.12是当前公开使用基线；历史beta.10兼容试验不作为推荐安装版本。
+- beta.14是当前公开使用基线；历史beta.10兼容试验不作为推荐安装版本。
 - 本地隔离环境的160项自动测试通过。跨平台完整旅程、真实账号能力和云端重启持久性仍须按实际环境验收。
 - 没有飞书工具仍可基于当轮素材共创；长期保存和恢复取决于实际文件及账号能力。
 - 标准Release安装包与SHA-256校验文件已提供；仍没有自动下载更新功能（release_source=null）。冻结公共包内的候选交付描述以本仓库的公开许可及发行说明为准。

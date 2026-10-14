@@ -13,3 +13,13 @@
 **/*.pyc
 **/.nianxiang/
 **/profiles/
+
+!/maintainer-skills/
+!/maintainer-skills/nianxiang-content-os-dev/
+!/maintainer-skills/nianxiang-content-os-dev/SKILL.md
+!/maintainer-skills/nianxiang-content-os-dev/agents/
+!/maintainer-skills/nianxiang-content-os-dev/agents/openai.yaml
+!/maintainer-skills/nianxiang-content-os-dev/references/
+!/maintainer-skills/nianxiang-content-os-dev/references/project-map.md
+!/maintainer-skills/nianxiang-content-os-dev/references/workflow.md
+!/maintainer-skills/nianxiang-content-os-dev/references/lessons.md

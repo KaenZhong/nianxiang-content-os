@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.17",
+  "version": "0.1.0-beta.18",
   "entry": "SKILL.md",
   "knowledge_schema_version": 5,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "056890001cb3b917875801ce235fdc4172fe60c920fdf61bc7e6a9681725bdff",
-      "size": 9580
+      "sha256": "984e7cd4d43977b1322117f2ceecd1f2d7617b026736227db52d89ab09f9fac0",
+      "size": 10385
     },
     "README.md": {
       "sha256": "f6ac5be7a6ac2a3a62754bb8b9444f3ae3e7b8ba0b7744b15ed69f6c5f470fcc",
@@ -20,8 +20,8 @@
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "3aad150f272cef604149c9700c90c8aa5938007a4b7b8fd5d3fd1d1d9ba20919",
-      "size": 15219
+      "sha256": "3afc45c99252715e16d0eec6f5aff704f8e733aacdad96af1533f970fdb3343a",
+      "size": 15294
     },
     "references/system/data-ownership.md": {
       "sha256": "e5b867a10bab42c488eba6e67dd238b118215dfcfd7c61e057147351e4ec2a3f",
@@ -64,8 +64,8 @@
       "size": 7341
     },
     "references/creation/workflow.md": {
-      "sha256": "01fc9aa32cc6ee62a844e3be32cccdc1736abf1b6e81dbb61cf81a78ef6806e2",
-      "size": 34938
+      "sha256": "f101a0eafaf5087472a831136f8e075327d8acfa846842d349cc84335449c268",
+      "size": 36251
     },
     "references/creation/topic-map.md": {
       "sha256": "a7a40be3d81a0487098d908e37cf0913c910d3886a400797c73bdbe0dcc31383",
@@ -76,16 +76,16 @@
       "size": 13501
     },
     "references/knowledge/assets.md": {
-      "sha256": "be03b424654641696d85bf7906b13c7f8847c70c437c2e7ce17cee61cbd59b71",
-      "size": 5358
+      "sha256": "17513854ed8388fdd02d6f20f2a2901a711987a85d874e1b03b4b30fcd876644",
+      "size": 8237
     },
     "references/knowledge/connection.md": {
       "sha256": "239d86a429f43796095b003bb1a70d3a0f522a6158b2a73c745fbad8326bb7e0",
       "size": 10554
     },
     "references/knowledge/map.md": {
-      "sha256": "0edf56d64ba060311ead1639ecd2b0b6bdb90b8189493a330b23c57643889fbc",
-      "size": 6775
+      "sha256": "39ff416264163caa5203f867f1fc44da20925b8a58ab3174cd73795f8909d532",
+      "size": 6963
     },
     "references/knowledge/personal.md": {
       "sha256": "266873e6ca7a812c3278dd12c81e40c798f25605a4d9973777133d6d02cf9555",
@@ -112,8 +112,8 @@
       "size": 8169
     },
     "references/knowledge/works.md": {
-      "sha256": "28d7fad883fc5a01d766aa81c152863e723fa51a98de6854743cb99cfebc65ed",
-      "size": 13764
+      "sha256": "c2cfe1915acfab733f15e167727a994b1e3dfd72c4f3bb616319645925f42634",
+      "size": 14300
     },
     "references/knowledge/co-creation-records.md": {
       "sha256": "714c36340df59ee94f0d26bad9be51df35d91a46304c1a8e346b2a95947f1305",
@@ -128,8 +128,8 @@
       "size": 7838
     },
     "references/maintenance/acceptance.md": {
-      "sha256": "a493ef8be2bd908a329344c8fe5e8a7df7c36239f1ad8cee3ae98444f476bb3d",
-      "size": 36449
+      "sha256": "35cb3822e7fc27d3758dd2385bac0bc4c2c8e3d4ea2d46813d1bf06a97be4604",
+      "size": 37744
     },
     "tests/test_core_journey.py": {
       "sha256": "ab94c5e83d279eecc4742c161c43deb8c793dfb0d341167ee543cedd49406267",

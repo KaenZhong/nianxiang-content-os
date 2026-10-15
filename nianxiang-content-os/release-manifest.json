@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.16",
+  "version": "0.1.0-beta.17",
   "entry": "SKILL.md",
   "knowledge_schema_version": 5,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "41a7de914738166af6e2543d582453743374f91f95439378f38d9cafa471f293",
-      "size": 9002
+      "sha256": "056890001cb3b917875801ce235fdc4172fe60c920fdf61bc7e6a9681725bdff",
+      "size": 9580
     },
     "README.md": {
       "sha256": "f6ac5be7a6ac2a3a62754bb8b9444f3ae3e7b8ba0b7744b15ed69f6c5f470fcc",
@@ -20,7 +20,7 @@
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "d720b1e36838b05a452a816d23124b66c59f374bc41948feee1df71941134f5c",
+      "sha256": "3aad150f272cef604149c9700c90c8aa5938007a4b7b8fd5d3fd1d1d9ba20919",
       "size": 15219
     },
     "references/system/data-ownership.md": {
@@ -64,8 +64,8 @@
       "size": 7341
     },
     "references/creation/workflow.md": {
-      "sha256": "42a46d66263e6860f3d9de01f5fa2ceb7a5c6250ae4afe9400da8d72fb5dba34",
-      "size": 34619
+      "sha256": "01fc9aa32cc6ee62a844e3be32cccdc1736abf1b6e81dbb61cf81a78ef6806e2",
+      "size": 34938
     },
     "references/creation/topic-map.md": {
       "sha256": "a7a40be3d81a0487098d908e37cf0913c910d3886a400797c73bdbe0dcc31383",
@@ -112,8 +112,8 @@
       "size": 8169
     },
     "references/knowledge/works.md": {
-      "sha256": "cd760a24dccc97fb822a560cad35c7c4067cb68e9d6f431d0e14397f876b388c",
-      "size": 12477
+      "sha256": "28d7fad883fc5a01d766aa81c152863e723fa51a98de6854743cb99cfebc65ed",
+      "size": 13764
     },
     "references/knowledge/co-creation-records.md": {
       "sha256": "714c36340df59ee94f0d26bad9be51df35d91a46304c1a8e346b2a95947f1305",
@@ -128,8 +128,8 @@
       "size": 7838
     },
     "references/maintenance/acceptance.md": {
-      "sha256": "0b473ec5aa38d6e5706ab569acc56be7b46a6bfa3887e69ef078056f2ae3b362",
-      "size": 35486
+      "sha256": "a493ef8be2bd908a329344c8fe5e8a7df7c36239f1ad8cee3ae98444f476bb3d",
+      "size": 36449
     },
     "tests/test_core_journey.py": {
       "sha256": "ab94c5e83d279eecc4742c161c43deb8c793dfb0d341167ee543cedd49406267",

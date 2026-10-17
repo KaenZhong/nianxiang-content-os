@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.18",
+  "version": "0.1.0-beta.19",
   "entry": "SKILL.md",
   "knowledge_schema_version": 5,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "984e7cd4d43977b1322117f2ceecd1f2d7617b026736227db52d89ab09f9fac0",
-      "size": 10385
+      "sha256": "b5c6c7894e1d6782b40fcbae57dfb403cb89397a1368f27423a271cf0752dc11",
+      "size": 11079
     },
     "README.md": {
       "sha256": "f6ac5be7a6ac2a3a62754bb8b9444f3ae3e7b8ba0b7744b15ed69f6c5f470fcc",
@@ -20,8 +20,8 @@
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "3afc45c99252715e16d0eec6f5aff704f8e733aacdad96af1533f970fdb3343a",
-      "size": 15294
+      "sha256": "306c2976404cae156e25df465f9b4eb1cf708c9f060390d1ea9f7089ebfc1b19",
+      "size": 15387
     },
     "references/system/data-ownership.md": {
       "sha256": "e5b867a10bab42c488eba6e67dd238b118215dfcfd7c61e057147351e4ec2a3f",
@@ -60,16 +60,16 @@
       "size": 5571
     },
     "references/creation/topics.md": {
-      "sha256": "6fd79c1d5a50ba577c0d65a965a11c33d215045be20c8a15a6055b2b93d527fd",
-      "size": 7341
+      "sha256": "8980f9173dc5d5ad387731d724cb97a75ba87005395af5477e7d13e2461f102e",
+      "size": 8085
     },
     "references/creation/workflow.md": {
-      "sha256": "f101a0eafaf5087472a831136f8e075327d8acfa846842d349cc84335449c268",
-      "size": 36251
+      "sha256": "aeeb327faf6a71a34cdd796ec14e54aa6f3757bf411a6e805f75197d5318af85",
+      "size": 36641
     },
     "references/creation/topic-map.md": {
-      "sha256": "a7a40be3d81a0487098d908e37cf0913c910d3886a400797c73bdbe0dcc31383",
-      "size": 6355
+      "sha256": "623a9afb8de2d261dc9c673332910c1726d7c07abe8caea12d42f99852532733",
+      "size": 6600
     },
     "references/creation/moments.md": {
       "sha256": "0a1e6267ecd17c550b6e9178d47b91a2002fd69be20406bcd5e25920076d76f9",
@@ -128,8 +128,8 @@
       "size": 7838
     },
     "references/maintenance/acceptance.md": {
-      "sha256": "35cb3822e7fc27d3758dd2385bac0bc4c2c8e3d4ea2d46813d1bf06a97be4604",
-      "size": 37744
+      "sha256": "5f668867d610a0b7894e5e66ec10e95ed808ab544c88a6cec54d9ddf97ca9667",
+      "size": 39236
     },
     "tests/test_core_journey.py": {
       "sha256": "ab94c5e83d279eecc4742c161c43deb8c793dfb0d341167ee543cedd49406267",
@@ -208,12 +208,12 @@
       "size": 2476
     },
     "agent/methodology.md": {
-      "sha256": "ab43f2cb228d80c71bbcea62092838dfeab1411af6a0ea57c5ce0b679e2f420d",
-      "size": 4286
+      "sha256": "8cec82a55e3a62da13475957552e5d451ca49892b366d85e2dac0fd3ab929444",
+      "size": 4766
     },
     "agent/SOUL.md": {
-      "sha256": "fb31224ad5a803e86c24ae6d1afaea9f6d69113dbbc18c9e8b96fca0ea5bde35",
-      "size": 12902
+      "sha256": "7060f90ce61dc365bf0ed6cc681546cd1f0d6b50d588b23f3b296056516ab26f",
+      "size": 13047
     },
     "agent/AGENTS.md": {
       "sha256": "889c2a150588d652c84a03fb757408362a52bdd0444c6e61031e0c33bdabb483",

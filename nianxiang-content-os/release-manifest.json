@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.19",
+  "version": "0.1.0-beta.20",
   "entry": "SKILL.md",
   "knowledge_schema_version": 5,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "b5c6c7894e1d6782b40fcbae57dfb403cb89397a1368f27423a271cf0752dc11",
-      "size": 11079
+      "sha256": "8243ccaf45f0ebeec59e6b8ca9f791cfa17f52a1e696f0be53d25682d7049327",
+      "size": 11704
     },
     "README.md": {
       "sha256": "f6ac5be7a6ac2a3a62754bb8b9444f3ae3e7b8ba0b7744b15ed69f6c5f470fcc",
@@ -20,7 +20,7 @@
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "306c2976404cae156e25df465f9b4eb1cf708c9f060390d1ea9f7089ebfc1b19",
+      "sha256": "7a93d5eda3f07287b956c1ba0b5d12162e7d71aab219be13b723097b81ca952a",
       "size": 15387
     },
     "references/system/data-ownership.md": {
@@ -60,12 +60,12 @@
       "size": 5571
     },
     "references/creation/topics.md": {
-      "sha256": "8980f9173dc5d5ad387731d724cb97a75ba87005395af5477e7d13e2461f102e",
-      "size": 8085
+      "sha256": "caaa6c8e1824c6561ce0c88e85b97790be56620e8fce4318949e885cb8410711",
+      "size": 8262
     },
     "references/creation/workflow.md": {
-      "sha256": "aeeb327faf6a71a34cdd796ec14e54aa6f3757bf411a6e805f75197d5318af85",
-      "size": 36641
+      "sha256": "8f24ab216e76f83fb80b527b88f2c40cccae48dd7244da7aef650ac3a072e803",
+      "size": 36719
     },
     "references/creation/topic-map.md": {
       "sha256": "623a9afb8de2d261dc9c673332910c1726d7c07abe8caea12d42f99852532733",
@@ -128,8 +128,8 @@
       "size": 7838
     },
     "references/maintenance/acceptance.md": {
-      "sha256": "5f668867d610a0b7894e5e66ec10e95ed808ab544c88a6cec54d9ddf97ca9667",
-      "size": 39236
+      "sha256": "eb19ac8df4fec4b4a9f1a3acc8626e63337c655551049086b06107b3c38e10d3",
+      "size": 40429
     },
     "tests/test_core_journey.py": {
       "sha256": "ab94c5e83d279eecc4742c161c43deb8c793dfb0d341167ee543cedd49406267",
@@ -208,12 +208,12 @@
       "size": 2476
     },
     "agent/methodology.md": {
-      "sha256": "8cec82a55e3a62da13475957552e5d451ca49892b366d85e2dac0fd3ab929444",
-      "size": 4766
+      "sha256": "afaa15b1559febd7b57d4b0d93828dd09043dff97d25057095e80ee4b36dc455",
+      "size": 5002
     },
     "agent/SOUL.md": {
-      "sha256": "7060f90ce61dc365bf0ed6cc681546cd1f0d6b50d588b23f3b296056516ab26f",
-      "size": 13047
+      "sha256": "948951cc6470a9076a93d986a30ab725ffae2b2332d4207455c2ec6099b01188",
+      "size": 15648
     },
     "agent/AGENTS.md": {
       "sha256": "889c2a150588d652c84a03fb757408362a52bdd0444c6e61031e0c33bdabb483",

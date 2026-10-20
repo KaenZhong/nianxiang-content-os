@@ -15,7 +15,7 @@ from runtime.bootstrap import plan_bootstrap,resume_bootstrap,authorize_bootstra
 from runtime.releases import build_manifest,verify_release,apply_release,rollback_release,recover_release,check_update,installation_state_path,installation_status,plan_name_migration,apply_name_migration
 from runtime.personal import read_personal_context,plan_personal_migration,apply_personal_migration,export_personal_context,save_preferred_name
 from runtime.tasks import create_task,update_task,resume_task
-from runtime.sync import read_context,sync_context,sync_status,CONTEXT_KEYS
+from runtime.sync import read_context,sync_context,sync_status,mark_source_changed,CONTEXT_KEYS
 from runtime.config_upgrade import plan_config_upgrade,apply_config_upgrade,verify_methods_authority
 from validate_local_config import validate
 
@@ -78,6 +78,7 @@ def main():
     ks.add_parser('pending')
     p=ks.add_parser('sync');p.add_argument('knowledge_ids',nargs='*',default=list(CONTEXT_KEYS))
     ks.add_parser('sync-status')
+    p=ks.add_parser('invalidate');p.add_argument('knowledge_ids',nargs='+')
     personal=groups.add_parser('personal');xs=personal.add_subparsers(dest='action',required=True)
     p=xs.add_parser('read');m=p.add_mutually_exclusive_group();m.add_argument('--refresh',action='store_true');m.add_argument('--cache-only',action='store_true');p.add_argument('--allow-stale',action='store_true');p.add_argument('--show-private-content',action='store_true')
     p=xs.add_parser('migration-plan');p.add_argument('--output',type=Path)
@@ -231,15 +232,19 @@ def main():
         elif args.action=='sync':outcome=sync_context(profile,args.knowledge_ids or list(CONTEXT_KEYS),adapter)
         elif args.action=='sync-status':
             status=sync_status(profile);outcome={k:v for k,v in status.items() if k in ('status','finished_at','code','knowledge_ids','retry_at','invalidations')}
+            outcome['current']=False
+        elif args.action=='invalidate':
+            mark_source_changed(profile,args.knowledge_ids)
+            outcome={'status':'invalidated','knowledge_ids':args.knowledge_ids,'code':'source_changed'}
         elif args.action=='save':
             request=read_json(args.request);request['authorization']=authorize_request(profile,request,consent(args));outcome=save_change(profile,request,adapter)
         elif args.action=='reconcile':outcome=reconcile_pending(profile,args.operation_id,adapter)
         else:
             outcome={'operations':[{'operation_id':p.stem,'status':read_json(p).get('status')} for p in (profile/'pending').glob('*.json') if read_json(p).get('status')!='saved']}
         # CLI status logs never contain remote IDs, source tokens or private body.
-        if 'status' in outcome:outcome={k:v for k,v in outcome.items() if k in ('status','message','readback_revision','snapshot_refresh','code','changed','full_reads','generation','finished_at','knowledge_ids','retry_at','invalidations')}
+        if 'status' in outcome:outcome={k:v for k,v in outcome.items() if k in ('status','current','message','readback_revision','snapshot_refresh','code','changed','full_reads','generation','finished_at','knowledge_ids','retry_at','invalidations')}
         emit(outcome)
-        return 0 if outcome.get('status','saved') in ('saved','synced','never_synced','starting','running') else 1
+        return 0 if outcome.get('status','saved') in ('saved','synced','invalidated','never_synced','starting','running') else 1
     except (NianxiangError,ValueError,KeyError,OSError) as exc:
         emit({'status':'blocked','message':getattr(exc,'code','invalid_input')});return 2
 

@@ -9,7 +9,7 @@ description: 念响内容OS，统一处理素材讨论、选题、个人IP朋友
 
 ## 维护信息
 
-当前版本：v0.1.0-beta.20 · 内测版
+当前版本：v0.1.0-beta.21 · 内测版
 开发者：卡昂  
 公众号：卡昂AI超能玩  
 使用反馈：kaenzhong@foxmail.com
@@ -22,7 +22,7 @@ description: 念响内容OS，统一处理素材讨论、选题、个人IP朋友
 
 1. 首次进入或人格上下文丢失时完整读取 [身份与关系](agent/IDENTITY.md)、[表达气质](agent/SOUL.md)、[执行协议](agent/AGENTS.md)，包括维护和短任务；已读取且仍完整有效时沿用，不每轮重读。阿响对话人格不自动写进用户作品。
 2. 按 [数据归属](references/system/data-ownership.md) 区分公共定义、飞书私人长期知识与本地运行状态。称呼仅使用用户明确指定、且记忆范围可核验的内容；缺失按 [首次协作](references/system/onboarding.md) 非阻断处理，不从账号或署名猜称呼。长期称呼按[个人源协议](references/knowledge/personal.md)在飞书保存并回读，旧本地档案只用于显式迁移。
-3. 新的实质共创按需读取 [判断方法](agent/methodology.md)，按[连接与核验](references/knowledge/connection.md)从选定配置档按需读取经营策略与表达风格源快照，按[使用时后台同步](references/system/synchronization.md)本地优先、到期后台刷新，普通共创不等待远端；同任务固定已读版本，轻聊、状态查询及纯维护不加载速照。无可信快照、明确要求最新或已知关键失效时，才核验所需远端资料。
+3. 新的实质共创按需读取 [判断方法](agent/methodology.md)，按[连接与核验](references/knowledge/connection.md)从选定配置档按需读取经营策略与表达风格源快照，按[飞书核验与本地缓存](references/system/synchronization.md)在新一轮实质共创先核验相关源版本，未变复用正文；同任务固定已读版本，轻聊、状态查询及纯维护不加载速照。远端不可用时才回退到未失效的可信缓存并说明核验日期，已知失效停止相关个性化。
 4. 无私有配置、策略、基线或飞书能力时，使用用户提供的事实、目标和限制完成能独立做的创作，不要求先连接知识库、不假称已校准最新策略或个人风格。零条确认规则不补造风格。访问私人知识与恢复历史对象时，按 [上下文与验收](references/creation/context-and-review.md) 及实际可用连接核验。用户希望建立长期知识时，走[分批建库](references/knowledge/bootstrap.md)与[首次协作](references/system/onboarding.md)，先校准必要知识再共创。
 5. 需要用户决定方向、渠道或具体候选时，先读取或沿用有效的[决策交互协议](references/system/interaction.md)，调用当前会话实际提供的原生提问工具；要求已明确时直接推进。协议统一维护触发、等待、答案匹配与文字降级，不把推荐或预选当作决定。
 6. 按 [系统任务流程](references/system/workflow.md) 识别五类任务及讨论/执行模式，按下面导航读取命中方法；不把所有参考文件或整份知识库一次加载。素材讨论、选题与单篇共创必须先读取或沿用有效的[共创工作流](references/creation/workflow.md)，再加载所需专项方法，不能因提到“朋友圈”或“口播”而直接跳到渠道写法。出稿意图与选题判断的门禁由共创工作流维护；用户没有明确要求出稿时先判断素材、推荐选题，一般先判断，只有明确要求生成完整稿或明确接受出稿建议且关键事实足够时才出稿；“我要写一条”仍属内容意向。
@@ -46,7 +46,7 @@ description: 念响内容OS，统一处理素材讨论、选题、个人IP朋友
 | 作品入库、沉淀时核验作品与发布信息、补朋友圈沉淀 | [作品契约](references/knowledge/works.md) | 包内和外部作品均可入库；任务目录不是白名单 |
 | 查找、收录、更新或分类整理内容资产 | [资产分类与收录](references/knowledge/assets.md) | 服务及本人实践归服务案例库并注明类型；具体表达、结构或视觉拆解归方法论下内容范式库；完整图文范式可建该库子文档，短范式用库内条目；按具体授权查重保存并核验正文及目录位置 |
 | 多内容、多阶段且有限周期的项目 | [战役契约](references/knowledge/campaigns.md) | 只在达到战役门槛并获得建立/更新授权时写入 |
-| 本地快照、后台同步、刷新延迟或明确同步资料 | [使用时后台同步](references/system/synchronization.md) | 使用触发，无定时任务；具体保存仍实时核验 |
+| 本地快照、后台同步、刷新延迟或明确同步资料 | [飞书核验与本地缓存](references/system/synchronization.md) | 新任务核验相关版本，同轮沿用；保存后更新或标记缓存失效 |
 | 更新经营策略、受众与策略速照 | [策略维护](references/knowledge/strategy.md) | 核对上游、受众影响与派生速照，各自验收 |
 | 个人表达风格与速照维护 | [表达风格](references/knowledge/expression.md) | 不混入阿响人格或单篇渠道偏好 |
 | 私人规则归属、创作Skill机会与反馈 | [规则维护](references/maintenance/rules.md) | 实质方法与私人规则读写定向`content.methods`《01｜创作方法与规则》，方法论主文档只作导航；先查原规则与执行原因，再在具体授权范围内修改 |

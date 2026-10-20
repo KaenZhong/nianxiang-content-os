@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.20",
+  "version": "0.1.0-beta.21",
   "entry": "SKILL.md",
   "knowledge_schema_version": 5,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "8243ccaf45f0ebeec59e6b8ca9f791cfa17f52a1e696f0be53d25682d7049327",
-      "size": 11704
+      "sha256": "00cb21147c75b56e5eef885198eed52aea6c9a992a5eef83c9980db3a2183d2b",
+      "size": 12548
     },
     "README.md": {
       "sha256": "f6ac5be7a6ac2a3a62754bb8b9444f3ae3e7b8ba0b7744b15ed69f6c5f470fcc",
@@ -20,20 +20,20 @@
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "7a93d5eda3f07287b956c1ba0b5d12162e7d71aab219be13b723097b81ca952a",
-      "size": 15387
+      "sha256": "23a77e035f66c128796055d34f19c73f60547775c12b4ae5ca7683b918a4ee83",
+      "size": 15447
     },
     "references/system/data-ownership.md": {
-      "sha256": "e5b867a10bab42c488eba6e67dd238b118215dfcfd7c61e057147351e4ec2a3f",
-      "size": 3334
+      "sha256": "56af608fb191b1ef45810ec119fce96e3be5d9b0ff35044ea478199be1a03ea8",
+      "size": 3358
     },
     "references/system/workflow.md": {
-      "sha256": "c3b270890e6209cfd5bf95d5d3fc92317d3d66d0fa5c87b7926d2bb00006e467",
-      "size": 3898
+      "sha256": "05455e4d88f9a577f00afe591a12057a66b1927f02ff4d997edbbbe52f317def",
+      "size": 3892
     },
     "references/system/synchronization.md": {
-      "sha256": "2fab15ccf1e04778777a862d71635702aae9e8c0a0c783d058859597f5c17161",
-      "size": 6886
+      "sha256": "245bbc3641764f6d8c2681d460da527e435a4ee24091f86ea79437e6b0a5a81e",
+      "size": 5974
     },
     "references/system/interaction.md": {
       "sha256": "b0f45113d3e4d5c9477d2bcdd0f04b4b2f9a84ae0168206fed78e38a501add38",
@@ -56,44 +56,44 @@
       "size": 6429
     },
     "references/creation/context-and-review.md": {
-      "sha256": "ebf495917b0df3b5cffa7b73b285ba75544ebc91ab4ecfc07e72924195598d21",
-      "size": 5571
+      "sha256": "c928626bf35f7cc22f01ee77a1d75eb74185cf0098f61b2c263858518c27a122",
+      "size": 5972
     },
     "references/creation/topics.md": {
       "sha256": "caaa6c8e1824c6561ce0c88e85b97790be56620e8fce4318949e885cb8410711",
       "size": 8262
     },
     "references/creation/workflow.md": {
-      "sha256": "8f24ab216e76f83fb80b527b88f2c40cccae48dd7244da7aef650ac3a072e803",
-      "size": 36719
+      "sha256": "2d8cdca3bfa38e7209ec0c8594dd179c1c79083c796ec1aaea6749afca99b96e",
+      "size": 36755
     },
     "references/creation/topic-map.md": {
       "sha256": "623a9afb8de2d261dc9c673332910c1726d7c07abe8caea12d42f99852532733",
       "size": 6600
     },
     "references/creation/moments.md": {
-      "sha256": "0a1e6267ecd17c550b6e9178d47b91a2002fd69be20406bcd5e25920076d76f9",
-      "size": 13501
+      "sha256": "7e901d40bbee630920c55046b2a644ed94b05515dd7dabaf70c4a826bde3d932",
+      "size": 14617
     },
     "references/knowledge/assets.md": {
       "sha256": "17513854ed8388fdd02d6f20f2a2901a711987a85d874e1b03b4b30fcd876644",
       "size": 8237
     },
     "references/knowledge/connection.md": {
-      "sha256": "239d86a429f43796095b003bb1a70d3a0f522a6158b2a73c745fbad8326bb7e0",
-      "size": 10554
+      "sha256": "73926cbe0362e164773c3767a16c0b074548d277974c345bcd16dd5cf2357eaa",
+      "size": 10723
     },
     "references/knowledge/map.md": {
-      "sha256": "39ff416264163caa5203f867f1fc44da20925b8a58ab3174cd73795f8909d532",
-      "size": 6963
+      "sha256": "6600237db5d93094672bbce4e95739c43929ec26000dd03209efcc44d9c62de6",
+      "size": 6948
     },
     "references/knowledge/personal.md": {
-      "sha256": "266873e6ca7a812c3278dd12c81e40c798f25605a4d9973777133d6d02cf9555",
-      "size": 5784
+      "sha256": "eccbd69554e4c03c46e70761eeac6a1b4518419a54b8b1312b40e64dc4f613c8",
+      "size": 5796
     },
     "references/knowledge/expression.md": {
-      "sha256": "6ed5b4220378e7d7f1139ffa2381ae8303469640f31fe080669789aa0dc2e22a",
-      "size": 4652
+      "sha256": "2db62d774799b5ca5ae97e7aae69d5e4d92ee91343b077892836b69a5f78d68a",
+      "size": 4679
     },
     "references/knowledge/bootstrap.md": {
       "sha256": "e169ea3fd6f1dbb6976332c33f5cdc6ea67018609f900b80ad3244d5e8e6081a",
@@ -128,16 +128,16 @@
       "size": 7838
     },
     "references/maintenance/acceptance.md": {
-      "sha256": "eb19ac8df4fec4b4a9f1a3acc8626e63337c655551049086b06107b3c38e10d3",
-      "size": 40429
+      "sha256": "ecd4c7211c1d37015c42de5363e0d701b34c07520cee202b0e261e073b7ba8e9",
+      "size": 41285
     },
     "tests/test_core_journey.py": {
       "sha256": "ab94c5e83d279eecc4742c161c43deb8c793dfb0d341167ee543cedd49406267",
       "size": 5082
     },
     "tests/test_context_sync.py": {
-      "sha256": "528596b427f76b139834589f2a511c02072d1f01e7e0f7a0d5e78915a80d19ff",
-      "size": 14239
+      "sha256": "c6357b21532952fb314281b136f89b864ef59db8d36b8b5102ad2082ec11174b",
+      "size": 18286
     },
     "tests/test_os_journey.py": {
       "sha256": "a55d8de4124ddc039841f64109185aa2963a7932bbf6cd126e1aad024a335e86",
@@ -260,8 +260,8 @@
       "size": 3961
     },
     "scripts/manage.py": {
-      "sha256": "f58edef8ba7e03369d4fc2da07d2e7ae5ab5d2aafe43ffad1dd1787f37ae4448",
-      "size": 21568
+      "sha256": "c092a4a1523fba5a3eda3dea249f47bd510098cd8448b18cd56c24cb0e32b7d5",
+      "size": 21929
     },
     "scripts/select_local_rules.py": {
       "sha256": "4bb8847ca8b164cb6d82bf1d5dc58d3f40612424ae4d9998f7f5eac81fdd2edd",
@@ -272,12 +272,12 @@
       "size": 10957
     },
     "scripts/runtime/sync.py": {
-      "sha256": "ea054da148419c2dd298256b8579e00ec910a9a2bfba572115fdc66a3c920c5a",
-      "size": 17392
+      "sha256": "15963b1bd5eeb1fb4dc97128df9201f4d1142d4a95cd6851d6776c7332dc9c46",
+      "size": 18326
     },
     "scripts/runtime/tasks.py": {
-      "sha256": "b86a0fcdeaef288236c1da1fd6e6c7a666082e2eb56a8b345156c3f4c9eac4f4",
-      "size": 10736
+      "sha256": "66b7b846e58008322d6c5077c7d256ebf64d95d9abf3367f83179ef04396a8ea",
+      "size": 11013
     },
     "scripts/runtime/models.py": {
       "sha256": "cbe1e30c4884c13aed3a16eb4d2eaf49abd00867d23b0149fc3eaef873c95bee",
@@ -308,8 +308,8 @@
       "size": 9199
     },
     "scripts/runtime/knowledge.py": {
-      "sha256": "8131fa14ed47a76db0e8d6cfa2bbc34446fafa3f2ef64c2b7468842f323afea1",
-      "size": 15380
+      "sha256": "a6b9a8929a081186379c442f500d0224983979612ef992525edb9197b82b1e3e",
+      "size": 16021
     },
     "scripts/runtime/feishu_cli.py": {
       "sha256": "acef5d99f83c3ca3caab257e3af51d682987c640bce0deb4cf97aeb12c3d9fda",

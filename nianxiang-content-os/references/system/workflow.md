@@ -32,6 +32,6 @@ python3 -B scripts/manage.py --data-dir '<私人根>' --profile '<UUID>' task up
 python3 -B scripts/manage.py --data-dir '<私人根>' --profile '<UUID>' task resume --task-id '<任务UUID>' --show-private-content
 ```
 
-resume按[后台同步协议](synchronization.md)用本地长期上下文比较检查点版本；具体远端产物实时核验账号和对象，本地产物核验摘要，pending只查现状。--refresh要求最新上下文，返回ready/needs_input/needs_revalidation/blocked。它只恢复可核验的下一步，零远端写入，不重放保存或过期选择卡。uncertain仍是不确定，不能转为已保存/已发布；新动作沿用仍有效的具体授权或补足新范围授权。
+resume按[缓存协议](synchronization.md)用本地长期上下文比较检查点版本；具体远端产物实时核验账号和对象，本地产物核验摘要，pending只查现状。--refresh要求最新上下文，返回ready/needs_input/needs_revalidation/blocked。它只恢复可核验的下一步，零远端写入，不重放保存或过期选择卡。uncertain仍是不确定，不能转为已保存/已发布；新动作沿用仍有效的具体授权或补足新范围授权。
 
 默认命令只输出状态，正文和私人选择仅显式--show-private-content。无文件能力时不承诺持久任务日志，当前会话沿用有效上下文，跨会话从飞书查回已保存对象；未保存素材如实说明缺失。需要关键决策时遵循[交互协议](interaction.md)，答案到达才推进，不把预选当确认。

@@ -128,7 +128,7 @@ def _save(profile,request,adapter):
     try:
         state=validate_request(profile,request);config=configuration(profile)
     except NianxiangError as exc:return result('blocked',exc.code)
-    from .sync import error_versions,invalidate_sources
+    from .sync import error_versions,invalidate_sources,mark_source_changed,CONTEXT_KEYS
     source_errors=error_versions(profile,state,config,[request['target']['knowledge_id']])
     op=request['operation_id'];journal=profile/'pending'/f'{op}.json';signature=digest({'request':request_signature(request),'binding':request['authorization']['binding_digest']})
     prior=read_json(journal) if journal.exists() else None
@@ -151,11 +151,13 @@ def _save(profile,request,adapter):
                 from .sync import make_snapshot,publish_snapshots
                 snap=make_snapshot(actual,state,config,target['knowledge_id'])
                 publish_snapshots(profile,{target['knowledge_id']:snap},state,config,locked=True,expected_errors=source_errors)
-            except NianxiangError as exc:
+            except (NianxiangError,OSError) as exc:
                 outcome['snapshot_refresh']='deferred'
-                if exc.code=='invalid_personal_source':
+                if target['knowledge_id'] in CONTEXT_KEYS:mark_source_changed(profile,[target['knowledge_id']])
+                if getattr(exc,'code',None)=='invalid_personal_source':
                     from .sync import _record
                     _record(profile,state,config,'blocked',[target['knowledge_id']],exc.code)
+                write_json(journal,entry)
             return outcome
         if is_record and actual and request['action']=='update':
             original=actual.get('content',{}).get('第一版')
@@ -169,6 +171,9 @@ def _save(profile,request,adapter):
         if not is_record and request['action']=='replace':
             entry['expected_document_digest']=digest(actual['content'].replace(content['pattern'],content['replacement'],1))
         entry.update(attempted=True,status='uncertain',attempted_at=now());write_json(journal,entry)
+        if not is_record and target['knowledge_id'] in CONTEXT_KEYS:
+            marked=mark_source_changed(profile,[target['knowledge_id']])
+            source_errors[target['knowledge_id']]=marked['invalidation_versions'][target['knowledge_id']]
         # Crash after dispatch is uncertain, including a successful write with failed readback.
         remote=adapter.write(request)
         actual=adapter.lookup(target,op) if is_record else adapter.read(target['knowledge_id'])
@@ -181,11 +186,13 @@ def _save(profile,request,adapter):
                 from .sync import make_snapshot,publish_snapshots
                 snap=make_snapshot(actual,state,config,target['knowledge_id'])
                 publish_snapshots(profile,{target['knowledge_id']:snap},state,config,locked=True,expected_errors=source_errors)
-            except NianxiangError as exc:
+            except (NianxiangError,OSError) as exc:
                 outcome['snapshot_refresh']='deferred'
-                if exc.code=='invalid_personal_source':
+                if target['knowledge_id'] in CONTEXT_KEYS:mark_source_changed(profile,[target['knowledge_id']])
+                if getattr(exc,'code',None)=='invalid_personal_source':
                     from .sync import _record
                     _record(profile,state,config,'blocked',[target['knowledge_id']],exc.code)
+                write_json(journal,entry)
         return outcome
     except NianxiangError as exc:
         invalidate_sources(profile,[request['target']['knowledge_id']],exc.code)

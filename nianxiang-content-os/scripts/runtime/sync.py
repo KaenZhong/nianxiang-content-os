@@ -1,4 +1,4 @@
-"""Local-first context and use-triggered detached refresh; no timers or remote writes."""
+"""Verify source revisions for new reads; trusted cache is an explicit offline fallback."""
 from __future__ import annotations
 import copy
 from contextlib import contextmanager
@@ -124,6 +124,15 @@ def invalidate_sources(profile,keys,code):
     _record(profile,state,config,'blocked',keys,code)
 
 
+def mark_source_changed(profile_dir,keys):
+    """Invalidate known old copies before external writes or after a newer revision is seen."""
+    profile=Path(profile_dir);state=profile_state(profile);config=configuration(profile)
+    keys=list(dict.fromkeys(keys))
+    if not keys or any(k not in CONTEXT_KEYS for k in keys):
+        raise NianxiangError('invalid_knowledge','choose long-term context sources')
+    return _record(profile,state,config,'blocked',keys,'source_changed')
+
+
 def _record(profile,state,config,status,keys,code=None,run_id=None,cache_locked=False):
     if not cache_locked:
         with profile_lock(profile,".context-cache.lock",blocking=True):
@@ -170,11 +179,17 @@ def sync_context(profile_dir,keys,adapter,run_id=None):
                 metadata=adapter.get_revision(key)
                 if metadata.get('document_id')!=node['obj_token'] or metadata.get('revision') is None:
                     raise NianxiangError('target_mismatch','metadata does not match the source')
+                if metadata['revision']!=previous['revision']:
+                    marked=mark_source_changed(profile,[key])
+                    errors[key]=marked['invalidation_versions'][key]
             if metadata and metadata['revision']==previous['revision']:
                 # Reparse validated personal sources; check time does not change body time.
                 current={**previous,'revision':metadata['revision']}
             else:
                 current=adapter.read(key);full_reads.append(key)
+                if previous and not metadata and current.get('revision')!=previous['revision']:
+                    marked=mark_source_changed(profile,[key])
+                    errors[key]=marked['invalidation_versions'][key]
                 if metadata and isinstance(metadata['revision'],int) and isinstance(current.get('revision'),int) and current['revision']<metadata['revision']:
                     raise NianxiangError('invalid_response','body response predates the checked revision')
             items[key]=make_snapshot(current,state,config,key,previous)
@@ -193,7 +208,7 @@ def sync_context(profile_dir,keys,adapter,run_id=None):
 
 
 def read_context(profile_dir,keys,adapter=None,require_latest=False,cache_only=False,launcher=None):
-    """Return a pinned local copy. Refresh age is never a foreground network gate."""
+    """Each call starts a source check unless cache-only; callers pin results within a task."""
     profile=Path(profile_dir);state=profile_state(profile);config=configuration(profile)
     keys=list(dict.fromkeys(keys))
     if not keys:raise NianxiangError('invalid_knowledge','choose configured knowledge IDs')
@@ -207,24 +222,25 @@ def read_context(profile_dir,keys,adapter=None,require_latest=False,cache_only=F
         if any(item['stale'] for item in live['knowledge'].values()):
             raise NianxiangError('offline','operational sources require live verification')
         return {'profile_id':state['profile_id'],'knowledge':{**local['knowledge'],**live['knowledge']},'generation':local['generation'],'sync':local['sync']}
-    _assert_readable(profile,state,config,keys) if not require_latest else None
     items,generation=local_items(profile,state,config,keys,tolerate_invalid=require_latest)
     initial=len(items)!=len(keys)
-    if require_latest or initial:
-        if cache_only or adapter is None:raise NianxiangError('cache_unavailable','no trusted local copy; initialize or supply current material')
+    current=False;activity={'status':'cache_only' if cache_only else 'unavailable','code':'adapter_unavailable'}
+    if require_latest and adapter is None:raise NianxiangError('source_unavailable','latest requires a live adapter')
+    if not cache_only and adapter is not None:
         synced=sync_context(profile,keys,adapter)
-        if synced['status']!='synced':raise NianxiangError(synced.get('code','source_unavailable'),'required source refresh failed')
-        items,generation=local_items(profile,state,config,keys)
-        current=True;activity=synced
-    else:
-        current=False;activity={'status':'not_due'}
-        due=any(time.time()-_epoch(x.get('checked_at',x.get('read_at')))>=INTERVAL for x in items.values())
-        if due and not cache_only:
-            # Capture local data above before spawning; worker completion cannot swap this response.
-            activity=(launcher or request_sync)(profile,list(CONTEXT_KEYS))
+        activity=synced
+        if synced['status']=='synced':
+            items,generation=local_items(profile,state,config,keys);current=True
+        else:
+            _assert_readable(profile,state,config,keys)
+            if require_latest or synced.get('code') not in OFFLINE:
+                raise NianxiangError(synced.get('code','source_unavailable'),'required source refresh failed')
+    if not current:
+        _assert_readable(profile,state,config,keys)
+        if initial:raise NianxiangError('cache_unavailable','no trusted local copy; supply current material')
     for key,item in items.items():
         expired=time.time()-_epoch(item.get('checked_at',item.get('read_at')))>=INTERVAL
-        items[key]={**item,'status':'current' if current else 'local','cached':not current,'current':current,
+        items[key]={**item,'status':'current' if current else ('local' if cache_only else 'offline_fallback'),'cached':not current,'current':current,
                     'stale':expired,'generation':generation,'account_verified_live':current}
     return {'profile_id':state['profile_id'],'knowledge':items,'generation':generation,'sync':activity}
 

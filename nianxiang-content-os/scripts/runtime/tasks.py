@@ -88,7 +88,12 @@ def resume_task(profile_dir,task_id,adapter,require_latest=False):
         loaded={}
         if data['context_refs']:
             from .sync import read_context
-            loaded=read_context(profile,[r['knowledge_id'] for r in data['context_refs']],adapter,require_latest=require_latest)
+            keys=[r['knowledge_id'] for r in data['context_refs']]
+            try:
+                loaded=read_context(profile,keys,adapter,require_latest=require_latest,cache_only=not require_latest)
+            except NianxiangError as exc:
+                if require_latest or exc.code not in ('cache_unavailable','live_source_required'):raise
+                loaded=read_context(profile,keys,adapter)
             for ref in data['context_refs']:
                 item=loaded['knowledge'][ref['knowledge_id']]
                 if require_latest and item['stale']:raise NianxiangError('offline','latest source verification is required')

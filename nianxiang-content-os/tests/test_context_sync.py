@@ -17,13 +17,72 @@ except ImportError:
 class ContextSync(Fixture, unittest.TestCase):
     def seed(self, keys=('content.strategy',)):
         load_context(self.profile,list(keys),self.adapter,True)
+    def test_new_task_checks_even_recent_cache_and_returns_changed_source(self):
+        self.seed();self.adapter.docs['content.strategy'].update(revision=2,content='new rule')
+        out=read_context(self.profile,['content.strategy'],self.adapter)
+        self.assertEqual(out['knowledge']['content.strategy']['content'],'new rule')
+        self.assertTrue(out['knowledge']['content.strategy']['current'])
+
+    def test_default_read_reuses_unchanged_body_after_metadata_check(self):
+        self.seed();calls=[]
+        def revision(key):
+            calls.append(key);return {'document_id':self.adapter.docs[key]['obj_token'],'revision':1}
+        self.adapter.get_revision=revision
+        self.adapter.read=lambda key:self.fail('unchanged body downloaded')
+        out=read_context(self.profile,['content.strategy'],self.adapter)
+        self.assertEqual(calls,['content.strategy'])
+        self.assertTrue(out['knowledge']['content.strategy']['current'])
+
+    def test_network_fallback_is_explicit_and_never_satisfies_refresh(self):
+        self.seed();self.adapter.offline=True
+        out=read_context(self.profile,['content.strategy'],self.adapter)
+        self.assertEqual(out['sync']['status'],'deferred')
+        self.assertFalse(out['knowledge']['content.strategy']['current'])
+        self.assertEqual(out['knowledge']['content.strategy']['status'],'offline_fallback')
+        with self.assertRaisesRegex(NianxiangError,'offline'):
+            read_context(self.profile,['content.strategy'],self.adapter,require_latest=True)
+
+    def test_external_change_invalidation_blocks_offline_old_copy(self):
+        from runtime.sync import mark_source_changed
+        self.seed();mark_source_changed(self.profile,['content.strategy'])
+        self.adapter.offline=True
+        with self.assertRaisesRegex(NianxiangError,'source_changed'):
+            read_context(self.profile,['content.strategy'],self.adapter)
+        self.adapter.offline=False
+        self.adapter.docs['content.strategy'].update(revision=2,content='new')
+        self.assertTrue(read_context(self.profile,['content.strategy'],self.adapter)['knowledge']['content.strategy']['current'])
+
+    def test_partial_new_revision_cannot_fall_back_to_older_known_copy(self):
+        self.seed(('content.strategy','audience.needs'))
+        self.adapter.get_revision=lambda key:{'document_id':self.adapter.docs[key]['obj_token'],'revision':2}
+        original=self.adapter.read
+        def read(key):
+            if key=='audience.needs':raise NianxiangError('offline','network interrupted')
+            return original(key)
+        self.adapter.docs['content.strategy'].update(revision=2,content='new')
+        self.adapter.read=read
+        with self.assertRaisesRegex(NianxiangError,'source_changed'):
+            read_context(self.profile,['content.strategy','audience.needs'],self.adapter)
+
+    def test_saved_remote_with_failed_cache_publish_stays_invalidated(self):
+        self.seed()
+        req={'operation_id':'cache-failure','target':{'knowledge_id':'content.strategy','obj_type':'docx'},'action':'append','base_revision':1,'content':{'text':'saved change'}}
+        req['authorization']=authorize_request(self.profile,req,'save this test change')
+        with patch('runtime.sync.publish_snapshots',side_effect=NianxiangError('cache_changed','racing cache')):
+            out=save_change(self.profile,req,self.adapter)
+        self.assertEqual(out['status'],'saved')
+        self.assertEqual(out['snapshot_refresh'],'deferred')
+        self.assertEqual(read_json(self.profile/'pending/cache-failure.json')['result']['snapshot_refresh'],'deferred')
+        with self.assertRaisesRegex(NianxiangError,'source_changed'):
+            read_context(self.profile,['content.strategy'],cache_only=True)
+        self.assertEqual(self.adapter.writes,1)
     def test_warm_read_does_not_contact_remote(self):
         self.seed();self.adapter.get_account=lambda: self.fail('foreground contacted remote')
         self.assertIsNotNone(read_context, 'cache-first context service is missing')
         out=read_context(self.profile,['content.strategy'],self.adapter,cache_only=True)
         self.assertEqual(out['knowledge']['content.strategy']['content'],'synthetic content.strategy')
         self.assertFalse(out['knowledge']['content.strategy']['current'])
-    def test_expired_cache_returns_pinned_copy_and_only_requests_worker(self):
+    def test_expired_cache_is_checked_in_foreground_without_worker(self):
         self.seed(); path=self.profile/'snapshots/context.json';bundle=read_json(path);old=bundle['knowledge']['content.strategy']
         old['read_at']=old['checked_at']=(datetime.now(timezone.utc)-timedelta(days=2)).isoformat();write_json(path,bundle)
         self.assertIsNotNone(read_context)
@@ -33,8 +92,8 @@ class ContextSync(Fixture, unittest.TestCase):
             return {'status':'started'}
         self.adapter.docs['content.strategy'].update(revision=2,content='new')
         out=read_context(self.profile,['content.strategy'],self.adapter,launcher=launch)
-        self.assertEqual(out['knowledge']['content.strategy']['revision'],1)
-        self.assertEqual(len(launches),1)
+        self.assertEqual(out['knowledge']['content.strategy']['revision'],2)
+        self.assertEqual(len(launches),0)
         self.assertEqual(read_context(self.profile,['content.strategy'],cache_only=True)['knowledge']['content.strategy']['revision'],2)
     def test_metadata_unchanged_skips_body_download(self):
         self.seed(); self.assertIsNotNone(sync_context)
@@ -52,7 +111,9 @@ class ContextSync(Fixture, unittest.TestCase):
             return read(key)
         self.adapter.read=failing
         self.assertEqual(sync_context(self.profile,['content.strategy','audience.needs'],self.adapter)['status'],'deferred')
-        self.assertEqual(read_context(self.profile,['content.strategy'],cache_only=True)['knowledge']['content.strategy']['revision'],1)
+        self.assertEqual(read_json(self.profile/'snapshots/context.json')['knowledge']['content.strategy']['revision'],1)
+        with self.assertRaisesRegex(NianxiangError,'source_changed'):
+            read_context(self.profile,['content.strategy'],cache_only=True)
     def test_known_account_mismatch_blocks_cached_personalization(self):
         self.seed();self.assertIsNotNone(sync_context);self.adapter.account='another'
         self.assertEqual(sync_context(self.profile,['content.strategy'],self.adapter)['status'],'blocked')
@@ -78,12 +139,12 @@ class ContextSync(Fixture, unittest.TestCase):
         self.adapter.read=racing
         sync_context(self.profile,['content.strategy'],self.adapter)
         self.assertEqual(read_context(self.profile,['content.strategy'],cache_only=True)['knowledge']['content.strategy']['revision'],2)
-    def test_personal_cache_is_default_and_no_remote_calls(self):
+    def test_personal_explicit_cache_only_makes_no_remote_calls(self):
         import json
         self.adapter.docs['ip.profile']['content']='NIANXIANG_COLLABORATION_V1='+json.dumps(collaboration())
         self.seed(('ip.profile','content.methods'))
         self.adapter.get_account=lambda:self.fail('personal default contacted remote')
-        out=read_personal_context(self.profile,self.adapter)
+        out=read_personal_context(self.profile,self.adapter,cache_only=True)
         self.assertEqual(out['collaboration']['preferred_name'],'测试作者')
     def test_launcher_deduplicates_and_is_detached(self):
         self.assertIsNotNone(request_sync)
@@ -121,10 +182,11 @@ class ContextSync(Fixture, unittest.TestCase):
         def capture(*args,**kwargs):
             child=real_popen(*args,**kwargs);processes.append(child);return child
         with patch.dict(os.environ,{'PATH':str(root)+os.pathsep+os.environ['PATH']}), patch('runtime.sync.subprocess.Popen',side_effect=capture):
-            started=time.monotonic();out=read_context(self.profile,['content.strategy'],self.adapter)
+            started=time.monotonic();out=read_context(self.profile,['content.strategy'],self.adapter,cache_only=True)
+            launched=request_sync(self.profile,list(CONTEXT_KEYS))
             self.assertLess(time.monotonic()-started,0.8)
             self.assertEqual(out['knowledge']['content.strategy']['revision'],1)
-            self.assertEqual(out['sync']['status'],'started')
+            self.assertEqual(launched['status'],'started')
         child=processes[0]
         try:self.assertEqual(child.wait(timeout=12),0)
         finally:

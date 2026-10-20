@@ -15,7 +15,7 @@
 - `snapshots/context.json`：原子发布的上下文包；单页`<knowledge_id>.json`为旧版兼容镜像；含账号、空间、对象、修订、读取时间和当前/过期状态。飞书内容不因被缓存就自动成为已确认事实。
 - `tasks/<task_id>.json`：版本化任务检查点，只存来源和产物引用、必要选择及下一步，不代替正文。
 - `derived/`：可重建的个人源投影和显式导出的摘要，不能回写源。
-- `context-sync.json`：使用触发的后台状态、退避及已知源失效，不含凭据。
+- `context-sync.json`：同步历史状态及已知源失效，不含凭据。
 - `pending/<operation_id>.json`：获具体授权后的保存请求与结果；包括saved操作的幂等记录。未授权素材不进入队列。
 
 包内 `local/`只带两份占位示例，不能直接作为真实连接使用。旧安装 `local/`不会被新版隐式读取。其他Skill的私人文件属于其各自规范，不随此目录调整。
@@ -49,15 +49,15 @@ python3 scripts/manage.py --data-dir '<私人根>' --profile '<UUID>' profile ve
 
 正文用obj_token；节点身份与父子关系用node_token。资产分类文档在`content.assets`的直属、同空间、唯一精确标题的docx节点中按契约动态发现，不扩大到其他子树；`02｜内容范式库`同样只在`methodology.current`直属子节点中动态发现，核对唯一精确标题、同空间、同父节点、docx类型和token配对。`content.methods`固定映射到其直属《01｜创作方法与规则》，实质方法及私人规则读写不写导航页。动态子节点操作由原生工具按同一核验与授权流程完成。
 
-普通新任务按[使用时后台同步](../system/synchronization.md)从选定profile按需读本地源快照；到期启动独立只读worker，前台继续共创。同任务固定已读版本。示例：
+普通新任务按[飞书核验与本地缓存](../system/synchronization.md)从选定profile核验相关源版本，未变复用正文；同任务固定已读版本。示例：
 
 ```bash
 python3 scripts/manage.py --data-dir '<私人根>' --profile '<UUID>' knowledge read content.strategy expression.baseline --show-private-content
 ```
 
-默认read对可信本地上下文零远端调用，`--cache-only`不发起后台；`--refresh`及`knowledge sync`显式等待所需远端核验。后台先查修订元数据，变化才读正文，整组成功原子发布；具体素材、历史作品与Base对象仍按需实时读取。换平台须明确选择该环境配置档，不假定旧电脑的profile或后台能力可用。
+默认read先核验相关源修订，变化才读正文，整组成功原子发布；`--cache-only`只用于明确的本地读取和同轮恢复，`--refresh`必须成功核验，不能离线降级；具体素材、历史作品与Base对象仍按需实时读取。换平台须明确选择该环境配置档，不假定旧电脑的profile或后台能力可用。
 
-网络失败保留匹配的本地副本，明确它的核验日期及本轮未实时核验；时间过期触发刷新，普通创作无需先等。账号不符、节点结构变化、已知权限或个人源损坏使受影响缓存失效，停止对应个性化，不能当普通离线降级。需要最新事实或具体保存仍须实时核验；无可信快照也可用当前素材继续独立创作。
+网络失败保留匹配的本地副本，明确它的核验日期及本轮未实时核验；远端不可用时普通读取可回退到未失效的可信副本。账号不符、节点结构变化、已知权限或个人源损坏使受影响缓存失效，停止对应个性化，不能当普通离线降级。需要最新事实或具体保存仍须实时核验；无可信快照也可用当前素材继续独立创作。
 
 ## 授权保存与恢复
 
@@ -71,7 +71,7 @@ python3 scripts/manage.py --data-dir '<私人根>' --profile '<UUID>' knowledge 
 
 `--consent`记录已有授权，不能由Agent替用户编造。请求格式见[请求示例](../../assets/templates/save-request.example.json)。脚本支持配置内Base记录的create/update，及Docx的非空纯文本append、单行精准replace。复杂文档结构、动态子文档创建及附件需原生工具按实际契约处理；不支持的脚本动作blocked，不改成全文覆盖。
 
-只有saved可以说“已保存”。pending表示还未尝试远端写入；uncertain表示已尝试但无法核实；conflict表示基础版本或业务键冲突；blocked表示身份、授权、权限或能力不满足。保存成功才刷新已确认的写入结果与源快照。
+只有saved可以说“已保存”。pending表示还未尝试远端写入；uncertain表示已尝试但无法核实；conflict表示基础版本或业务键冲突；blocked表示身份、授权、权限或能力不满足。保存派发前标记受影响旧缓存失效；回读成功后更新源快照，缓存更新失败须保留失效标记。原生工具写入也按[缓存协议](../system/synchronization.md#保存与失效闭环)执行invalidate与sync，不把远端保存成功当作本地已同步。
 
 恢复先查询真实对象。同一operation_id绑定原请求，不重复创建；源变化或新范围重新决定。已尝试而未找到结果时保持uncertain，人工核查后才允许新操作，不盲目重放。Base写前检查与写后回读没有分布式条件更新保证，首版同一资料一次由一个Agent修改。
 

@@ -9,7 +9,7 @@ description: 念响内容OS，统一处理素材讨论、选题、个人IP朋友
 
 ## 维护信息
 
-当前版本：v0.1.0-beta.21 · 内测版
+当前版本：v0.1.0-beta.22 · 内测版
 开发者：卡昂  
 公众号：卡昂AI超能玩  
 使用反馈：kaenzhong@foxmail.com
@@ -44,7 +44,7 @@ description: 念响内容OS，统一处理素材讨论、选题、个人IP朋友
 | 飞书连接、访问私人知识、指定文档写入 | [连接与核验](references/knowledge/connection.md)、[知识地图](references/knowledge/map.md) | 使用当前环境真实可用的文档、Wiki、Base 能力；私人系统默认用户身份 |
 | 选题入池、找回及作品关联 | [选题池契约](references/knowledge/topic-pool.md) | 具体授权后查重、保存并回读 |
 | 作品入库、沉淀时核验作品与发布信息、补朋友圈沉淀 | [作品契约](references/knowledge/works.md) | 包内和外部作品均可入库；任务目录不是白名单 |
-| 查找、收录、更新或分类整理内容资产 | [资产分类与收录](references/knowledge/assets.md) | 服务及本人实践归服务案例库并注明类型；具体表达、结构或视觉拆解归方法论下内容范式库；完整图文范式可建该库子文档，短范式用库内条目；按具体授权查重保存并核验正文及目录位置 |
+| 查找、收录、更新或分类整理内容资产 | [资产分类与收录](references/knowledge/assets.md) | 服务及本人实践归服务案例库并注明类型；具体表达、结构或视觉拆解归方法论下内容范式库；每条范式均建该库直属独立子文档，父文档只作索引与导航；按具体授权查重保存并核验正文及目录位置 |
 | 多内容、多阶段且有限周期的项目 | [战役契约](references/knowledge/campaigns.md) | 只在达到战役门槛并获得建立/更新授权时写入 |
 | 本地快照、后台同步、刷新延迟或明确同步资料 | [飞书核验与本地缓存](references/system/synchronization.md) | 新任务核验相关版本，同轮沿用；保存后更新或标记缓存失效 |
 | 更新经营策略、受众与策略速照 | [策略维护](references/knowledge/strategy.md) | 核对上游、受众影响与派生速照，各自验收 |

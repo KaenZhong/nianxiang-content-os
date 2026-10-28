@@ -4,11 +4,11 @@
 
 面向个人IP与一人公司的开源内容Skill。阿响是念响OS中的AI内容合伙人，从你真实的经历、观点和旧稿出发，陪你判断值得讲什么，再一起写朋友圈、做口播。
 
-[看看怎么用](#一次使用会怎样) · [适合哪些场景](#适合哪些场景) · [安装与首次尝试](#安装与首次尝试) · [常见问题](#常见问题)
+[👀 看看怎么用](#-一次使用会怎样) · [🎯 适合哪些场景](#-适合哪些场景) · [🚀 安装与首次尝试](#-安装与首次尝试) · [❓ 常见问题](#-常见问题)
 
-> 当前源码：**v0.1.0-beta.27 · 本地候选版**。公开下载以[官方 Releases](https://github.com/KaenZhong/nianxiang-content-os/releases)中的实际发行为准，包含 Pre-release。公共代码与文档采用 MIT 许可。
+> 当前源码：**v0.1.0-beta.28 · 本地候选版**。公开下载以[官方 Releases](https://github.com/KaenZhong/nianxiang-content-os/releases)中的实际发行为准，包含 Pre-release。公共代码与文档采用 MIT 许可。
 
-## 从一句真实经历开始
+## 💡 从一句真实经历开始
 
 你可能积累了不少客户问答、分享录音和日常观察，但准备写内容时，仍会卡在这里：这段经历有什么值得讲？该选哪个切口？写出来为什么又不像自己？
 
@@ -16,7 +16,7 @@
 
 如果你希望长期协作，可以按需连接个人内容知识库，让已经确认的定位、风格、作品与方法成为后续共创的依据。
 
-## 一次使用会怎样
+## 👀 一次使用会怎样
 
 ```mermaid
 flowchart LR
@@ -46,7 +46,7 @@ flowchart LR
 
 有了稿件，还可以让阿响修改语气、检查表达，或改成自然口播。是否采用、是否发表以及是否保存，由你分别决定。
 
-## 适合哪些场景
+## 🎯 适合哪些场景
 
 | 你的情况 | 可以直接说 | 得到什么 |
 |---|---|---|
@@ -59,9 +59,9 @@ flowchart LR
 
 念响OS主要支持素材讨论、选题、个人IP朋友圈和口播共创。整套活动宣传、客户宣传片、拍摄分镜等任务，需要环境中适配的专项能力。
 
-## 安装与首次尝试
+## 🚀 安装与首次尝试
 
-**[前往官方 Releases 下载](https://github.com/KaenZhong/nianxiang-content-os/releases)** · **[复制完整安装提示词](BETA-START.md#可复制提示词)**
+**[📦 前往官方 Releases 下载](https://github.com/KaenZhong/nianxiang-content-os/releases)** · **[📋 复制完整安装提示词](BETA-START.md#可复制提示词)**
 
 1. 选择实际公开的内测发行，下载同一发行的 **标准Skill ZIP、SHA256SUMS与LICENSE**，一起交给准备使用的Agent。ZIP用于安装，SHA256SUMS用于完整性核验，LICENSE说明使用与分发许可。
 2. 把[完整安装提示词](BETA-START.md#可复制提示词)发给Agent，让它检查当前平台能力、核验安装包并引导完成安装。只导入完整的 `nianxiang-content-os/` 目录。
@@ -71,7 +71,7 @@ flowchart LR
 
 候选源码可能领先公开发行；旧版界面和说明可能仍显示旧产品名。技术标识、目录名和调用入口继续使用 `nianxiang-content-os`。
 
-## 让共创逐渐了解你
+## 🌱 让共创逐渐了解你
 
 你可以从当轮素材开始，也可以在需要时连接飞书个人内容知识库，积累：
 
@@ -83,7 +83,7 @@ flowchart LR
 
 [了解知识结构](nianxiang-content-os/references/knowledge/map.md) · [分批建库](nianxiang-content-os/references/knowledge/bootstrap.md) · [连接与数据归属](nianxiang-content-os/references/knowledge/connection.md)
 
-## 常见问题
+## ❓ 常见问题
 
 **装完就能自动记住我吗？** 需要具备相应文件与知识库能力，并完成初始化、连接和具体保存。当前对话能使用你提供的素材，不等于已经建立长期记忆。
 
@@ -97,7 +97,7 @@ flowchart LR
 
 **能商用吗？** 公共代码与文档采用MIT许可，分发时保留许可与版权声明。你的私人知识、素材和作品不属于公开包。
 
-## 能力边界与隐私
+## 🔒 能力边界与隐私
 
 不补造经历、数字、身份、结果或商业承诺。工具不足或事实缺失时说明缺口；没有相应能力时，不宣称完成了知识读写、转写或跨平台操作。
 
@@ -105,7 +105,7 @@ flowchart LR
 
 当前版本为内测候选。离线检查不能替代真实飞书操作、独立新会话加载或跨平台完整使用验证；当前也未配置自动下载更新源（`release_source=null`）。
 
-## 给Agent与维护者
+## 🧩 给Agent与维护者
 
 | 入口 | 用途 |
 |---|---|
@@ -125,7 +125,7 @@ python3 -B -m unittest discover -s tests -q
 
 测试使用合成资料，不代表已经验证你的生产知识库。维护规则见 [AGENTS.md](AGENTS.md)。仓库根目录的 `tools/` 仅供维护者使用，不进入用户安装包。许可见 [LICENSE](LICENSE)。
 
-## 反馈与联系
+## 💬 反馈与联系
 
 通过 [GitHub Issues](https://github.com/KaenZhong/nianxiang-content-os/issues)反馈，附上平台、版本、复现步骤、预期和实际结果，以及脱敏后的截图。
 

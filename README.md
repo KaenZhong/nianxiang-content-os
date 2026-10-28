@@ -8,7 +8,7 @@
 
 [👀 看看怎么用](#-一次使用会怎样) · [🎯 适合哪些场景](#-适合哪些场景) · [🚀 安装与首次尝试](#-安装与首次尝试) · [❓ 常见问题](#-常见问题)
 
-> 当前公开内测：**v0.1.0-beta.31** · [查看本次更新](https://github.com/KaenZhong/nianxiang-content-os/releases/tag/v0.1.0-beta.31) · MIT 开源。
+> 当前公开内测：**v0.1.0-beta.39** · [查看本次更新](https://github.com/KaenZhong/nianxiang-content-os/releases/tag/v0.1.0-beta.39) · MIT 开源。
 
 ## 💡 从一句真实经历开始
 
@@ -57,7 +57,7 @@
 
 ## 🚀 安装与首次尝试
 
-**[📦 下载 beta.31 标准Skill ZIP](https://github.com/KaenZhong/nianxiang-content-os/releases/download/v0.1.0-beta.31/nianxiang-content-os-0.1.0-beta.31.zip)** · [SHA256SUMS](https://github.com/KaenZhong/nianxiang-content-os/releases/download/v0.1.0-beta.31/SHA256SUMS) · [LICENSE](https://github.com/KaenZhong/nianxiang-content-os/releases/download/v0.1.0-beta.31/LICENSE)
+**[📦 下载 beta.39 标准Skill ZIP](https://github.com/KaenZhong/nianxiang-content-os/releases/download/v0.1.0-beta.39/nianxiang-content-os-0.1.0-beta.39.zip)** · [SHA256SUMS](https://github.com/KaenZhong/nianxiang-content-os/releases/download/v0.1.0-beta.39/SHA256SUMS) · [LICENSE](https://github.com/KaenZhong/nianxiang-content-os/releases/download/v0.1.0-beta.39/LICENSE)
 
 把上面三个文件一起交给Agent。**[📋 复制完整安装提示词](BETA-START.md#可复制提示词)** · [全部公开内测版本](https://github.com/KaenZhong/nianxiang-content-os/releases)
 
@@ -101,7 +101,7 @@
 
 公共Skill提供通用方法和占位示例。私人长期知识归飞书，连接配置、缓存和运行状态放在包外。发送材料前，请按所用AI服务的实际条件判断可提供的范围。反馈问题时也请去除私人正文、账号配置和访问凭证。
 
-当前版本为内测候选。离线检查不能替代真实飞书操作、独立新会话加载或跨平台完整使用验证；当前也未配置自动下载更新源（`release_source=null`）。
+当前版本为公开内测版。离线检查不能替代真实飞书操作、独立新会话加载或跨平台完整使用验证；当前也未配置自动下载更新源（`release_source=null`）。
 
 ## 🧩 给Agent与维护者
 

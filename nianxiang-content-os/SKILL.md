@@ -9,7 +9,7 @@ description: 念响OS，统一处理素材讨论、选题、个人IP朋友圈与
 
 ## 维护信息
 
-当前版本：v0.1.0-beta.38 · 内测版
+当前版本：v0.1.0-beta.39 · 内测版
 开发者：卡昂  
 公众号：卡昂AI超能玩  
 使用反馈：kaenzhong@foxmail.com

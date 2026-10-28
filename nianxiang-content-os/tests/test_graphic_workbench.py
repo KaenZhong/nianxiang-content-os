@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
+import shutil
 
 spec = importlib.util.spec_from_file_location('graphic_workbench', Path(__file__).parents[1] / 'scripts/graphic_workbench.py')
 module = importlib.util.module_from_spec(spec)
@@ -54,3 +56,20 @@ class WorkbenchTest(unittest.TestCase):
         self.path.write_text(json.dumps(self.data)); chosen=self.selection();chosen['images']=list(reversed(self.data['images']))
         selection=self.root/'selection.json';selection.write_text(json.dumps(chosen));module.build(self.path,selection)
         self.assertEqual(json.loads(self.path.read_text())['images'][0]['id'],'b')
+
+    def test_template_update_keeps_content_revision_and_handoff_valid(self):
+        chosen = self.selection()
+        before = json.loads(self.path.read_text())
+        template = self.root / 'test-template'
+        shutil.copytree(module.TEMPLATE, template)
+        css = template / 'style.css'
+        css.write_text(css.read_text() + '\n/* template update fixture */\n')
+        selection = self.root / 'selection.json'
+        selection.write_text(json.dumps(chosen))
+        with patch.object(module, 'TEMPLATE', template):
+            result = module.build(self.path)
+            self.assertEqual(result['revision'], before['revision'])
+            self.assertEqual(json.loads(self.path.read_text()), before)
+            self.assertIn('template update fixture', (self.root / 'style.css').read_text())
+            module.build(self.path, selection)
+        self.assertEqual(json.loads(self.path.read_text())['body'], '用户改稿')

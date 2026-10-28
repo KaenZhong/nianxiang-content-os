@@ -1,4 +1,4 @@
-# 念响内容OS · 内测安装与首次使用
+# 念响OS · 内测安装与首次使用
 
 安装以[官方 Releases](https://github.com/KaenZhong/nianxiang-content-os/releases)中的最新公开内测发行为准（包含 Pre-release）。阿响负责素材讨论、选题、朋友圈与口播共创；无私人知识库也能先试用。
 
@@ -11,7 +11,7 @@
 ## 可复制提示词
 
 ```text
-请帮我安装并开始使用「念响AI · 内容OS」，内容Agent叫“阿响”。
+请帮我安装并开始使用「念响OS · AI内容系统」，AI内容合伙人叫“阿响”。
 
 官方仓库：https://github.com/KaenZhong/nianxiang-content-os
 版本选择：获取最新公开内测发行，包含标记为 Pre-release 的版本，不把开发分支当作公开发行。

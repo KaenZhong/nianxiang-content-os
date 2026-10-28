@@ -167,15 +167,15 @@ function renderCreationNav() {
     const row = document.createElement('p'); const heading = document.createElement('strong'); heading.textContent = label;
     const text = document.createElement('span'); text.textContent = topic[key]; row.append(heading, text); $('topic-context').append(row);
   }
-  for (const source of topic.sources || []) {
-    const link = documentLink(source.label || '来源素材', source.url);
-    if (link) $('topic-context').append(link);
-  }
   $('creation-links').replaceChildren();
   for (const [key, label] of [['topicMap', '选题地图'], ['draftBatch', '批量初稿']]) {
     const item = creation[key]; if (!item) continue;
     const link = documentLink(label, item.url);
     if (link) { if (item.title) link.title = item.title; $('creation-links').append(link); }
+  }
+  for (const source of topic.sources || []) {
+    const link = documentLink(source.label || '来源素材', source.url);
+    if (link) $('creation-links').append(link);
   }
   const hasLinks = $('creation-links').children.length > 0;
   $('creation-links').hidden = !hasLinks;
@@ -220,15 +220,15 @@ if (pendingDraft) {
 }
 
 function setupCollapsiblePanels() {
-  for (const [key, label] of [['images','配图'], ['titles','标题'], ['body','正文']]) {
-    const button = $('toggle-' + key), panel = $('panel-' + key);
+  for (const [key, label] of [['topic','选题'], ['images','配图'], ['titles','标题'], ['body','正文']]) {
+    const button = $('toggle-' + key), panel = $(key === 'topic' ? 'topic-context' : 'panel-' + key);
     const apply = expanded => {
       button.setAttribute('aria-expanded', String(expanded));
       button.setAttribute('aria-label', (expanded ? '收起' : '展开') + label);
       button.title = (expanded ? '收起' : '展开') + label;
       panel.hidden = !expanded;
     };
-    apply(key !== 'images' || state.images.length > 0);
+    apply(key !== 'topic' && (key !== 'images' || state.images.length > 0));
     button.addEventListener('click', () => apply(button.getAttribute('aria-expanded') !== 'true'));
   }
 }

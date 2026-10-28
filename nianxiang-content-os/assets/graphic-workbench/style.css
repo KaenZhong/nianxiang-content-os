@@ -102,6 +102,6 @@ body.resizing-columns{cursor:col-resize;user-select:none}
 @media(prefers-reduced-motion:reduce){.text-section .section-actions #copy-body,.text-section .section-actions .collapse-toggle{transition:none}}
 
 /* 正文操作与复制标题统一使用无底色文字按钮。 */
-#copy-body,.font-controls button{background:transparent;border:0;box-shadow:none;color:var(--blue);font-size:11px;font-weight:400;min-height:32px;padding:6px 4px}
-#copy-body:hover,.font-controls button:hover{background:transparent;text-decoration:underline;text-underline-offset:3px}
+#copy-title,#copy-body,.font-controls button{background:transparent;border:0;box-shadow:none;color:var(--blue);font-size:11px;font-weight:400;min-height:32px;padding:6px 4px}
+#copy-title:hover,#copy-body:hover,.font-controls button:hover{background:transparent;text-decoration:underline;text-underline-offset:3px}
 .font-controls button:disabled:hover{text-decoration:none}

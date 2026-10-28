@@ -8,7 +8,7 @@
 
 [👀 看看怎么用](#-一次使用会怎样) · [🎯 适合哪些场景](#-适合哪些场景) · [🚀 安装与首次尝试](#-安装与首次尝试) · [❓ 常见问题](#-常见问题)
 
-> 当前源码：**v0.1.0-beta.39 · 内测版**。公开下载以[官方 Releases](https://github.com/KaenZhong/nianxiang-content-os/releases)中的实际发行为准，包含 Pre-release。公共代码与文档采用 MIT 许可。
+> 当前源码：**v0.1.0-beta.48 · 内测版**。公开下载以[官方 Releases](https://github.com/KaenZhong/nianxiang-content-os/releases)中的实际发行为准，包含 Pre-release。公共代码与文档采用 MIT 许可。
 
 ## 💡 从一句真实经历开始
 

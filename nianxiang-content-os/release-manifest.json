@@ -8,8 +8,8 @@
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "59dc033dcda21c1bfd526a12c293891a43b6641909d2efdd49f9856859ccbc78",
-      "size": 22166
+      "sha256": "f0b15863ed74b6d333595ca5119486985195a6d1ded100cea921f4b32502c24e",
+      "size": 22357
     },
     "README.md": {
       "sha256": "2e4ad10d7befce8d7989876aecde1d86f525f78d3678b880482841bf1022c30a",
@@ -352,12 +352,12 @@
       "size": 503
     },
     "assets/graphic-workbench/index.html": {
-      "sha256": "03301378ff4a6bcaf247a8c6931c70917943acfba1fda7f488d741e7b63f1138",
-      "size": 6369
+      "sha256": "4876f65bb814bf8c62157489b18deb769054546b069db4834477e0813b8cc871",
+      "size": 6364
     },
     "assets/graphic-workbench/style.css": {
-      "sha256": "6e66cc65bc6120f4eb278a7e0a7606633eb2b27314934f946588788a46718636",
-      "size": 20078
+      "sha256": "d8eb57ea8918e075c595a188f816b2ef177d913479363d5de83f6d7a9f07f627",
+      "size": 20492
     },
     "assets/graphic-workbench/app.js": {
       "sha256": "30d56e052c5419db2f50856064d9c9669b5e6f22abce12a37015a50174bc4c19",

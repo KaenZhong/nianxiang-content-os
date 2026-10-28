@@ -91,3 +91,5 @@ body.resizing-columns{cursor:col-resize;user-select:none}
 #creation-links a:hover{background:#eee3cb;border-color:#cdbc99}
 .creation-nav .topic-context{margin-top:0}
 @media(max-width:760px){.topic-heading{gap:8px}#creation-links{padding-left:44px}}
+
+.topic-heading #toggle-topic{margin-left:auto}.topic-heading #topic-name{flex:1}#creation-links{padding-left:0}@media(max-width:760px){#creation-links{padding-left:0}}

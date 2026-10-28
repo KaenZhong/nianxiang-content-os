@@ -9,7 +9,7 @@ description: 念响OS，统一处理素材讨论、选题、个人IP朋友圈与
 
 ## 维护信息
 
-当前版本：v0.1.0-beta.31 · 内测版
+当前版本：v0.1.0-beta.32 · 内测版
 开发者：卡昂  
 公众号：卡昂AI超能玩  
 使用反馈：kaenzhong@foxmail.com
@@ -39,6 +39,7 @@ description: 念响OS，统一处理素材讨论、选题、个人IP朋友圈与
 | 轻聊素材、单篇共创、改稿、交付与沉淀 | [共创工作流](references/creation/workflow.md) | 发生渠道转换、历史恢复或验收问题时读 [上下文与验收](references/creation/context-and-review.md)；自然收口与 📥 沉淀入口、👉 下一步入口已在工作流末章 |
 | 长素材挖题、批量挑题、下周讲什么 | [选题方法](references/creation/topics.md) | 批量或长素材任务再读 [选题地图](references/creation/topic-map.md)；少量临时想法不强制地图 |
 | 朋友圈写稿、图文共创与配图、批量初稿、改稿、审稿与案例拆解 | [朋友圈方法](references/creation/moments.md) | 有现存私人规则时按 [规则维护](references/maintenance/rules.md) 筛选 |
+| 放进工作台、用工作台继续图文共创 | [图文工作台](references/creation/graphic-workbench.md) | 承接完整稿，固定模板展示；仅有选题时不自动出稿；页面修改须交回后继续 |
 | 个人IP口播、图文转口播、改稿、审稿与案例拆解 | [口播方法](references/creation/spoken-video.md) | 使用指定母稿与真实发布状态，不要求先发表朋友圈 |
 | 首次建立个人内容知识库 | [分批建库](references/knowledge/bootstrap.md)、[首次协作](references/system/onboarding.md) | 检查当前会话能否执行脚本、读写文件和调用用户身份的飞书工具，并核对位置与授权，先建立兼容骨架，再分批确认核心知识 |
 | 飞书连接、访问私人知识、指定文档写入 | [连接与核验](references/knowledge/connection.md)、[知识地图](references/knowledge/map.md) | 使用当前环境真实可用的文档、Wiki、Base 能力；私人系统默认用户身份 |

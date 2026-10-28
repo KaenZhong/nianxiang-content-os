@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.31",
+  "version": "0.1.0-beta.32",
   "entry": "SKILL.md",
   "knowledge_schema_version": 5,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "2ca6bda0a8e9c94c3a2101e8f65350642fefb74fe03b4ba6d805f52843b205e5",
-      "size": 17544
+      "sha256": "00c7fcefd7d23a1e387368bde0bb929514912fa8bf9e7b544e7b2eefe164d49d",
+      "size": 18132
     },
     "README.md": {
       "sha256": "535ba58045cab94478d81488a20b00278bb6e2705ed2f02cfca26361f67b698d",
@@ -20,8 +20,8 @@
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "541f5ef4f781e63be9ca264891bc600d8e746a261919d74d0e4054c3c6b28021",
-      "size": 15656
+      "sha256": "e418744e1a83a0765161f127fd6601e99b8db489bc9b3fe2518c6e595fc1e6a4",
+      "size": 15876
     },
     "references/system/data-ownership.md": {
       "sha256": "465471cab55254dedde6fa3bc5f573615cb87e3ffdd83cf0d5f11cc7f6602191",
@@ -63,9 +63,13 @@
       "sha256": "b984e600ed74c6cca24f0f26d7ef240957a8d20ca41772fba0352360630bbdcf",
       "size": 9560
     },
+    "references/creation/graphic-workbench.md": {
+      "sha256": "68c9b902e21f99f9b2a7846b0195dcaea7c58b8a6c93fd052c1d8efe79e0b40a",
+      "size": 5434
+    },
     "references/creation/workflow.md": {
-      "sha256": "de2469c540d21d7075f8c3d0f858cc51a83f42658b1bf68ceefd33cb55d05800",
-      "size": 38054
+      "sha256": "c7fe638760f74af34b1a05588f1a82c05db1d9087afeb50846f6c7ef3de5b8bd",
+      "size": 38314
     },
     "references/creation/topic-map.md": {
       "sha256": "b4dbc734506f4efaa10e40016f5a5458139e056cf8f5c3d2c83167c7fc5fa7ec",
@@ -191,6 +195,10 @@
       "sha256": "0908218551435175e48896247a147369da94b98396907fe67384fb72541f3f8c",
       "size": 4934
     },
+    "tests/test_graphic_workbench.py": {
+      "sha256": "c70ef84ad2f6062d6ca3621a341e298686434a4cf949c314c4973fbe8905d362",
+      "size": 2934
+    },
     "tests/test_bootstrap_rules.py": {
       "sha256": "79eaed3011acfde1079e0df0ab273a4c0da711254cc313645c92cdd056c90ae5",
       "size": 12291
@@ -242,6 +250,10 @@
     "scripts/check_public_release.py": {
       "sha256": "f4e3ef0f1649609c7d3d580f596c413db07cc749a2f97918f360d7e30d440774",
       "size": 2671
+    },
+    "scripts/graphic_workbench.py": {
+      "sha256": "a46787487826d46dc8985c79a2f33536defaf16fc580b6ba0056cf85fc7e719d",
+      "size": 5154
     },
     "scripts/save_user_profile.py": {
       "sha256": "c1632d4e2871d9ab0cdc7d98348a677a83d74300741973867337af3749018797",
@@ -338,6 +350,18 @@
     "assets/templates/save-request.example.json": {
       "sha256": "e3d21b4487181038ad5619fda88c5466047046c37adaeb5095927caed34a6ec1",
       "size": 503
+    },
+    "assets/graphic-workbench/index.html": {
+      "sha256": "0e7026f81609b461d7e442c8fa59930eb30ef0386493f04f1cca7356968ec953",
+      "size": 4618
+    },
+    "assets/graphic-workbench/style.css": {
+      "sha256": "7066d24111b8e3a7ef773203463389988b03a84d0cce2e2bcb37526893bc2763",
+      "size": 16018
+    },
+    "assets/graphic-workbench/app.js": {
+      "sha256": "14a61c00f35b35c361144417be2d0367edf89b8f9d9077e00b5b93725e5db2db",
+      "size": 15412
     }
   },
   "changes": "See CHANGELOG.md; local development candidate, not a published release."

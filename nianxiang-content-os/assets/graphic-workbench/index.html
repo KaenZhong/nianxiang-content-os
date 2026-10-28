@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>图文工作台 · 念响OS · AI内容系统</title><link rel="stylesheet" href="style.css"><script defer src="data.js"></script><script defer src="app.js"></script></head>
+<body>
+<div class="fixed-header">
+<header class="topbar"><div class="brand"><svg class="axiang-icon" viewBox="0 0 48 48" role="img" aria-label="阿响"><defs><radialGradient id="axiang-fill" cx="38%" cy="30%" r="80%"><stop offset="0" stop-color="#ffe9a1"/><stop offset="1" stop-color="#f7c85d"/></radialGradient></defs><path d="M24 4C28 4 29 13 33 14C37 15 43 12 44 16C45 20 38 23 38 27C38 31 43 36 40 39C37 42 31 37 27 38C23 39 20 46 16 44C12 42 15 35 12 32C9 29 2 29 3 24C4 20 12 20 14 17C16 13 19 3 24 4Z" fill="url(#axiang-fill)"/><ellipse cx="20" cy="25" rx="1.8" ry="3" fill="#403729"/><ellipse cx="29" cy="24.5" rx="1.8" ry="3" fill="#403729"/></svg><span>念响OS · AI内容系统</span><span class="workbench-tag">图文工作台</span></div><p class="slogan">让做内容像呼吸一样，轻松自然~</p></header>
+</div>
+<main>
+<section id="creation-nav" class="creation-nav" aria-label="创作导航" hidden><details id="topic-details"><summary><span class="topic-label">当前选题</span><span id="topic-name"></span><span class="topic-chevron" aria-hidden="true">⌄</span></summary><div id="topic-context" class="topic-context"></div></details><nav id="creation-links" aria-label="相关创作文档" hidden></nav></section>
+
+<div class="workspace">
+<div class="visual-column">
+<section class="paper image-section"><div class="section-heading"><div><h2>配图</h2></div><span id="image-count" class="image-count"></span></div><div id="gallery"></div></section>
+<section class="paper title-section"><div class="section-heading"><div><h2>标题</h2></div></div><div id="titles"></div><div class="title-footer" title="修改标题不会改变图中文字"><button id="copy-title" class="text-button">复制标题 ↗</button></div></section>
+</div>
+<div class="writing-column">
+<section class="paper text-section"><div class="section-heading"><div><h2>正文</h2><span id="count" class="word-count" aria-live="polite" title="非空白字符数，含标点">0 字</span></div><button id="copy-body" class="button secondary">复制正文 <span>↗</span></button></div><div class="editor-toolbar"><span>字号</span><div class="font-controls" role="group" aria-label="正文字号控制"><button id="font-smaller" aria-label="缩小正文文字">A−</button><output id="font-size" aria-live="polite">16px</output><button id="font-larger" aria-label="放大正文文字">A＋</button><button id="font-reset" aria-label="恢复默认字号">重置</button></div></div><label class="sr-only" for="body">编辑正文</label><textarea id="body" spellcheck="false"></textarea><div class="editor-footer"><span id="save-status" role="status">本地草稿</span></div></section>
+</div>
+</div>
+<section class="handoff"><div class="handoff-guide"><h2>继续和阿响共创</h2><p>点击「复制给阿响」，粘贴到对话中，再说说你想调整什么。</p></div><div class="handoff-actions"><button id="handoff" class="button primary">复制给阿响 <span>↗</span></button><button id="export" class="button secondary">导出 ↓</button></div></section>
+<footer><div class="maintenance-info"><span>开发者：卡昂</span><span>公众号：卡昂AI超能玩</span><a href="mailto:kaenzhong@foxmail.com">反馈：kaenzhong@foxmail.com</a></div><div><button id="reset" class="text-button">恢复载入内容</button></div></footer>
+</main>
+<dialog id="version-conflict"><h2>有尚未交回的修改</h2><p>阿响更新了内容。请先导出本机草稿，再选择继续编辑哪一版。</p><div class="conflict-actions"><button id="conflict-export" class="button secondary">导出本机草稿</button><button id="conflict-local" class="button secondary">继续本机草稿</button><button id="conflict-new" class="button primary">使用更新版</button></div></dialog>
+<dialog id="lightbox"><div class="lightbox-bar"><span id="image-label"></span><div><a id="download-large" download>下载原图 ↓</a><button id="close-dialog" aria-label="关闭大图">×</button></div></div><img id="large-image" alt=""><div class="lightbox-nav"><button id="previous" class="button secondary">← 上一张</button><span id="image-position"></span><button id="next" class="button secondary">下一张 →</button></div></dialog><div id="toast" role="status" aria-live="polite"></div>
+</body></html>

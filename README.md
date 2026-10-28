@@ -4,11 +4,11 @@
 
 面向个人IP与一人公司的开源内容Skill。阿响是念响OS中的AI内容合伙人，从你真实的经历、观点和旧稿出发，陪你判断值得讲什么，再一起写朋友圈、做口播。
 
-![说明：简体中文](https://img.shields.io/badge/%E8%AF%B4%E6%98%8E-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-00875A) [![项目：Agent Skill](https://img.shields.io/badge/%E9%A1%B9%E7%9B%AE-Agent%20Skill-5555CC)](nianxiang-content-os/SKILL.md) [![许可：MIT](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF-MIT-blue)](LICENSE)
+![说明：简体中文](https://img.shields.io/badge/%E8%AF%B4%E6%98%8E-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-FFD400) [![项目：Agent Skill](https://img.shields.io/badge/%E9%A1%B9%E7%9B%AE-Agent%20Skill-FFD400)](nianxiang-content-os/SKILL.md) [![许可：MIT](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF-MIT-FFD400)](LICENSE)
 
 [👀 看看怎么用](#-一次使用会怎样) · [🎯 适合哪些场景](#-适合哪些场景) · [🚀 安装与首次尝试](#-安装与首次尝试) · [❓ 常见问题](#-常见问题)
 
-> 当前公开内测：**v0.1.0-beta.29** · [查看本次更新](https://github.com/KaenZhong/nianxiang-content-os/releases/tag/v0.1.0-beta.29) · MIT 开源。开发源码为 **beta.30 本地候选版**，尚未公开发行。
+> 当前公开内测：**v0.1.0-beta.29** · [查看本次更新](https://github.com/KaenZhong/nianxiang-content-os/releases/tag/v0.1.0-beta.29) · MIT 开源。开发源码为 **beta.31 本地候选版**，尚未公开发行。
 
 ## 💡 从一句真实经历开始
 

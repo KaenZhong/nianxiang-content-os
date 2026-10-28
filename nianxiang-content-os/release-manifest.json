@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.34",
+  "version": "0.1.0-beta.35",
   "entry": "SKILL.md",
   "knowledge_schema_version": 5,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "e26fe4e355a6a0dfa54722c0eb9ce7c2bf9b30999c3b2412a64429c2a4f04b45",
-      "size": 18955
+      "sha256": "58f829551d38590789f0730520c34bccf6488417b3e6e78c622c1fd6153378ae",
+      "size": 19224
     },
     "README.md": {
       "sha256": "535ba58045cab94478d81488a20b00278bb6e2705ed2f02cfca26361f67b698d",
@@ -20,7 +20,7 @@
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "24d38d2102279cf4b2a4dbe81a7d34b37bfb571a055b0435e40f88cdc47c2251",
+      "sha256": "14a834af5d266c574123e369339e9cbaa6e72a072f2da1fe3e7399f4c8f23686",
       "size": 15876
     },
     "references/system/data-ownership.md": {
@@ -356,8 +356,8 @@
       "size": 5933
     },
     "assets/graphic-workbench/style.css": {
-      "sha256": "f9b286c19990b737a9b8284b0ac1558aa5a5266d0fee7246d4867ea64ea20014",
-      "size": 17047
+      "sha256": "330277ee81156b12a2a2beb16d183aaec803978ca12536b5025a5228ca783675",
+      "size": 17120
     },
     "assets/graphic-workbench/app.js": {
       "sha256": "a7e6e478b1f5be4ab1a4bc081f00e2459252bb58ab6c74a3fe33ba448e0a0181",

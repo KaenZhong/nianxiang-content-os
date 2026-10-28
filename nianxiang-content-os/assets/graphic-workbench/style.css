@@ -93,3 +93,10 @@ body.resizing-columns{cursor:col-resize;user-select:none}
 @media(max-width:760px){.topic-heading{gap:8px}#creation-links{padding-left:44px}}
 
 .topic-heading #toggle-topic{margin-left:auto}.topic-heading #topic-name{flex:1}#creation-links{padding-left:0}@media(max-width:760px){#creation-links{padding-left:0}}
+
+/* 正文栏操作统一尺寸、圆角与状态。 */
+.text-section .section-actions #copy-body,.text-section .section-actions .collapse-toggle{height:36px;min-height:36px;border-radius:8px;background:#f5f1e8;color:#8b806b;border:0;box-sizing:border-box;transition:background .18s ease}
+.text-section .section-actions #copy-body{padding:8px 12px;font-size:12px;line-height:20px}
+.text-section .section-actions #copy-body:hover,.text-section .section-actions .collapse-toggle:hover{background:#eae3d5}
+.text-section .section-actions #copy-body:active,.text-section .section-actions .collapse-toggle:active{background:#e1d8c6}
+@media(prefers-reduced-motion:reduce){.text-section .section-actions #copy-body,.text-section .section-actions .collapse-toggle{transition:none}}

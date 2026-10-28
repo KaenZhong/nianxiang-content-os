@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.33",
+  "version": "0.1.0-beta.34",
   "entry": "SKILL.md",
   "knowledge_schema_version": 5,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "6d0d20fcbaf422d60667e29507cd38ce380c995e9b95de2f821ac07909fbe1eb",
-      "size": 18602
+      "sha256": "e26fe4e355a6a0dfa54722c0eb9ce7c2bf9b30999c3b2412a64429c2a4f04b45",
+      "size": 18955
     },
     "README.md": {
       "sha256": "535ba58045cab94478d81488a20b00278bb6e2705ed2f02cfca26361f67b698d",
@@ -20,7 +20,7 @@
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "6506e44c1a018cecbaaec0e4b9c0edaebe8e3fd8fd03c905adc123f89feec75a",
+      "sha256": "24d38d2102279cf4b2a4dbe81a7d34b37bfb571a055b0435e40f88cdc47c2251",
       "size": 15876
     },
     "references/system/data-ownership.md": {
@@ -64,8 +64,8 @@
       "size": 9560
     },
     "references/creation/graphic-workbench.md": {
-      "sha256": "68c9b902e21f99f9b2a7846b0195dcaea7c58b8a6c93fd052c1d8efe79e0b40a",
-      "size": 5434
+      "sha256": "f1167a0d69cf20559447ba823e43e32ec65f85d334823b0f3e0970c944f253d2",
+      "size": 5539
     },
     "references/creation/workflow.md": {
       "sha256": "15656506ae4dee0e10f7b3e3d7f43c5afb90fc9dcb947f2253d7a001dfed11b0",
@@ -352,16 +352,16 @@
       "size": 503
     },
     "assets/graphic-workbench/index.html": {
-      "sha256": "0e7026f81609b461d7e442c8fa59930eb30ef0386493f04f1cca7356968ec953",
-      "size": 4618
+      "sha256": "25e5f388ac02183c3e4c39bd33a640210ca58dca71ad0253e3a58cd1d9c6797c",
+      "size": 5933
     },
     "assets/graphic-workbench/style.css": {
-      "sha256": "7066d24111b8e3a7ef773203463389988b03a84d0cce2e2bcb37526893bc2763",
-      "size": 16018
+      "sha256": "f9b286c19990b737a9b8284b0ac1558aa5a5266d0fee7246d4867ea64ea20014",
+      "size": 17047
     },
     "assets/graphic-workbench/app.js": {
-      "sha256": "14a61c00f35b35c361144417be2d0367edf89b8f9d9077e00b5b93725e5db2db",
-      "size": 15412
+      "sha256": "a7e6e478b1f5be4ab1a4bc081f00e2459252bb58ab6c74a3fe33ba448e0a0181",
+      "size": 16076
     }
   },
   "changes": "See CHANGELOG.md; local development candidate, not a published release."

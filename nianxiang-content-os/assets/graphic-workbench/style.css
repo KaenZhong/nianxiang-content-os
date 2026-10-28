@@ -56,3 +56,13 @@ footer{justify-content:space-between}.maintenance-info{display:flex;align-items:
 .image-placeholder{grid-column:1/-1;min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:1px dashed #d9d2c4;border-radius:14px;background:#f7f4ed80;color:#a39884;font-size:12px}.placeholder-mark{font-size:30px;line-height:1;color:#c2b69e}@media(max-width:760px){.image-placeholder{min-height:200px}}
 
 #version-conflict{max-width:520px;padding:28px}#version-conflict p{font-size:13px;line-height:1.8;margin:16px 0;color:var(--muted)}.conflict-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* 统一选题与内容面板的折叠控件。 */
+.topic-chevron{display:inline-flex;align-items:center;justify-content:center;flex:0 0 32px;width:32px;height:32px;margin-left:2px;border-radius:10px;background:rgba(233,226,213,.42);color:#8b806b;transition:background .18s ease,transform .2s ease}
+.topic-chevron svg,.collapse-toggle svg{display:block;width:20px;height:20px}
+.creation-nav summary:hover .topic-chevron{background:#eae3d5}
+.section-actions{display:flex;align-items:center;gap:10px}
+.collapse-toggle{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex:0 0 36px;padding:8px;border-radius:11px;background:#f5f1e8;color:#8b806b;transition:background .18s ease}
+.collapse-toggle:hover{background:#eae3d5}.collapse-toggle svg{transition:transform .2s ease}.collapse-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
+.section-heading>.section-actions{gap:10px}
+@media(prefers-reduced-motion:reduce){.topic-chevron,.collapse-toggle,.collapse-toggle svg{transition:none}}

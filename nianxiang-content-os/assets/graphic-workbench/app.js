@@ -217,3 +217,18 @@ if (pendingDraft) {
   });
   dialog.showModal();
 }
+
+function setupCollapsiblePanels() {
+  for (const [key, label] of [['images','配图'], ['titles','标题'], ['body','正文']]) {
+    const button = $('toggle-' + key), panel = $('panel-' + key);
+    const apply = expanded => {
+      button.setAttribute('aria-expanded', String(expanded));
+      button.setAttribute('aria-label', (expanded ? '收起' : '展开') + label);
+      button.title = (expanded ? '收起' : '展开') + label;
+      panel.hidden = !expanded;
+    };
+    apply(key !== 'images' || state.images.length > 0);
+    button.addEventListener('click', () => apply(button.getAttribute('aria-expanded') !== 'true'));
+  }
+}
+setupCollapsiblePanels();

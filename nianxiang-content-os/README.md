@@ -8,7 +8,7 @@
 
 [👀 看看怎么用](#-一次使用会怎样) · [🎯 适合哪些场景](#-适合哪些场景) · [🚀 安装与首次尝试](#-安装与首次尝试) · [❓ 常见问题](#-常见问题)
 
-> 当前源码：**v0.1.0-beta.29 · 本地候选版**。公开下载以[官方 Releases](https://github.com/KaenZhong/nianxiang-content-os/releases)中的实际发行为准，包含 Pre-release。公共代码与文档采用 MIT 许可。
+> 当前源码：**v0.1.0-beta.30 · 本地候选版**。公开下载以[官方 Releases](https://github.com/KaenZhong/nianxiang-content-os/releases)中的实际发行为准，包含 Pre-release。公共代码与文档采用 MIT 许可。
 
 ## 💡 从一句真实经历开始
 
@@ -20,13 +20,7 @@
 
 ## 👀 一次使用会怎样
 
-```mermaid
-flowchart LR
-    A[提供真实素材] --> B[阿响判断价值与切口]
-    B --> C[你选择方向]
-    C --> D[共创朋友圈或口播]
-    D --> E[按你的授权保存与积累]
-```
+![共创流程：提供素材 → 判断切口 → 选择方向 → 共创内容 → 按授权保存](assets/readme/workflow.svg)
 
 *这是使用流程示意，不是真实案例或执行回执。你也可以从改稿、转口播等中间步骤开始。*
 

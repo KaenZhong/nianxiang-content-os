@@ -94,14 +94,20 @@ body.resizing-columns{cursor:col-resize;user-select:none}
 
 .topic-heading #toggle-topic{margin-left:auto}.topic-heading #topic-name{flex:1}#creation-links{padding-left:0}@media(max-width:760px){#creation-links{padding-left:0}}
 
-/* 正文栏操作统一尺寸、圆角与状态。 */
-.text-section .section-actions #copy-body,.text-section .section-actions .collapse-toggle{height:36px;min-height:36px;border-radius:8px;background:#f5f1e8;color:#8b806b;border:0;box-sizing:border-box;transition:background .18s ease}
-.text-section .section-actions #copy-body{padding:8px 12px;font-size:12px;line-height:20px}
-.text-section .section-actions #copy-body:hover,.text-section .section-actions .collapse-toggle:hover{background:#eae3d5}
-.text-section .section-actions #copy-body:active,.text-section .section-actions .collapse-toggle:active{background:#e1d8c6}
-@media(prefers-reduced-motion:reduce){.text-section .section-actions #copy-body,.text-section .section-actions .collapse-toggle{transition:none}}
+/* 标题与正文复制操作统一尺寸、圆角与状态。 */
+.title-section .section-actions #copy-title,.text-section .section-actions #copy-body,.text-section .section-actions .collapse-toggle{height:36px;min-height:36px;border-radius:8px;background:#f5f1e8;color:#8b806b;border:0;box-sizing:border-box;transition:background .18s ease}
+.title-section .section-actions #copy-title,.text-section .section-actions #copy-body{padding:8px 12px;font-size:12px;line-height:20px}
+.title-section .section-actions #copy-title:hover,.text-section .section-actions #copy-body:hover,.text-section .section-actions .collapse-toggle:hover{background:#eae3d5}
+.title-section .section-actions #copy-title:active,.text-section .section-actions #copy-body:active,.text-section .section-actions .collapse-toggle:active{background:#e1d8c6}
+@media(prefers-reduced-motion:reduce){.title-section .section-actions #copy-title,.text-section .section-actions #copy-body,.text-section .section-actions .collapse-toggle{transition:none}}
 
 /* 正文操作与复制标题统一使用无底色文字按钮。 */
 #copy-title,#copy-body,.font-controls button{background:transparent;border:0;box-shadow:none;color:var(--blue);font-size:11px;font-weight:400;min-height:32px;padding:6px 4px}
 #copy-title:hover,#copy-body:hover,.font-controls button:hover{background:transparent;text-decoration:underline;text-underline-offset:3px}
 .font-controls button:disabled:hover{text-decoration:none}
+
+.title-section .section-actions #copy-title:hover,.text-section .section-actions #copy-body:hover{text-decoration:none}
+/* 内容内缩，保留工具栏横线的完整宽度。 */
+.editor-toolbar{padding-left:14px;padding-right:14px}
+#body{padding-left:14px;padding-right:14px}
+@media(max-width:760px){.editor-toolbar{padding-left:10px;padding-right:10px}#body{padding-left:10px;padding-right:10px}}

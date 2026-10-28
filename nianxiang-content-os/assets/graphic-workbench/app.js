@@ -1,6 +1,7 @@
 'use strict';
 const original = structuredClone(window.WORKBENCH_DATA);
 const storageKey = 'nianxiang-illustrated-workbench-v2-' + encodeURIComponent(original.id || location.pathname);
+const imageSource = item => window.WORKBENCH_IMAGES?.[item.path] || item.path;
 const $ = id => document.getElementById(id);
 let state = structuredClone(original), storageAvailable = true, imageIndex = 0, toastTimer;
 let pendingDraft = null;
@@ -89,10 +90,10 @@ function renderGallery() {
     const label = document.createElement('strong'); label.textContent = `0${index+1} / ${item.label}`;
     heading.append(label);
     const open = document.createElement('button'); open.className = 'image-open'; open.setAttribute('aria-label', `放大查看${item.label}`);
-    const img = document.createElement('img'); img.src = item.path; img.alt = item.alt || item.label;
+    const img = document.createElement('img'); img.src = imageSource(item); img.alt = item.alt || item.label;
     const zoom = document.createElement('span'); zoom.className = 'zoom'; zoom.textContent = '放大 ↗'; open.append(img,zoom); open.addEventListener('click', () => showImage(index));
     const bottom = document.createElement('div'); bottom.className = 'image-bottom';
-    const download = document.createElement('a'); download.href = item.path; download.download = item.path.split('/').pop(); download.textContent = '下载原图 ↓';
+    const download = document.createElement('a'); download.href = imageSource(item); download.download = item.path.split('/').pop(); download.textContent = '下载原图 ↓';
     const move = document.createElement('button'); move.className = 'order-button'; move.textContent = index === 0 ? '后移 →' : '← 前移'; move.setAttribute('aria-label', `将${item.label}${index === 0 ? '后移' : '前移'}`);
     move.disabled = state.images.length < 2;
     move.addEventListener('click', () => { const target = index === 0 ? 1 : index-1; [state.images[index],state.images[target]] = [state.images[target],state.images[index]]; renderGallery(); save(); toast('图组顺序已调整'); });
@@ -102,10 +103,10 @@ function renderGallery() {
 function showImage(index) {
   imageIndex = (index + state.images.length) % state.images.length;
   const item = state.images[imageIndex];
-  $('large-image').src = item.path; $('large-image').alt = item.label;
+  $('large-image').src = imageSource(item); $('large-image').alt = item.label;
   $('image-label').textContent = item.label;
   $('image-position').textContent = `${imageIndex+1} / ${state.images.length}`;
-  $('download-large').href = item.path; $('download-large').download = item.path.split('/').pop();
+  $('download-large').href = imageSource(item); $('download-large').download = item.path.split('/').pop();
   if (!$('lightbox').open) $('lightbox').showModal();
 }
 function selection() {

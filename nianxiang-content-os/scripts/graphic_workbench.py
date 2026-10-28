@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Build a private graphic workbench from one content.json; no network writes."""
 import argparse
+import base64
+import mimetypes
 import hashlib
 import json
 import os
@@ -56,7 +58,7 @@ def atomic(path, text):
             os.unlink(tmp)
 
 
-def build(content, selection=None):
+def build(content, selection=None, self_contained=True):
     content = Path(content).resolve()
     root = content.parent
     if root == CORE or CORE in root.parents:
@@ -79,6 +81,19 @@ def build(content, selection=None):
     # Asset names are reserved outputs; task content and images stay independent.
     files = {name: (TEMPLATE / name).read_text(encoding='utf-8') for name in ('style.css', 'app.js', 'index.html')}
     files['data.js'] = 'window.WORKBENCH_DATA = ' + json.dumps(data, ensure_ascii=False).replace('<', '\\u003c').replace('\u2028', '\\u2028').replace('\u2029', '\\u2029') + ';\n'
+    if self_contained:
+        resources = {}
+        for image in data['images']:
+            path = root / image['path']
+            mime = mimetypes.guess_type(path.name)[0]
+            resources[image['path']] = 'data:' + mime + ';base64,' + base64.b64encode(path.read_bytes()).decode('ascii')
+        page = files['index.html']
+        page = page.replace('<link rel="stylesheet" href="style.css">', '<style>' + files['style.css'].replace('</style', '<\\/style') + '</style>')
+        page = page.replace('<script defer src="data.js"></script>', '').replace('<script defer src="app.js"></script>', '')
+        resource_script = 'window.WORKBENCH_IMAGES = ' + json.dumps(resources) + ';'
+        # Inline scripts execute after every page element exists; defer does not defer inline code.
+        scripts = '<script>' + files['data.js'] + resource_script + '</script><script>' + files['app.js'].replace('</script', '<\\/script') + '</script>'
+        files['index.html'] = page.replace('</body>', scripts + '</body>')
     for name in ('style.css', 'app.js', 'data.js', 'index.html'):
         target = root / name
         if target.is_symlink():
@@ -86,16 +101,19 @@ def build(content, selection=None):
     atomic(content, json.dumps(data, ensure_ascii=False, indent=2) + '\n')
     for name in ('style.css', 'app.js', 'data.js', 'index.html'):
         atomic(root / name, files[name])
-    return {'status':'generated', 'id': data['id'], 'revision':data['revision'], 'page':str(root / 'index.html')}
+    return {'status':'generated', 'id': data['id'], 'revision':data['revision'], 'page':str(root / 'index.html'), 'self_contained':self_contained}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--content', required=True, help='private task content.json; outputs go beside it')
     parser.add_argument('--import-selection', help='user-returned selection JSON with matching work and base revision')
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--self-contained', dest='self_contained', action='store_true', default=True, help='inline all assets into index.html (default for delivery/sharing)')
+    mode.add_argument('--multi-file', dest='self_contained', action='store_false', help='local-only HTML referencing sibling assets')
     args = parser.parse_args()
     try:
-        print(json.dumps(build(args.content, args.import_selection), ensure_ascii=False))
+        print(json.dumps(build(args.content, args.import_selection, args.self_contained), ensure_ascii=False))
     except (ValueError, KeyError, TypeError, OSError) as error:
         parser.exit(1, str(error) + '\n')
 

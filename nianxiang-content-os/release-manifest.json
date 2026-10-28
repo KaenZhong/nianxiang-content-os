@@ -1,26 +1,26 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.28",
+  "version": "0.1.0-beta.29",
   "entry": "SKILL.md",
   "knowledge_schema_version": 5,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "3de201edb0de7217e283c1ab8dc4a59a0ff3e46b0ad9228fe5a8c7d0f9581639",
-      "size": 16526
+      "sha256": "61a055cb74f337e754731dfb230248ff4ba2eeac0d24415e5196e8d66dba8576",
+      "size": 16906
     },
     "README.md": {
-      "sha256": "7fa777c776f896ba41ef4448ef100feadd9385d6579e62e19df8bef6f779c642",
-      "size": 8715
+      "sha256": "8c2858ba00d48d2a588401df6c4e8c95c5467a7d5ef2693d91aef3176082f654",
+      "size": 9085
     },
     ".gitignore": {
       "sha256": "7e585a41f683fdec919186bcdd2d19d0cfd2741800a49c9ce48f88297bc45d1d",
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "042a0f109f615c62a981265964d1a2a38a72637665a4095fb7ffd397e9830dd0",
+      "sha256": "55249fe5ad4ac7dc22e14d37b188d6391f582337fa58da4ff089bb163af8f95a",
       "size": 15656
     },
     "references/system/data-ownership.md": {

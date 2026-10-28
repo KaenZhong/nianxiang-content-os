@@ -78,3 +78,5 @@ footer{justify-content:space-between}.maintenance-info{display:flex;align-items:
 .column-resizer:hover::after,.column-resizer:focus-visible::after,.column-resizer.is-dragging::after{background:#ad8f4b;opacity:1}
 body.resizing-columns{cursor:col-resize;user-select:none}
 @media(max-width:760px){.workspace{grid-template-columns:1fr;gap:16px}.column-resizer{display:none}}
+
+.creation-nav summary>.topic-chevron{margin-left:0;margin-right:2px}

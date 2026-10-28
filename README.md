@@ -8,7 +8,7 @@
 
 [👀 看看怎么用](#-一次使用会怎样) · [🎯 适合哪些场景](#-适合哪些场景) · [🚀 安装与首次尝试](#-安装与首次尝试) · [❓ 常见问题](#-常见问题)
 
-> 当前源码：**v0.1.0-beta.29 · 本地候选版**。公开下载以[官方 Releases](https://github.com/KaenZhong/nianxiang-content-os/releases)中的实际发行为准，包含 Pre-release。公共代码与文档采用 MIT 许可。
+> 当前公开内测：**v0.1.0-beta.29** · [查看本次更新](https://github.com/KaenZhong/nianxiang-content-os/releases/tag/v0.1.0-beta.29) · MIT 开源。
 
 ## 💡 从一句真实经历开始
 
@@ -63,7 +63,9 @@ flowchart LR
 
 ## 🚀 安装与首次尝试
 
-**[📦 前往官方 Releases 下载](https://github.com/KaenZhong/nianxiang-content-os/releases)** · **[📋 复制完整安装提示词](BETA-START.md#可复制提示词)**
+**[📦 下载 beta.29 标准Skill ZIP](https://github.com/KaenZhong/nianxiang-content-os/releases/download/v0.1.0-beta.29/nianxiang-content-os-0.1.0-beta.29.zip)** · [SHA256SUMS](https://github.com/KaenZhong/nianxiang-content-os/releases/download/v0.1.0-beta.29/SHA256SUMS) · [LICENSE](https://github.com/KaenZhong/nianxiang-content-os/releases/download/v0.1.0-beta.29/LICENSE)
+
+把上面三个文件一起交给Agent。**[📋 复制完整安装提示词](BETA-START.md#可复制提示词)** · [全部公开内测版本](https://github.com/KaenZhong/nianxiang-content-os/releases)
 
 1. 选择实际公开的内测发行，下载同一发行的 **标准Skill ZIP、SHA256SUMS与LICENSE**，一起交给准备使用的Agent。ZIP用于安装，SHA256SUMS用于完整性核验，LICENSE说明使用与分发许可。
 2. 把[完整安装提示词](BETA-START.md#可复制提示词)发给Agent，让它检查当前平台能力、核验安装包并引导完成安装。只导入完整的 `nianxiang-content-os/` 目录。
@@ -71,7 +73,7 @@ flowchart LR
 
 已有安装应走[受控更新](nianxiang-content-os/references/maintenance/releases.md)，由Agent检查版本和现有改动。GitHub的 Source code ZIP 包含仓库外壳，不能直接作为标准受控更新包。不同平台的具体接入与限制见[三平台接入说明](nianxiang-content-os/docs/platform-setup.md)。
 
-候选源码可能领先公开发行；旧版界面和说明可能仍显示旧产品名。技术标识、目录名和调用入口继续使用 `nianxiang-content-os`。
+后续开发源码可能领先公开发行；旧版界面和说明可能仍显示旧产品名。技术标识、目录名和调用入口继续使用 `nianxiang-content-os`。
 
 ## 🌱 让共创逐渐了解你
 

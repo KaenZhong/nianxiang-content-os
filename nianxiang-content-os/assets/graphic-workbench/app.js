@@ -232,3 +232,44 @@ function setupCollapsiblePanels() {
   }
 }
 setupCollapsiblePanels();
+
+const columnResizer = $('column-resizer');
+const workspace = document.querySelector('.workspace');
+if (columnResizer && workspace) {
+  const columnWidthKey = 'nianxiang-workbench-left-column';
+  let columnWidth = 50;
+  try { const savedWidth = Number(localStorage.getItem(columnWidthKey)); if (savedWidth >= 30 && savedWidth <= 70) columnWidth = savedWidth; } catch {}
+  const applyWidth = () => {
+    workspace.style.setProperty('--left-column', `calc((100% - 20px) * ${columnWidth / 100})`);
+    columnResizer.setAttribute('aria-valuenow', String(Math.round(columnWidth)));
+    columnResizer.setAttribute('aria-valuetext', `左列${Math.round(columnWidth)}%，右列${100-Math.round(columnWidth)}%`);
+  };
+  const persistWidth = () => { try { localStorage.setItem(columnWidthKey, String(columnWidth)); } catch {} };
+  const resetWidth = () => { columnWidth = 50; applyWidth(); persistWidth(); };
+  let draggingPointer = null;
+  columnResizer.addEventListener('pointerdown', e => {
+    if (e.button !== 0 || window.innerWidth <= 760) return;
+    draggingPointer = e.pointerId; columnResizer.setPointerCapture(e.pointerId);
+    columnResizer.classList.add('is-dragging'); document.body.classList.add('resizing-columns'); e.preventDefault();
+  });
+  columnResizer.addEventListener('pointermove', e => {
+    if (draggingPointer !== e.pointerId) return;
+    const rect = workspace.getBoundingClientRect();
+    columnWidth = Math.min(70, Math.max(30, (e.clientX - rect.left - 10) / (rect.width - 20) * 100)); applyWidth();
+  });
+  const finishDrag = e => {
+    if (draggingPointer !== e.pointerId) return;
+    draggingPointer = null; columnResizer.classList.remove('is-dragging'); document.body.classList.remove('resizing-columns'); persistWidth();
+  };
+  columnResizer.addEventListener('pointerup', finishDrag);
+  columnResizer.addEventListener('pointercancel', finishDrag);
+  columnResizer.addEventListener('lostpointercapture', finishDrag);
+  columnResizer.addEventListener('dblclick', resetWidth);
+  columnResizer.addEventListener('keydown', e => {
+    if (!['ArrowLeft','ArrowRight','Home'].includes(e.key)) return;
+    e.preventDefault();
+    if (e.key === 'Home') { resetWidth(); return; }
+    columnWidth = Math.min(70, Math.max(30, columnWidth + (e.key === 'ArrowLeft' ? -2 : 2))); applyWidth(); persistWidth();
+  });
+  applyWidth();
+}

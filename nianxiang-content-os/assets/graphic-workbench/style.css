@@ -68,3 +68,13 @@ footer{justify-content:space-between}.maintenance-info{display:flex;align-items:
 @media(prefers-reduced-motion:reduce){.topic-chevron,.collapse-toggle,.collapse-toggle svg{transition:none}}
 
 .topic-chevron,.creation-nav details[open] .topic-chevron{transform:none}.topic-chevron svg{transition:none}
+
+/* 桌面与平板两列可调，窄屏保留纵向排列。 */
+.workspace{--left-column:50%;grid-template-columns:minmax(0,var(--left-column)) 20px minmax(0,1fr);gap:0}
+.column-resizer{position:relative;align-self:stretch;min-height:100%;cursor:col-resize;touch-action:none;outline:none;border-radius:8px}
+.column-resizer::before{content:"";position:absolute;top:0;bottom:0;left:9px;width:2px;border-radius:2px;background:transparent;transition:background .15s}
+.column-resizer::after{content:"";position:absolute;top:105px;left:7px;width:6px;height:36px;border-radius:4px;background:#d8cebb;opacity:.65;transition:background .15s,opacity .15s}
+.column-resizer:hover::before,.column-resizer:focus-visible::before,.column-resizer.is-dragging::before{background:#dfd6c4}
+.column-resizer:hover::after,.column-resizer:focus-visible::after,.column-resizer.is-dragging::after{background:#ad8f4b;opacity:1}
+body.resizing-columns{cursor:col-resize;user-select:none}
+@media(max-width:760px){.workspace{grid-template-columns:1fr;gap:16px}.column-resizer{display:none}}

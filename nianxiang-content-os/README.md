@@ -1,4 +1,6 @@
-# 念响OS · AI内容系统
+# 念响OS · AI内容获客系统
+
+简称“念响内容OS”，AI内容合伙人叫“阿响”。
 
 **陪你聊素材、找选题、写内容，把经验慢慢积累成自己的内容资产。**
 
@@ -8,7 +10,7 @@
 
 [👀 看看怎么用](#-一次使用会怎样) · [🎯 适合哪些场景](#-适合哪些场景) · [🚀 安装与首次尝试](#-安装与首次尝试) · [❓ 常见问题](#-常见问题)
 
-> 当前源码：**v0.1.0-beta.48 · 内测版**。公开下载以[官方 Releases](https://github.com/KaenZhong/nianxiang-content-os/releases)中的实际发行为准，包含 Pre-release。公共代码与文档采用 MIT 许可。
+> 当前源码：**v0.1.0-beta.49 · 内测版**。公开下载以[官方 Releases](https://github.com/KaenZhong/nianxiang-content-os/releases)中的实际发行为准，包含 Pre-release。公共代码与文档采用 MIT 许可。
 
 ## 💡 从一句真实经历开始
 

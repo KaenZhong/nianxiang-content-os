@@ -1,27 +1,27 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.48",
+  "version": "0.1.0-beta.49",
   "entry": "SKILL.md",
   "knowledge_schema_version": 5,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "5abd8785a9f8602d12daef6fe247b0c0061383aaba56dc8536b7ab295ec67c58",
-      "size": 23308
+      "sha256": "af64d30c0bdc35156112d2565a268466a48b7395b09b42e4357c94b5b729dd0a",
+      "size": 23736
     },
     "README.md": {
-      "sha256": "8d819d0d4ef7bde33621072b79c47ce5606597c54e6e447bffe5f8962e24551d",
-      "size": 9011
+      "sha256": "1aa2ce1dfdce1e6b734dba67248afaf560f9f7d834dde9cd509515015ab2c560",
+      "size": 9083
     },
     ".gitignore": {
       "sha256": "7e585a41f683fdec919186bcdd2d19d0cfd2741800a49c9ce48f88297bc45d1d",
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "ce06d56c5ce7a5bc69d577648705184778414abf4da27270c4c7fb18f0b72b62",
-      "size": 15876
+      "sha256": "7cedf554a457c31e9baddcc5252d9d364ac005a0750f597e62cd8a113e9b9f99",
+      "size": 15959
     },
     "references/system/data-ownership.md": {
       "sha256": "465471cab55254dedde6fa3bc5f573615cb87e3ffdd83cf0d5f11cc7f6602191",
@@ -128,12 +128,12 @@
       "size": 15027
     },
     "references/maintenance/rules.md": {
-      "sha256": "e9d4edcd9a6e091cf7f2fbbef7a039b7588ed9c425976664a87a4e29e428327a",
-      "size": 8660
+      "sha256": "4ad25f92eb74b80f66f9b94941fb64bf573f921cfd11cc5869f424bde3e82c6b",
+      "size": 8672
     },
     "references/maintenance/acceptance.md": {
-      "sha256": "172aa4009b66da4f6a0898abec784a2e5885028a05d37bf0e3ccdbf4fe8dbd34",
-      "size": 46678
+      "sha256": "c4f6ff477bbb2b1741d821f52c957b7dbb5ac8ea7a7f2804fe9c46096d4339ef",
+      "size": 46690
     },
     "tests/test_core_journey.py": {
       "sha256": "ab94c5e83d279eecc4742c161c43deb8c793dfb0d341167ee543cedd49406267",
@@ -208,8 +208,8 @@
       "size": 15231
     },
     "agents/openai.yaml": {
-      "sha256": "51a5a2ef3290cbe366cd5e1d8033101920f524bc5085058ab000b132d704555b",
-      "size": 337
+      "sha256": "45d677c3a8a4e8ce986f5b0ba6cf79932e6a73c0753df163300cd010ab0571d0",
+      "size": 343
     },
     "agent/IDENTITY.md": {
       "sha256": "906d8454b01753653cc082cd33933c84c8885f937b68078fa5f70219e440a598",
@@ -224,8 +224,8 @@
       "size": 15648
     },
     "agent/AGENTS.md": {
-      "sha256": "ef47319f0b65b8c61c1c0dcf6edb7d94eef5e24cea411f3e9fbb6019a574059b",
-      "size": 3424
+      "sha256": "82e6603c9df19bf5e55bb32008d38c09cbb865f364b5c9f4487af20128a4e0d0",
+      "size": 3430
     },
     "docs/platform-setup.md": {
       "sha256": "8e1505bffd5684fa05019f8f09f6a117a3b84e8c5cd40b3fb8dc27e893c69f09",
@@ -352,8 +352,8 @@
       "size": 503
     },
     "assets/graphic-workbench/index.html": {
-      "sha256": "a87d36a85a5090d6d25059ee6c893dcf21e45b6e93e9460010a1bd1448d3d5f5",
-      "size": 6322
+      "sha256": "d876f2eb203673d8e415b51e7583abda0dd3404c2313683f431c1c92c162f823",
+      "size": 6334
     },
     "assets/graphic-workbench/style.css": {
       "sha256": "14feae394b909a93c38f516449fd92440be7cacd00f7ed4ae3f2fc42ceddbad7",

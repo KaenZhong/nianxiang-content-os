@@ -11,7 +11,7 @@
 ## 可复制提示词
 
 ```text
-请帮我安装并开始使用「念响OS · AI内容系统」，AI内容合伙人叫“阿响”。
+请帮我安装并开始使用「念响OS · AI内容获客系统」，AI内容合伙人叫“阿响”。
 
 官方仓库：https://github.com/KaenZhong/nianxiang-content-os
 版本选择：获取最新公开内测发行，包含标记为 Pre-release 的版本，不把开发分支当作公开发行。

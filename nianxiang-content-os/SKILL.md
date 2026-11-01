@@ -9,7 +9,7 @@ description: 念响内容OS（完整名称：念响OS · AI内容获客系统）
 
 ## 维护信息
 
-当前版本：v0.1.0-beta.49 · 内测版
+当前版本：v0.1.0-beta.50 · 内测版
 开发者：卡昂  
 公众号：卡昂AI超能玩  
 使用反馈：kaenzhong@foxmail.com

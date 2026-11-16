@@ -58,7 +58,7 @@ def atomic(path, text):
             os.unlink(tmp)
 
 
-def build(content, selection=None, self_contained=True):
+def _build_editor(content, selection=None, self_contained=True):
     content = Path(content).resolve()
     root = content.parent
     if root == CORE or CORE in root.parents:
@@ -102,6 +102,14 @@ def build(content, selection=None, self_contained=True):
     for name in ('style.css', 'app.js', 'data.js', 'index.html'):
         atomic(root / name, files[name])
     return {'status':'generated', 'id': data['id'], 'revision':data['revision'], 'page':str(root / 'index.html'), 'self_contained':self_contained}
+
+
+def build(content, selection=None, self_contained=True):
+    """Compatibility entry: validate/import the old single-work format, deliver the unified workbench."""
+    from content_workbench import build as build_workbench
+    result = _build_editor(content, selection, self_contained)
+    unified = build_workbench(content)
+    return {**result, **unified}
 
 
 def main():

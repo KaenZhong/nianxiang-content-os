@@ -21,40 +21,40 @@ class WorkbenchTest(unittest.TestCase):
         self.path.write_text(json.dumps(self.data))
 
     def test_empty_and_stable_revision(self):
-        first = module.build(self.path)
-        self.assertEqual(first['revision'], module.build(self.path)['revision'])
+        first = module._build_editor(self.path)
+        self.assertEqual(first['revision'], module._build_editor(self.path)['revision'])
         self.assertIn('image-placeholder', (self.root / 'app.js').read_text())
         self.assertNotIn('</script>', (self.root / 'data.js').read_text())
 
     def selection(self):
-        module.build(self.path)
+        module._build_editor(self.path)
         return dict(schema_version='nianxiang.graphic-workbench.selection.v1', work_id='test-work', base_revision=module.revision(self.data), body='用户改稿', title_candidates=self.data['titles'], selected_title='测试标题', images=[])
 
     def test_import_and_stale_rejection(self):
         chosen = self.selection()
         selection = self.root / 'selection.json'
         selection.write_text(json.dumps(chosen))
-        module.build(self.path, selection)
+        module._build_editor(self.path, selection)
         self.assertEqual(json.loads(self.path.read_text())['body'], '用户改稿')
         before = self.path.read_bytes()
         with self.assertRaises(ValueError):
-            module.build(self.path, selection)
+            module._build_editor(self.path, selection)
         self.assertEqual(before, self.path.read_bytes())
 
     def test_cross_work_and_path_rejected(self):
         chosen = self.selection(); chosen['work_id']='other'
         selection = self.root / 'selection.json'; selection.write_text(json.dumps(chosen))
-        with self.assertRaises(ValueError): module.build(self.path, selection)
+        with self.assertRaises(ValueError): module._build_editor(self.path, selection)
         self.data['images']=[dict(id='cover',label='封面',path='../private.png')]
         self.path.write_text(json.dumps(self.data))
-        with self.assertRaises(ValueError): module.build(self.path)
+        with self.assertRaises(ValueError): module._build_editor(self.path)
 
     def test_multiple_images_order(self):
         (self.root/'images').mkdir()
         for name in ['a','b']:(self.root/'images'/f'{name}.png').write_bytes(b'fixture')
         self.data['images']=[dict(id=n,label=n,path=f'images/{n}.png') for n in ['a','b']]
         self.path.write_text(json.dumps(self.data)); chosen=self.selection();chosen['images']=list(reversed(self.data['images']))
-        selection=self.root/'selection.json';selection.write_text(json.dumps(chosen));module.build(self.path,selection)
+        selection=self.root/'selection.json';selection.write_text(json.dumps(chosen));module._build_editor(self.path,selection)
         self.assertEqual(json.loads(self.path.read_text())['images'][0]['id'],'b')
 
     def test_template_update_keeps_content_revision_and_handoff_valid(self):
@@ -67,11 +67,11 @@ class WorkbenchTest(unittest.TestCase):
         selection = self.root / 'selection.json'
         selection.write_text(json.dumps(chosen))
         with patch.object(module, 'TEMPLATE', template):
-            result = module.build(self.path)
+            result = module._build_editor(self.path)
             self.assertEqual(result['revision'], before['revision'])
             self.assertEqual(json.loads(self.path.read_text()), before)
             self.assertIn('template update fixture', (self.root / 'style.css').read_text())
-            module.build(self.path, selection)
+            module._build_editor(self.path, selection)
         self.assertEqual(json.loads(self.path.read_text())['body'], '用户改稿')
 
     def test_single_file_survives_isolation_and_preserves_image_paths(self):
@@ -84,7 +84,7 @@ class WorkbenchTest(unittest.TestCase):
         (self.root / 'images/cover.png').write_bytes(picture)
         self.data['images'] = [dict(id='cover', label='封面', path='images/cover.png')]
         self.path.write_text(json.dumps(self.data))
-        first = module.build(self.path)
+        first = module._build_editor(self.path)
         isolated = self.root / 'isolated'
         isolated.mkdir()
         shutil.copy2(self.root / 'index.html', isolated / 'index.html')
@@ -123,12 +123,12 @@ for(const fn of get('handoff').listeners.click)fn();assert(copied.includes('imag
 const selection=vm.runInContext('selection()',c);assert.equal(selection.images[0].path,'images/cover.png');
 """
             subprocess.run(['node', '-e', harness], input=json.dumps(scripts), text=True, check=True, capture_output=True)
-        self.assertEqual(first['revision'], module.build(self.path, self_contained=False)['revision'])
+        self.assertEqual(first['revision'], module._build_editor(self.path, self_contained=False)['revision'])
         self.assertIn('src="data.js"', (self.root / 'index.html').read_text())
-        self.assertEqual(first['revision'], module.build(self.path)['revision'])
+        self.assertEqual(first['revision'], module._build_editor(self.path)['revision'])
 
     def test_empty_standalone_runs_after_dom(self):
-        result = module.build(self.path)
+        result = module._build_editor(self.path)
         page = (self.root / 'index.html').read_text()
         self.assertTrue(result['self_contained'])
         self.assertIn('window.WORKBENCH_IMAGES = {};', page)

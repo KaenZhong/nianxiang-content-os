@@ -8,6 +8,8 @@ def build(content):
     content=Path(content).resolve();root=content.parent
     if root==CORE or CORE in root.parents: raise ValueError('private content must be outside the public Skill')
     data=json.loads(content.read_text(encoding='utf-8'))
+    if isinstance(data,dict) and 'works' not in data and 'id' in data:
+        data={'date':'single-'+data['id'],'works':[data]}
     if not isinstance(data,dict) or not isinstance(data.get('works'),list): raise ValueError('works must be a list')
     works=[];ids=set();resources={}
     for item in data['works']:

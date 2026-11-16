@@ -28,3 +28,16 @@ class MultiWorkbenchTest(unittest.TestCase):
   self.assertEqual(self.build([])['works'],0)
   self.work['selectedTitle']=5
   with self.assertRaises(ValueError):self.build([self.work])
+
+ def test_single_work_and_legacy_entry_deliver_unified_ui(self):
+  import graphic_workbench
+  self.file.write_text(json.dumps(self.work,ensure_ascii=False))
+  before=self.file.read_bytes();result=m.build(self.file)
+  self.assertEqual(result['works'],1);self.assertEqual(before,self.file.read_bytes())
+  result=graphic_workbench.build(self.file)
+  self.assertEqual(result['works'],1)
+  page=(self.root/'index.html').read_text()
+  self.assertIn('id="draft-sidebar"',page)
+  self.assertNotIn('id="copy-post"',page)
+  self.assertNotIn("check.type='checkbox'",page)
+  self.assertIn('交回全部稿件',page)

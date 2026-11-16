@@ -111,3 +111,6 @@ body.resizing-columns{cursor:col-resize;user-select:none}
 .editor-toolbar{padding-left:14px;padding-right:14px}
 #body{padding-left:14px;padding-right:14px}
 @media(max-width:760px){.editor-toolbar{padding-left:10px;padding-right:10px}#body{padding-left:10px;padding-right:10px}}
+
+/* Mobile workbench: body, titles, images; readable gutters and adjustable font size. */
+@media(max-width:760px){main{padding:18px 16px 0!important}.creation-nav{margin-top:0;margin-bottom:0;padding:12px 14px}.workspace{display:flex!important;flex-direction:column;gap:18px!important;padding-top:18px}.writing-column{order:0;width:100%}.visual-column{display:contents!important;position:static!important}.text-section{order:0}.title-section{order:1}.image-section{order:2}.text-section,.title-section,.image-section{padding:16px!important;width:100%}.text-section textarea{padding:10px 0;min-height:380px;line-height:1.9}.section-actions button,.font-controls button{min-height:32px;min-width:28px;padding:5px 7px;font-size:11px}.column-resizer{display:none!important}}

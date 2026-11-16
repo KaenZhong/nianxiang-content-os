@@ -10,7 +10,7 @@
 
 [👀 看看怎么用](#-一次使用会怎样) · [🎯 适合哪些场景](#-适合哪些场景) · [🚀 安装与首次尝试](#-安装与首次尝试) · [❓ 常见问题](#-常见问题)
 
-> 当前源码：**v0.1.0-beta.50 · 内测版**。公开下载以[官方 Releases](https://github.com/KaenZhong/nianxiang-content-os/releases)中的实际发行为准，包含 Pre-release。公共代码与文档采用 MIT 许可。
+> 当前源码：**v0.1.0-beta.51 · 内测版**。公开下载以[官方 Releases](https://github.com/KaenZhong/nianxiang-content-os/releases)中的实际发行为准，包含 Pre-release。公共代码与文档采用 MIT 许可。
 
 ## 💡 从一句真实经历开始
 
@@ -128,3 +128,5 @@ python3 -B -m unittest discover -s tests -q
 通过 [GitHub Issues](https://github.com/KaenZhong/nianxiang-content-os/issues)反馈，附上平台、版本、复现步骤、预期和实际结果，以及脱敏后的截图。
 
 开发者：卡昂（KaenZhong） · 公众号：卡昂AI超能玩 · 反馈：kaenzhong@foxmail.com
+
+定时协作：使用“设置定时任务”先试跑真实推荐与工作台，再按当前宿主能力确认设置；“调整/暂停/恢复定时任务”维护已有任务。多稿工作台承接已有稿件，真实发布仍由用户操作。

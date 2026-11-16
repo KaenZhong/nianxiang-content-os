@@ -14,7 +14,7 @@ try {
   }
 } catch { storageAvailable = false; }
 function restoreDraft(draft) {
-  if (typeof draft.body !== 'string' || !Array.isArray(draft.titles) || !draft.titles.every(t => typeof t.text === 'string') || !Array.isArray(draft.images) || !draft.images.every(i => original.images.some(o => o.id === i.id)) || new Set(draft.images.map(i => i.id)).size !== original.images.length || (draft.titles.length && (!Number.isInteger(draft.selectedTitle) || draft.selectedTitle < 0 || draft.selectedTitle >= draft.titles.length))) return false;
+  if (typeof draft.body !== 'string' || !Array.isArray(draft.titles) || !draft.titles.every(t => typeof t.text === 'string') || !Array.isArray(draft.images) || !draft.images.every(i => original.images.some(o => o.id === i.id)) || new Set(draft.images.map(i => i.id)).size !== original.images.length || (draft.titles.length && (!Number.isInteger(draft.selectedTitle) || draft.selectedTitle < -1 || draft.selectedTitle >= draft.titles.length))) return false;
   state.body = draft.body;
   state.titles = draft.titles;
   state.selectedTitle = draft.selectedTitle;

@@ -27,7 +27,7 @@ def validate(data, root):
     if not isinstance(titles, list) or not all(isinstance(t, dict) and isinstance(t.get('text'), str) and isinstance(t.get('type'), str) for t in titles):
         raise ValueError('titles require text and type')
     selected = data.get('selectedTitle')
-    if type(selected) is not int or (titles and not 0 <= selected < len(titles)) or (not titles and selected != -1):
+    if type(selected) is not int or (titles and not -1 <= selected < len(titles)) or (not titles and selected != -1):
         raise ValueError('selectedTitle must be valid, or -1 when titles are empty')
     if not isinstance(images, list):
         raise ValueError('images must be a list')

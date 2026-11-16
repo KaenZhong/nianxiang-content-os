@@ -40,4 +40,6 @@ class MultiWorkbenchTest(unittest.TestCase):
   self.assertIn('id="draft-sidebar"',page)
   self.assertNotIn('id="copy-post"',page)
   self.assertNotIn("check.type='checkbox'",page)
-  self.assertIn('交回全部稿件',page)
+  self.assertIn('把当前篇交回阿响',page)
+  self.assertNotIn('>继续编辑</button>',page)
+  self.assertIn('aria-label="关闭交回弹窗"',page)

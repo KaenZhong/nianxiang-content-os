@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
   "name": "nianxiang-content-os",
-  "version": "0.1.0-beta.52",
+  "version": "0.1.0-beta.53",
   "entry": "SKILL.md",
   "knowledge_schema_version": 5,
   "data_layout_version": 1,
   "release_source": null,
   "files": {
     "CHANGELOG.md": {
-      "sha256": "5d5db48a2324159340e77981f03a6165fd098bbd14015270409da2b367c24898",
-      "size": 25589
+      "sha256": "652e4a4142b8f919eb3a7df497f754d861b12f1f3be3f55de9fa30e10addb184",
+      "size": 25876
     },
     "README.md": {
-      "sha256": "a2c0abad2ade4c1948bd61f113488b25d9c8744cc33966fafd765d49d77d2992",
+      "sha256": "dd1e4cb81dd75850c931ccb6de98358b95faeea0b2b7ba09d9b4626fb0b6e343",
       "size": 9333
     },
     ".gitignore": {
@@ -20,7 +20,7 @@
       "size": 482
     },
     "SKILL.md": {
-      "sha256": "855056e8087185278167d1bc1b1988297adc3aed391b202905257202be618c0b",
+      "sha256": "530712f3591bc3c6f51993a483881048cb5486da12b6a8b9de1b0bf6e43a2a61",
       "size": 16271
     },
     "references/system/data-ownership.md": {
@@ -68,8 +68,8 @@
       "size": 9560
     },
     "references/creation/graphic-workbench.md": {
-      "sha256": "8f9427379bceb2298c188a3d29931537496c3d272b7e68463ede7ce9ef8c5e3f",
-      "size": 11939
+      "sha256": "a761b14ee038332e4d24eaa4ce14dbfacb0fbd752521dfa064f80df4005bd760",
+      "size": 12041
     },
     "references/creation/workflow.md": {
       "sha256": "e83ee29d95506e6d423e5107bd1de3de82a49091f472a07313d0d4639ffb8a75",
@@ -176,8 +176,8 @@
       "size": 9263
     },
     "tests/test_content_workbench.py": {
-      "sha256": "1921194acf519e02b393dfdf016485395f30aaced60ad4d0353f0516c8780f4f",
-      "size": 2796
+      "sha256": "e526052d4b8b3f61ae896131e1fd220720acc41d40f1d5ad9c80a11a63f0882d",
+      "size": 2908
     },
     "tests/test_release_journey.py": {
       "sha256": "1de08ece5548e669daff4fb30adda3aa503fcfdfdb8d95ae13400dd5e3a830f0",
@@ -348,8 +348,8 @@
       "size": 3260
     },
     "assets/content-workbench/index.html": {
-      "sha256": "e61006d0b8367a3371a72d64a8e6e0727f3b7f914d68a7ea54942ecc3d106807",
-      "size": 94878
+      "sha256": "d7fb1850e6c47a305363970a32f456ff4c21c98924d2f6c674f24ca6c38431d9",
+      "size": 95311
     },
     "assets/templates/knowledge-starter.md": {
       "sha256": "c0bd0cc1d3263e676dd6973d5cabf6a8607f03c70fec6103198c567fa1a530b4",
